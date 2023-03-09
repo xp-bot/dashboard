@@ -1,0 +1,6 @@
+{
+    "domains":{
+        "discordVerification":"https://discord.com/api/oauth2/authorize?client_id=706935674800177193&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fverification&response_type=code&scope=guilds.join%20guilds%20identify",
+        "support":"https://discord.xp-bot.net/"
+    }
+}

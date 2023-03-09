@@ -1,0 +1,77 @@
+$small-height: 45px;
+$medium-height: 65px;
+$big-height: 95px;
+
+@keyframes resize-small {
+    0% {
+        height: $small-height;
+		transform: translatey(-10px);
+    }
+
+    50% {
+        height: 25px;
+		transform: translatey(0px);
+    }
+    100% {
+        height: $small-height;
+		transform: translatey(-10px);
+    }
+}
+
+@keyframes resize-medium {
+    0% {
+        height: $medium-height;
+		transform: translatey(-10px);
+    }
+
+    50% {
+        height: 25px;
+		transform: translatey(0px);
+    }
+    100% {
+        height: $medium-height;
+		transform: translatey(-10px);
+    }
+}
+
+@keyframes resize-big {
+    0% {
+        height: $big-height;
+		transform: translatey(-10px);
+    }
+
+    50% {
+        height: 25px;
+		transform: translatey(0px);
+    }
+    100% {
+        height: $big-height;
+		transform: translatey(-10px);
+    }
+}
+
+.xp-loading {
+    >div {
+        @apply w-6 rounded-full bg-panelBack border-2 border-black/10 dark:border-white/10 shadow-lg dark:bg-panelBack-darkMode;
+		transform: translatey(-10px);
+        animation-duration: 2.25s;
+        animation-timing-function:cubic-bezier(0.4, 0, 0.4, 1);
+        animation-iteration-count: infinite;
+    }
+    .xp-loading-small {
+        height: $small-height;
+        animation-name: resize-small;
+        animation-delay: .5s;
+    }
+
+    .xp-loading-medium {
+        height: $medium-height;
+        animation-name: resize-medium;
+        animation-delay: .25s;
+    }
+
+    .xp-loading-big {
+        height: $big-height;
+        animation-name: resize-big;
+    }
+}

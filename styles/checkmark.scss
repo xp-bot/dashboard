@@ -1,0 +1,83 @@
+.PanelCheckboxTickContainer {
+    display: inline-flex;
+    margin-right: 10px;
+    position: relative;
+}
+
+.PanelCheckboxTick {
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    border: 2px solid;
+    @apply border-darkText dark:border-darkText-darkMode;
+    background-color: transparent !important;
+    height: 14px;
+    width: 14px;
+    border-radius: 3px;
+}
+
+.PanelCheckmark {
+    transition: all 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
+    cursor: pointer;
+    position: absolute;
+    height: 6px;
+    width: 6px;
+    background-color: transparent;
+    transform: scale(.5);
+    border-radius: 1px;
+}
+
+/* When the checkbox is checked, add a blue background */
+.PanelCheckboxTick:checked~.PanelCheckmark {
+    @apply bg-darkText dark:bg-darkText-darkMode;
+    transform: scale(1);
+}
+
+/* Create the PanelCheckmark/indicator (hidden when not checked) */
+
+/* Show the PanelCheckmark when checked */
+.PanelCheckboxTick:checked~.PanelCheckmark:after {
+    display: block;
+}
+
+/* Style the PanelCheckmark/indicator */
+.container .PanelCheckmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    @apply border-darkText border dark:border-darkText-darkMode;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+
+.PanelCheckbox {
+    position: relative;
+
+    &.disabled {
+        opacity: .5;
+        pointer-events: none;
+    }
+
+    padding: 10px;
+    flex-grow: 1;
+    width: fit-content;
+
+    .PanelTitle {
+        label {
+            cursor: pointer;
+        }
+
+        font-family: Roboto;
+        font-weight: 500;
+        font-size: 17px;
+
+        .DefaultLabel {
+            font-size: 12px;
+            opacity: .5;
+        }
+    }
+}

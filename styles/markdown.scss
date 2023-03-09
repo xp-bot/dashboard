@@ -1,0 +1,90 @@
+.markdown-body {
+    @apply text-darkText mt-5 xl:mt-3 dark:text-darkText-darkMode font-serif  mx-auto px-5 overflow-visible;
+
+    h1, h2, .sr-only {
+        @apply text-darkText pb-2 mb-5 border-b dark:text-darkText-darkMode mx-0 mt-0 ;
+        word-wrap: break-word;
+    }
+    h3, h4, h5, h6 {
+        @apply text-darkText mb-2 dark:text-darkText-darkMode font-semibold;
+        word-wrap: break-word;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        @apply -mx-3 text-center md:text-left font-serif leading-tight;
+    }
+    h1 {
+        @apply text-2xl md:text-3xl;
+    }
+    h2, .sr-only {
+        @apply text-xl md:text-2xl;
+    }
+    h3 {
+        @apply text-base md:text-lg;
+    }
+
+    .sr-only {
+        @apply w-auto h-auto relative;
+    }
+
+    *+h2, *+h1 {
+        @apply mt-8;
+    }
+
+    p,ol, ul, pre {
+        @apply my-[16px];
+    }
+
+    ol, ul {
+        @apply pl-5;
+    }
+
+    ol{
+        li {
+            @apply list-decimal;
+        }
+    }
+
+    ul{
+        li {
+            @apply list-disc;
+        }
+    }
+
+    hr {
+        @apply w-full my-8;
+    }
+    
+    blockquote {
+        @apply border-l-[3px] pl-3 border-darkText dark:border-darkText-darkMode opacity-75;
+        img {
+            @apply mx-0 inline-block;
+        }
+    }
+
+    pre {
+        @apply p-3 bg-input dark:bg-input-darkMode border-input-border dark:bg-input-border-darkMode border rounded-md shadow-md;
+        code {
+            @apply w-full p-3;
+        }
+    }
+
+    code {
+        @apply p-1 select-text whitespace-pre-wrap text-sm inline-block my-0 bg-gray-200 rounded-md text-darkText shadow-sm border-input-border border;
+    }
+
+    a {
+        @apply text-xpBlue visited:font-semibold visited:opacity-75 border-b hover:border-b-xpBlue hover:pb-0.5 pb-0 border-b-transparent transition-all ease-in-out;
+    }
+
+    .footnotes {
+        @apply mt-20 opacity-40 hover:opacity-100 transition ease-in-out;
+    }
+
+    
+
+    img {
+        max-width: 100%;
+        @apply mx-auto;
+    }
+
+}

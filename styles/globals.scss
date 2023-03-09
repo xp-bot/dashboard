@@ -1,0 +1,450 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import 'node_modules/@fortawesome/fontawesome-svg-core/styles';
+
+// @font-face {
+//   font-family: 'Montserrat';
+//   src: url(/fonts/Montserrat.ttf) format('truetype');
+//   font-weight: 400;
+//   font-style: normal;
+// }
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+@font-face {
+  font-family: 'Whitney Semibold';
+  src: url(/fonts/Whitney-Semibold.ttf) format('truetype');
+}
+
+
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  scroll-behavior: smooth;
+  width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+  // @apply transition ease-in-out // Pfui deibel
+  @apply select-none
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    color: white;
+    background: black;
+  }
+}
+
+h1 {
+  font-size: 1.55rem;
+  font-family: "Montserrat", sans-serif;
+  @apply text-lightText dark:text-lightText-darkMode;
+  font-weight: 500;
+  // letter-spacing: 1px;
+}
+
+h2 {
+  font-size: 1.29rem;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  @apply text-darkText dark:text-darkText-darkMode mt-2 mb-4;
+  line-height: 20px;
+  font-size: 20px;
+}
+
+h3 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+h4 {
+  font-size: 12px;
+  letter-spacing: .5px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  @apply text-lightText dark:text-lightText-darkMode;
+  opacity: .5;
+}
+
+h5 {
+  font-size: 10px;
+  letter-spacing: .5px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  @apply text-lightText dark:text-lightText-darkMode;
+  opacity: .5;
+}
+
+
+
+hr {
+  border-color: hsla(0, 0%, 73%, 0.25);
+  @apply w-4/5 mx-auto;
+}
+
+header {
+  hr {
+    border-color: hsla(0, 0%, 85%, 0.15)
+  }
+}
+
+.headerGradient {
+  @apply opacity-75;
+  background: linear-gradient(30deg, rgba(58, 68, 222, 1) 0%, rgba(103, 111, 227, 1) 100%);
+}
+
+.headerImage {
+  transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+hr {
+  @apply dark:opacity-50
+}
+
+
+.LoadingDots {
+  justify-self: center;
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.LoadingDots div {
+  position: absolute;
+  top: 33px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #fff;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.LoadingDots div:nth-child(1) {
+  left: 8px;
+  animation: Loading1 0.6s infinite;
+}
+.LoadingDots div:nth-child(2) {
+  left: 8px;
+  animation: Loading2 0.6s infinite;
+}
+.LoadingDots div:nth-child(3) {
+  left: 32px;
+  animation: Loading2 0.6s infinite;
+}
+.LoadingDots div:nth-child(4) {
+  left: 56px;
+  animation: Loading3 0.6s infinite;
+}
+@keyframes Loading1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes Loading3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes Loading2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 2px;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  @apply bg-[#22222200];
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsla(0, 0%, 100%, 0.5);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+  border-radius: 10px;
+}
+
+
+.RankingCardPreview {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  // overflow: hidden;
+  border-radius: 10px;
+}
+#RankingCapture {
+  position: absolute;
+  top: -2000px;
+  left: -2000px;
+  width: 450px;
+  height: 351px;
+  background-position: center;
+  background-size: cover;
+}
+.RankingCardContainer {
+  border-radius: 10px;
+  @apply shadow-md;
+  width: 450px;
+  height: 351px;
+  background: #18181c;
+  background-position: center;
+  overflow: hidden;
+  display: flex;
+  flex-flow: column;
+  // border-radius: 10px;
+  background-size: cover;
+  position: relative;
+  .RankingCardHover {
+    border-radius: 10px;
+    position: absolute;
+    transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: saturate(0.5);
+    &.active {
+      opacity: 1;
+    }
+    & > p {
+      color: white;
+      font-size: 20px;
+      font-family: "Roboto";
+      font-weight: normal;
+      // margin-top: 30px;
+    }
+    &:hover {
+      opacity: 1;
+      cursor: pointer;
+    }
+  }
+  .RankingCardHeader {
+    max-height: 81px;
+    min-height: 81px;
+    // background-color: #18181c;
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    .RankingCardImage {
+      border-radius: 300px;
+      width: 120px;
+      position: absolute;
+      box-shadow: 0 0 0 8px #0000000f;
+      margin-top: 35px;
+      margin-left: 35px;
+      z-index: 6;
+    }
+    .RankingCardHeaderPreviewImageContainer {
+      display: flex;
+      height: 81px;
+      width: 100%;
+      position: absolute;
+      overflow: hidden;
+      align-items: center;
+      .RankingCardHeaderPreviewImage {
+        width: 100%;
+        height: 351px;
+        position: absolute;
+        background-position: center;
+        background-size: cover;
+      }
+    }
+  }
+  .RankingCardCanvas {
+    border-radius: 0 0 10px 10px;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    // border-radius: 0 0 10px 10px;
+    .RankingCardCanvasBackground {
+      // background-color: #18181c;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      // border-radius: 0 0 10px 10px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 0 0 11px 11px;
+    }
+    .RankingCardCanvasOverlay {
+      background-color: rgba(24, 24, 28, 0.85);
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      border-radius: 0 0 10px 10px;
+    }
+    .RankingCardUsername {
+      font-family: "Whitney Semibold", sans-serif;
+      font-size: 30px;
+      z-index: 7;
+      position: absolute;
+      color: white;
+      margin-top: 90px;
+      margin-left: 25px;
+      font-weight: bold;
+    }
+    .RankingCardTitle {
+      font-family: "Roboto";
+      font-size: 11.5px;
+      z-index: 7;
+      position: absolute;
+      color: #a7a9ab;
+      margin-top: 130px;
+      margin-left: 25px;
+      font-weight: 400;
+      opacity: 0.5;
+    }
+    .RankingCardProgress {
+      height: 2px;
+      background-color: #5a62ed;
+      width: 35%;
+      bottom: 0;
+      left: 0;
+      position: absolute;
+    }
+    .RankingCardLevel {
+      font-family: "Roboto";
+      font-size: 60px;
+      z-index: 7;
+      position: absolute;
+      color: white;
+      margin-top: 160px;
+      margin-left: 20px;
+      font-weight: 100;
+    }
+    .RankingCardXP {
+      font-family: "Roboto";
+      font-size: 14px;
+      z-index: 7;
+      position: absolute;
+      color: #a7a9ab;
+      margin-top: 230px;
+      margin-left: 25px;
+      font-weight: 400;
+      opacity: 0.5;
+    }
+  }
+}
+
+@media (max-width: 530px) {
+  .RankingCardHeader {
+    .RankingCardImage {
+      left: 50%;
+      margin-left: 0 !important;
+      transform: translate(-50%);
+      max-width: 30vw;
+      aspect-ratio: 1/1;
+    }
+  }
+  .RankingCardCanvas {
+    .RankingCardUsername {
+      display: none;
+    }
+    .RankingCardTitle {
+      display: none;
+    }
+    .RankingCardLevel {
+      display: none;
+    }
+    .RankingCardXP {
+      display: none;
+    }
+  }
+}
+
+.FeatureArrow {
+  cursor: pointer;
+  margin-top: -105px;  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  @keyframes bounceArrow {
+    0% {
+      transform: translateY(0px);
+    }
+    10% {
+      transform: translateY(10px);
+    }
+    30% {
+      transform: translateY(0px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+  @keyframes bounceText {
+    0% {
+      transform: translateY(0px);
+    }
+    10% {
+      transform: translateY(5px);
+    }
+    30% {
+      transform: translateY(0px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+  p {
+    animation: bounceText 5s infinite cubic-bezier(0.4, 0, 0, 1);
+    font-family: Montserrat;
+    font-weight: 900;
+    font-size: 15px;
+    letter-spacing: 0.1em;
+    text-align: center;
+    @apply text-darkText dark:text-darkText-darkMode;
+    opacity: 0.5;
+    text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+    margin: 0;
+    font-variant: small-caps;
+  }
+  svg {
+    animation: bounceArrow 5s infinite cubic-bezier(0.4, 0, 0, 1);
+    g{
+      opacity: 0.5;
+      line {
+        @apply stroke-darkText dark:stroke-darkText-darkMode;
+      }
+    }
+  }
+}
