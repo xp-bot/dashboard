@@ -13,7 +13,9 @@ const WavePage: FC<WavePageProps> = ({ children }) => {
       <div className="h-full w-full bg-wavePage pb-10 pt-7 dark:bg-wavePage-darkMode">
         <div
           className={`${
-            isEqual(router.asPath, `/`) || isEqual(router.asPath, `/premium`)
+            isEqual(router.asPath, `/`) ||
+            isEqual(router.asPath, `/premium`) ||
+            isEqual(router.asPath, `/open-cards`)
               ? ``
               : `container lg:px-10`
           } mx-auto -mt-4 box-border`}

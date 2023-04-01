@@ -142,9 +142,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       <ThemeProvider attribute="class">
         <UserContextProvider>
-          {/* {isEqual(router.asPath, `/`) ? (
-            <Component {...pageProps} />
-          ) : ( */}
           <div
             className={`h-fit min-h-[100vh] overflow-hidden ${
               isEqual(router.asPath, `/`) || isEqual(router.asPath, `/premium`)
@@ -161,7 +158,6 @@ function MyApp({ Component, pageProps }: AppProps) {
             </LayoutContextProvider>
             <MobileNavBar />
           </div>
-          {/* )} */}
         </UserContextProvider>
       </ThemeProvider>
     </>
