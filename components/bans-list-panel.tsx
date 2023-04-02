@@ -52,7 +52,7 @@ const BansListPanel: FC<BansListPanelProps> = ({ ban, requestModify }) => {
             {ban.content.notes || `None provided`}
           </p>
         </div>
-        <div className="absolute right-0 bottom-0 hidden w-fit md:flex">
+        <div className="absolute bottom-0 right-0 hidden w-fit md:flex">
           <BlockButton
             onClick={requestModify}
             variant={BlockButtonVariant.inPanel}

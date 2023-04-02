@@ -73,7 +73,7 @@ const BlogPost: NextPage<BlogPostProps> = ({ blogPost, comments }) => {
         />
       )}
       <BlogMarkdown html body={blogPost.content.body} />
-      <hr className="mt-10 mb-3" />
+      <hr className="mb-3 mt-10" />
       <div className="flex flex-col items-center justify-center gap-8 px-3 text-darkText dark:text-darkText-darkMode/50 md:flex-row">
         <button
           className="flex flex-row items-center gap-2 border-b border-b-transparent pb-0.5 opacity-75 transition-all ease-in-out hover:border-y-xpBlue hover:text-xpBlue hover:opacity-100"

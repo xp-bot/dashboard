@@ -5,7 +5,7 @@ import { UserRoutes } from 'page-tabs/user-tabs/user-routes';
 const test = Object.entries(UserRoutes);
 
 const splitArrayByMarginLeft = (array: typeof test): any[] => {
-  const splitArray: typeof array[] = [];
+  const splitArray: (typeof array)[] = [];
   let editArray: typeof array = [];
 
   // eslint-disable-next-line consistent-return
@@ -30,7 +30,7 @@ const server = Object.entries(ServerRoutes);
 
 export const splitServerArrayByMarginLeft = (
   array: typeof server
-): typeof server[] => {
+): (typeof server)[] => {
   return splitArrayByMarginLeft(array as any);
 };
 
@@ -38,6 +38,6 @@ const users = Object.entries(UserRoutes);
 
 export const splitUserArrayByMarginLeft = (
   array: typeof users
-): typeof users[] => {
+): (typeof users)[] => {
   return splitArrayByMarginLeft(array as any);
 };

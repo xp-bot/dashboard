@@ -23,7 +23,7 @@ const BlogH1: FC<IBlogH1Props> = ({ children, id, className }) => {
             `https://xp-bot.net${router.asPath}#${id}`
           );
         }}
-        className="absolute top-1 -left-12 scale-90 cursor-pointer opacity-0 transition ease-in-out hover:scale-100 active:scale-90 group-hover:opacity-75 group-hover:hover:opacity-100"
+        className="absolute -left-12 top-1 scale-90 cursor-pointer opacity-0 transition ease-in-out hover:scale-100 active:scale-90 group-hover:opacity-75 group-hover:hover:opacity-100"
         icon={faLink}
       />
       {children}

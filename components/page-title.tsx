@@ -32,7 +32,7 @@ const PageTitle = (props: {
           <motion.h2
             transition={{ type: 'tween' }}
             layoutId={props.motionTextKey}
-            className={`relative mt-2 mb-6 flex flex-row items-center gap-2 transition ease-in-out active:-translate-x-1`}
+            className={`relative mb-6 mt-2 flex flex-row items-center gap-2 transition ease-in-out active:-translate-x-1`}
           >
             {!props.disableArrow && (
               <div className="text-[1.2rem] text-darkText drop-shadow-sm dark:text-darkText-darkMode dark:opacity-50">

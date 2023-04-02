@@ -33,6 +33,7 @@ import { UserContextProvider } from '../context/user-context';
 
 const inter = Inter({
   variable: '--inter-font',
+  subsets: ['latin', 'cyrillic', 'greek'],
 });
 
 const ChangelogModal = () => {

@@ -177,7 +177,7 @@ const ServerTabSettings: FC<ServerTabSettingsProps> = () => {
               />
             </div>
           </div>
-          <hr className="mx-auto mt-4 -mb-1 w-4/5" />
+          <hr className="mx-auto -mb-1 mt-4 w-4/5" />
           <div>
             <PageTitle
               disableArrow

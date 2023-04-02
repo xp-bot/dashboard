@@ -168,7 +168,7 @@ const ServerTabAnnouncements: FC<ServerTabAnnouncementsProps> = () => {
                 </div>
               </div>
             </div>
-            <hr className="mt-5 -mb-1 w-[80%]" />
+            <hr className="-mb-1 mt-5 w-[80%]" />
             <div className="w-full">
               <PageTitle disableArrow title={`Announcement Message Designer`} />
               <div className="flex flex-col items-center gap-5">
@@ -202,7 +202,7 @@ const ServerTabAnnouncements: FC<ServerTabAnnouncementsProps> = () => {
                           : maxiumMessageLengthReached >= 1
                           ? `opacity-100`
                           : `opacity-75`
-                      } absolute top-3 right-3 transition ease-in-out`}
+                      } absolute right-3 top-3 transition ease-in-out`}
                     >
                       <span
                         className={`${

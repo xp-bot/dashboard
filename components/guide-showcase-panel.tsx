@@ -12,7 +12,7 @@ const GuideShowcasePanel: FC<GuideShowcasePanelProps> = ({ image }) => (
   <div className="relative flex w-fit grow flex-col overflow-hidden rounded-md bg-panelBack shadow-lg dark:bg-panelBack-darkMode">
     <div className="h-[100px] w-full overflow-hidden rounded-md">
       <FallBackImage
-        className="top-0 left-0 h-full w-full object-cover"
+        className="left-0 top-0 h-full w-full object-cover"
         src={image}
         alt={'jeje'}
       />

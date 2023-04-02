@@ -3,10 +3,10 @@
 import { faAdd, faCancel, faSave } from '@fortawesome/free-solid-svg-icons';
 import { apiRoutes } from 'apis/api-helper';
 import ButtonCluster from 'components/button-cluster';
-import PageTitle from 'components/page-title';
 import IncidentPanel from 'components/incident-panel';
 import Modal from 'components/modal';
 import MultilineInput from 'components/multiline-input';
+import PageTitle from 'components/page-title';
 import PanelInput from 'components/panel-input';
 import Select from 'components/select';
 import {
@@ -232,7 +232,7 @@ const UserTabIncidents: FC<UserTabIncidentsProps> = () => {
               }
               label="Affected Services"
             />
-            <hr className="my-3 mx-auto w-4/5" />
+            <hr className="mx-auto my-3 w-4/5" />
             <MultilineInput
               value={``}
               disabled={isEqual(watch(`status`), `Resolved`)}

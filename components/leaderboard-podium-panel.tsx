@@ -96,7 +96,7 @@ const LeaderboardPodiumPanel: FC<LeaderboardPodiumPanelProps> = ({
       )}
       <div className="relative flex w-full flex-row flex-wrap justify-center gap-5 p-6">
         <div
-          className={`absolute top-0 left-0 hidden h-full w-full scale-110 opacity-25 blur-xl dark:md:flex`}
+          className={`absolute left-0 top-0 hidden h-full w-full scale-110 opacity-25 blur-xl dark:md:flex`}
         >
           {fetchedUser && (
             <FallBackImage

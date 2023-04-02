@@ -27,7 +27,7 @@ const GuildList: FC<GuildListProps> = ({ buttons, title }) => {
 
   return (
     <div>
-      {title && <h2 className="mt-2 mb-4">{title}</h2>}
+      {title && <h2 className="mb-4 mt-2">{title}</h2>}
       <div className="flex flex-col items-end overflow-hidden rounded-xl bg-panelBack text-darkText shadow-md dark:bg-panelBack-darkMode dark:text-darkText-darkMode dark:shadow-none md:hidden">
         {map(buttons, ({ guild, onClick }, idx) => (
           <div key={`guild-list-item-${guild.id}-${idx}`} className="w-full">
@@ -96,7 +96,7 @@ const GuildList: FC<GuildListProps> = ({ buttons, title }) => {
                 onClick={onClick}
                 className={`relative z-10 my-6 flex w-full flex-row items-center rounded-lg border bg-panelBack py-[11px] text-left transition ease-in-out active:bg-button-state-pressed group-focus-within:translate-x-2 group-hover:translate-x-1 group-active:translate-x-2 dark:bg-panelBack-darkMode active:dark:bg-button-state-pressed-darkMode`}
               >
-                <div className="absolute top-0 -left-1 mx-4 flex aspect-square h-[100%] shrink-0 scale-150 overflow-hidden rounded-md bg-gray-700 drop-shadow-md transition-all ease-in-out">
+                <div className="absolute -left-1 top-0 mx-4 flex aspect-square h-[100%] shrink-0 scale-150 overflow-hidden rounded-md bg-gray-700 drop-shadow-md transition-all ease-in-out">
                   <FallBackImage
                     className={`h-full w-full object-cover`}
                     src={guildIconToURL(guild, 256)}
