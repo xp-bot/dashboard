@@ -23,11 +23,11 @@ const UserTabRankingCard: FC<UserTabSettingsProps> = () => {
 
   return (
     <div
-      className={`${
-        userDetails.rankingBackground !== null
-          ? ``
-          : `pointer-events-none opacity-75 saturate-0`
-      }`}
+    // className={`${
+    //   userDetails.rankingBackground !== null
+    //     ? ``
+    //     : `pointer-events-none opacity-75 saturate-0`
+    // }`}
     >
       <PageTitle title="Ranking Card Editor" />
       {userDetails.currentXPUser && (
