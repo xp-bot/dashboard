@@ -53,7 +53,7 @@ const RankingCard: FC<RankingCardProps> = () => {
       {userDetails.tempRankingCard.tempRankingCardImage ? (
         <div
           id="RankingCapture"
-          className="absolute top-[-2000px] left-[-2000px] h-[351px] w-[450px] bg-cover bg-center"
+          className="absolute left-[-2000px] top-[-2000px] h-[351px] w-[450px] bg-cover bg-center"
           style={{
             backgroundImage: `url(${
               userDetails.tempRankingCard.tempRankingCardImage &&

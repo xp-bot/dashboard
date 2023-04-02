@@ -198,7 +198,7 @@ const ServerTabLogs: FC<ServerTabLogsProps> = () => {
                           },
                         }}
                         key={`log_${log.id}`}
-                        className="top-0 left-0 w-full"
+                        className="left-0 top-0 w-full"
                       >
                         <LogPanel log={log} />
                       </motion.div>

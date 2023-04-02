@@ -2,8 +2,8 @@
 
 import { faGlobe, faRefresh } from '@fortawesome/free-solid-svg-icons';
 import ButtonCluster, { ButtonFeature } from 'components/button-cluster';
-import PageTitle from 'components/page-title';
 import ModulePanel from 'components/module-panel';
+import PageTitle from 'components/page-title';
 import Select from 'components/select';
 import { XPLoading } from 'components/svg/logos';
 import ValuePanel from 'components/value-panel';

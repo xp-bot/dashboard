@@ -202,7 +202,7 @@ export function GuildDetailsContextProvider({
               ? { y: isLg ? '-2rem' : '-8rem', opacity: 1 }
               : { y: '4rem', opacity: 0 }
           }
-          className={`pointer-events-none fixed left-0 bottom-0 z-30 flex h-20 w-full justify-center`}
+          className={`pointer-events-none fixed bottom-0 left-0 z-30 flex h-20 w-full justify-center`}
         >
           <div className={`container mx-auto box-border px-10`}>
             <div className={`relative h-full w-full`}>
@@ -210,7 +210,7 @@ export function GuildDetailsContextProvider({
                 onClick={() => {
                   saveGuild();
                 }}
-                className="pointer-events-auto absolute right-0 bottom-0 flex h-14 w-14 cursor-pointer items-center justify-center gap-2 rounded-full bg-green-500 p-3 px-5 text-lg text-white ring-green-600/25 drop-shadow-lg transition ease-in-out active:bg-green-600 active:ring lg:right-5 lg:h-10 lg:w-fit lg:text-base lg:hover:-translate-y-1"
+                className="pointer-events-auto absolute bottom-0 right-0 flex h-14 w-14 cursor-pointer items-center justify-center gap-2 rounded-full bg-green-500 p-3 px-5 text-lg text-white ring-green-600/25 drop-shadow-lg transition ease-in-out active:bg-green-600 active:ring lg:right-5 lg:h-10 lg:w-fit lg:text-base lg:hover:-translate-y-1"
               >
                 <FontAwesomeIcon icon={faSave} />
                 {isLg && ` Save Server`}

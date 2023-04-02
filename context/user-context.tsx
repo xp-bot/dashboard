@@ -245,7 +245,7 @@ export function UserContextProvider({
       <div
         key={`motion-transition-main-page`}
         className={`${
-          isEqual(loginStatus, LoginStatus.checking) ? `fixed top-0 left-0` : ``
+          isEqual(loginStatus, LoginStatus.checking) ? `fixed left-0 top-0` : ``
         }`}
       >
         {children}
@@ -262,7 +262,7 @@ export function UserContextProvider({
               exit: { opacity: 0 },
               base: { opacity: 1, transition: { delay: 0.25 } },
             }}
-            className={`fixed top-0 left-0 z-50 flex h-screen w-screen items-center justify-center overflow-hidden bg-wavePage dark:bg-wavePage-darkMode`}
+            className={`fixed left-0 top-0 z-50 flex h-screen w-screen items-center justify-center overflow-hidden bg-wavePage dark:bg-wavePage-darkMode`}
           >
             <motion.div
               variants={{

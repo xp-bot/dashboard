@@ -46,7 +46,7 @@ const Header: FC<HeaderProps> = ({
           customGradient={customGradient}
           customImage={customImage}
         />
-        <div className="absolute top-0 left-0 -z-10 h-full w-full">
+        <div className="absolute left-0 top-0 -z-10 h-full w-full">
           <AnimatePresence initial={false} mode="popLayout">
             <motion.div
               initial={{ opacity: 0 }}
@@ -66,7 +66,7 @@ const Header: FC<HeaderProps> = ({
                     }
               }
               // eslint-disable-next-line tailwindcss/no-custom-classname
-              className="headerGradient absolute top-0 left-0 z-[-1] h-full w-full"
+              className="headerGradient absolute left-0 top-0 z-[-1] h-full w-full"
             />
           </AnimatePresence>
           <div

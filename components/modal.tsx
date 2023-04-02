@@ -52,7 +52,7 @@ const ModalPanel: FC<IModalProps> = ({
       }}
       transition={{ type: 'tween', duration: 0.3 }}
       // className={`max-h-[90%]   rounded-lg bg-panelBack p-10 dark:bg-panelBack-darkMode`}
-      className={`absolute bottom-0 z-10 max-h-[90%] w-full min-w-[30%] overflow-auto rounded-t-lg bg-panelBack p-10 pb-[110px] dark:bg-panelBack-darkMode lg:relative lg:rounded-lg lg:pb-10 2sm:w-4/5 2sm:md:w-fit`}
+      className={`absolute bottom-0 z-10 max-h-[90%] w-full min-w-[30%] overflow-auto rounded-t-lg bg-panelBack p-10 pb-[110px] dark:bg-panelBack-darkMode 2sm:w-4/5 2sm:md:w-fit lg:relative lg:rounded-lg lg:pb-10`}
     >
       {/* <motion.div
         onPointerDown={(e) => {
@@ -102,7 +102,7 @@ const Modal: FC<IModalProps> = ({
           initial={'exit'}
           animate={'base'}
           exit={'exit'}
-          className="fixed top-0 left-0 z-30 flex h-full w-full items-center justify-center"
+          className="fixed left-0 top-0 z-30 flex h-full w-full items-center justify-center"
         >
           <motion.div
             onClick={(e) => {
@@ -111,7 +111,7 @@ const Modal: FC<IModalProps> = ({
             }}
             variants={{ exit: { opacity: 0 }, base: { opacity: 1 } }}
             transition={{ type: 'tween', duration: 0.3 }}
-            className={`fixed top-0 left-0 z-0 flex h-full w-full bg-black/75 p-5 pb-[90px]`}
+            className={`fixed left-0 top-0 z-0 flex h-full w-full bg-black/75 p-5 pb-[90px]`}
           />
           <ModalPanel
             isOpen={isOpen}

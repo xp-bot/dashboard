@@ -60,7 +60,7 @@ const ModulePanel: FC<ModulePanelProps> = (props) => {
         </h4>
       </i>
       {props.premiumLock ? (
-        <div className="absolute top-3 right-2">{!enabled ? '🔒' : '🔓'}</div>
+        <div className="absolute right-2 top-3">{!enabled ? '🔒' : '🔓'}</div>
       ) : (
         <></>
       )}

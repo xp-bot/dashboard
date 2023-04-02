@@ -46,7 +46,7 @@ const BlogComment: FC<IBlogCommentProps> = ({
         initial={selected ? { background: 'rgb(103, 103, 234)' } : undefined}
         id={comment.commentID}
         className={`relative flex w-full flex-col items-start gap-5 md:flex-row md:items-start md:gap-10 ${
-          selected ? `border-y border-y-xpBlue p-5` : `p-[8px] py-[8px]`
+          selected ? `border-y border-y-xpBlue p-5` : `p-[8px]`
         }`}
       >
         <div className="w-20 shrink-0">
@@ -72,7 +72,7 @@ const BlogComment: FC<IBlogCommentProps> = ({
             </span>
           </span>
         </div>
-        <div className="absolute top-[8px] right-[8px] flex flex-row gap-3">
+        <div className="absolute right-[8px] top-[8px] flex flex-row gap-3">
           <button
             onClick={() => {
               shareContent({

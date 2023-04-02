@@ -69,7 +69,7 @@ const ValuePanel: FC<ValuePanelProps> = (props) => {
         value={props.value}
       />
       {props.premiumLock ? (
-        <div className="absolute top-3 right-2">
+        <div className="absolute right-2 top-3">
           {!premiumEnabled || props.disabled ? '🔒' : '🔓'}
         </div>
       ) : (
