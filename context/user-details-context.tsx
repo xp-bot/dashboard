@@ -16,7 +16,7 @@ interface IUserDetailsContextValues {
   unsavedChanges: boolean;
   savingInProgress: boolean;
   fetchRankingBackground: () => Promise<boolean>;
-  rankingBackground?: IXPBackground;
+  rankingBackground?: IXPBackground | null | undefined;
   tempRankingCard: {
     initTempRankingCardImageUpload: () => void;
     uploadingTempRankingCardImage: boolean;
@@ -58,7 +58,9 @@ export function UserDetailsContextProvider({
   const tempRankingCardImageUploadButton = useRef<HTMLInputElement>(null);
   const [savingInProgress, setSavingInProgress] = useState(false);
 
-  const [rankingBackground, setRankingBackground] = useState<IXPBackground>();
+  const [rankingBackground, setRankingBackground] = useState<
+    IXPBackground | null | undefined
+  >();
 
   async function updateUser(user: IXPUser): Promise<boolean> {
     if (userContext.isLoggedIn) {
@@ -77,6 +79,9 @@ export function UserDetailsContextProvider({
         setRankingBackground(res.body);
         return true;
       }
+
+      setRankingBackground(null);
+      return false;
     }
     return false;
   }
