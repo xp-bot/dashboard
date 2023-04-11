@@ -53,7 +53,7 @@ const LeaderboardPage: NextPage<ServerTabProps> = ({ serverid, lbContent }) => {
     setModifyUserState(u);
   };
 
-  const onModifyUser: SubmitHandler<ModifyUserInputs> = async (data) => {
+  const modifyUserSettings = async (data: ModifyUserInputs) => {
     if (!modifyUser) return;
     const res = await apiRoutes.xp.guild.guildMember.setGuildMembersXP(
       serverid,
@@ -63,6 +63,10 @@ const LeaderboardPage: NextPage<ServerTabProps> = ({ serverid, lbContent }) => {
     if (!res.success) return;
     // TODO: Add toast
     router.reload();
+  };
+
+  const onModifyUser: SubmitHandler<ModifyUserInputs> = async (data) => {
+    modifyUserSettings(data);
   };
 
   const page = router.query.page
@@ -255,6 +259,9 @@ const LeaderboardPage: NextPage<ServerTabProps> = ({ serverid, lbContent }) => {
                     {
                       icon: faRemove,
                       text: `Reset User`,
+                      onClick: () => {
+                        onModifyUser({ xp: 0 });
+                      },
                       feature: ButtonFeature.danger,
                     },
                     {
