@@ -1,4 +1,4 @@
-import { isUndefined } from 'lodash';
+import { isNil, isUndefined } from 'lodash';
 
 type XPEvents = `spooktober` | `christmas` | `lgbt`;
 
@@ -40,10 +40,15 @@ const XPBadges: {
     DEFAULT:
       'http://cdn.namespace.media/s/LsoB5Q4yZNgEK57/download/xpbughunter.png',
   },
+  xpcorecommunity: {
+    DEFAULT:
+      'http://cdn.namespace.media/s/aAZ4XzZC8m8dtwP/download/xp-core-community.png',
+  },
 };
 
 export const getXPBadge = (badge: keyof typeof XPBadges, event?: XPEvents) => {
   const badgeOBJ = XPBadges[badge];
+  if (isNil(badgeOBJ)) return '';
   return !isUndefined(event)
     ? isUndefined(badgeOBJ.EVENTS) || isUndefined(badgeOBJ.EVENTS[event])
       ? badgeOBJ.DEFAULT
