@@ -43,9 +43,9 @@ const UserTabRankingCard: FC<UserTabSettingsProps> = () => {
               }
               moduleDescription="Enable the Background Canvas"
               moduleName="Canvas"
-              disabled={!userDetails.rankingBackground}
+              disabled={!user.currentUser?.premium.userPremium}
               onChange={(v) => {
-                if (user.currentUser && userDetails.rankingBackground)
+                if (user.currentUser && user.currentUser?.premium.userPremium)
                   userDetails.updateUser({
                     ...user.currentUser.xpUser,
                     settings: {
@@ -63,10 +63,10 @@ const UserTabRankingCard: FC<UserTabSettingsProps> = () => {
               valueDescription="Set the Canvas Blur"
               valueName="Canvas Blur"
               defaultValue={0}
-              disabled={!userDetails.rankingBackground}
+              disabled={!user.currentUser?.premium.userPremium}
               premiumLock={PremiumType.UserPremium}
               onChange={(v) => {
-                if (user.currentUser && userDetails.rankingBackground)
+                if (user.currentUser && user.currentUser?.premium.userPremium)
                   userDetails.updateUser({
                     ...user.currentUser.xpUser,
                     settings: {

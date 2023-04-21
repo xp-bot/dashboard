@@ -74,8 +74,7 @@ const RankingCard: FC<RankingCardProps> = () => {
             <div className="group relative flex aspect-[450/351] w-[450px] max-w-full flex-col overflow-hidden rounded-lg bg-[#18181c]">
               {/* Top Image */}
               <div className="flex h-[23.08%] w-full shrink-0 grow-0 items-center overflow-hidden">
-                {userDetails.rankingBackground &&
-                userDetails.tempRankingCard.tempRankingCardImage ? (
+                {userDetails.tempRankingCard.tempRankingCardImage ? (
                   !userDetails.currentXPUser?.settings.background.canvas && (
                     <div className="aspect-[450/351] w-full">
                       <FallBackImage
@@ -124,7 +123,6 @@ const RankingCard: FC<RankingCardProps> = () => {
               </div>
               {/* Upload Image */}
               {userDetails.tempRankingCard.tempRankingCardImage &&
-                userDetails.rankingBackground &&
                 userDetails.currentXPUser?.settings.background.canvas && (
                   <div className="absolute h-full w-full">
                     <FallBackImage
@@ -146,8 +144,7 @@ const RankingCard: FC<RankingCardProps> = () => {
               {/* Hover Overlay */}
               <div
                 onClick={() => {
-                  userDetails.rankingBackground &&
-                    userDetails.tempRankingCard.initTempRankingCardImageUpload();
+                  userDetails.tempRankingCard.initTempRankingCardImageUpload();
                 }}
                 className="group absolute z-30 flex h-full w-full cursor-pointer flex-col items-center justify-center bg-[rgba(24,24,28,0.5)] opacity-0 backdrop-saturate-50 transition ease-in-out hover:opacity-100"
               >
