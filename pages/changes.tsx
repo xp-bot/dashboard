@@ -69,8 +69,10 @@ const Blog: NextPage<HomeProps> = () => {
   return (
     <div className="container">
       <HeadSet
-        title="Official XP Blog"
-        description="An outlet for any thoughts from the XP dev team, XP updates or for information related to XP in general."
+        title="Dashboard Changelogs"
+        description="Stay up-to-date with the latest updates, bug fixes, and feature
+        enhancements for your favorite dashboard with our comprehensive
+        changelogs."
       />
       <div className="flex flex-col gap-[2.5rem]">
         <div>

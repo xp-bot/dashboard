@@ -287,12 +287,19 @@ const changelogs: { [version: string]: ChangelogType } = {
       {
         type: 'text',
         content:
-          'Implemented a new "Changelogs" page that provides a comprehensive overview of all changes made to the platform over the past several years.',
+          'Implemented a new "Changelogs" page that provides a comprehensive overview of all changes made to the platform over the past several years. This can be found in your profile section.',
       },
       {
         type: 'image',
         content: {
           pc: 'https://qwq.sh/h1ouc8',
+          key: '',
+        },
+      },
+      {
+        type: 'image',
+        content: {
+          pc: 'https://qwq.sh/wnsb49',
           key: '',
         },
       },
