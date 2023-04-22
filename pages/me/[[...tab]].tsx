@@ -1,5 +1,6 @@
 import {
   faHeartPulse,
+  faInfoCircle,
   faPeopleCarryBox,
   faPowerOff,
   faUserSecret,
@@ -154,6 +155,16 @@ const UserTab: NextPage<UserTabProps> = () => {
                         text: `Safety Guidelines`,
                         link: `/blog/contributing_to_user_safety_and_service_guidelines_1657056506533`,
                         icon: faHeartPulse,
+                      },
+                    ]}
+                  />
+                  <ButtonCluster
+                    title={`Updates`}
+                    buttons={[
+                      {
+                        text: `Changelogs`,
+                        link: `/changes`,
+                        icon: faInfoCircle,
                       },
                     ]}
                   />
