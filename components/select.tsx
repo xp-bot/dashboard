@@ -1,5 +1,5 @@
 import { map } from 'lodash';
-import { FC } from 'react';
+import { CSSProperties, FC, LegacyRef } from 'react';
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 
 import ErrorLabel from './input-error-label';
@@ -18,6 +18,8 @@ interface SelectProps {
   registerForm?: UseFormRegisterReturn;
   formError?: FieldError;
   disabled?: boolean;
+  ref?: LegacyRef<HTMLSelectElement>;
+  style?: CSSProperties;
 }
 
 const Select: FC<SelectProps> = (props) => {
@@ -29,6 +31,8 @@ const Select: FC<SelectProps> = (props) => {
     <div className="flex w-full flex-col">
       {props.label && <Label label={props.label} />}
       <select
+        style={props.style}
+        ref={props.ref}
         {...props.registerForm}
         onChange={(e) => {
           // eslint-disable-next-line @typescript-eslint/no-unused-expressions
@@ -42,8 +46,8 @@ const Select: FC<SelectProps> = (props) => {
         } ${
           props.isInPanel
             ? `border-[1px] border-input-border bg-input p-2.5 font-medium shadow-sm dark:border-input-border-darkMode dark:bg-input-darkMode`
-            : `border-transparent bg-panelBack px-4 py-2 shadow-md dark:bg-panelBack-darkMode`
-        } relative h-[45.5px] w-full cursor-pointer rounded-md   text-darkText focus-within:outline-none dark:text-darkText-darkMode`}
+            : `border-transparent bg-panelBack p-2 shadow-md dark:bg-panelBack-darkMode`
+        } relative h-[45.5px] w-full cursor-pointer rounded-md  text-darkText focus-within:outline-none dark:text-darkText-darkMode`}
         defaultValue={props.value}
       >
         {map(props.options, (option) => {

@@ -7,6 +7,7 @@ import { Inter } from '@next/font/google';
 import { apiRoutes } from 'apis/api-helper';
 import FallBackImage from 'components/fallback-image';
 import Modal from 'components/modal';
+import Tooltip from 'components/tooltip';
 import { LayoutContextProvider } from 'context/layout-context';
 import SocketManager from 'context/socket-manager';
 import { useLocalStorage } from 'hooks/use-local-storage';
@@ -174,9 +175,15 @@ const ChangelogModal = () => {
                         <div className="flex flex-col gap-2">
                           <p>{change.content}</p>
                           {change.submitter_id && change.submit_type && (
-                            <>
-                              <SubmitterUser user_id={change.submitter_id} />
-                            </>
+                            <div className="flex flex-row items-center gap-2">
+                              <Tooltip
+                              alignLeft
+                                showContentOnMobile
+                                text={`Thank you for submitting this idea!`}
+                              >
+                                <SubmitterUser user_id={change.submitter_id} />
+                              </Tooltip>
+                            </div>
                           )}
                         </div>
                       </li>
