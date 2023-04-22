@@ -1,4 +1,4 @@
-import { reduce } from 'lodash';
+import { isNil, reduce } from 'lodash';
 import { useEffect, useState } from 'react';
 
 type TokenMap<T extends string> = { [K in T]?: string };
@@ -9,10 +9,13 @@ type TokenSetter<T extends string> = (
 
 export const useLocalStorage = <T extends string>(
   tokens?: T[]
-): [TokenMap<T>, TokenSetter<T>] => {
+): [TokenMap<T>, TokenSetter<T>, boolean] => {
   const [storedTokens, setStoredTokens] = useState<TokenMap<T>>({});
+  const [isReady, setIsReady] = useState<boolean>(false);
 
   useEffect(() => {
+    if (isNil(localStorage)) return;
+
     setStoredTokens(
       reduce(
         tokens,
@@ -23,6 +26,7 @@ export const useLocalStorage = <T extends string>(
         {}
       )
     );
+    setIsReady(true);
   }, []);
 
   const setToken: TokenSetter<T> = (key, value) => {
@@ -31,5 +35,5 @@ export const useLocalStorage = <T extends string>(
     setStoredTokens({ ...storedTokens, [key]: value });
   };
 
-  return [storedTokens, setToken];
+  return [storedTokens, setToken, isReady];
 };

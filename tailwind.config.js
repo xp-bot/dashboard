@@ -57,8 +57,8 @@ module.exports = {
           DEFAULT: '#6767EA',
           premium: '#3f85e0',
         },
-        lightText: { DEFAULT: 'white', darkMode: '' },
-        darkText: { DEFAULT: '#282828', darkMode: 'white' },
+        lightText: { DEFAULT: '#f5f5f7', darkMode: '' },
+        darkText: { DEFAULT: '#1d1d1f', darkMode: '#f5f5f7' },
         wavePage: {
           DEFAULT: '#F2F3F7',
           darkMode: '#1C1C1D',
