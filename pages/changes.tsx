@@ -156,7 +156,9 @@ const Blog: NextPage<HomeProps> = () => {
                         )}
                       </BasicPanel>
                     </div>
-                    <hr className="mt-4 lg:-mb-4" />
+                    {idx + 1 < size(entries(changelog)) && (
+                      <hr className="mt-4 lg:-mb-4" />
+                    )}
                   </>
                 );
               }
