@@ -61,13 +61,18 @@ const BlogCreateComment: FC<IBlogCreateCommentProps> = () => {
             />
             <span>
               <BlockTextArea
-                inputProps={{ maxLength: 250 }}
+                inputProps={{ maxLength: 1024 }}
                 placeholder="What do you think about the blog post..."
                 registerForm={register('body', {
                   required: `A Description is required.`,
                   minLength: {
                     value: 25,
                     message: `Please enter at least 25 characters.`,
+                  },
+                  maxLength: {
+                    value: 1024,
+                    message:
+                      "This message can't be longer than 1024 characters.",
                   },
                 })}
                 formError={errors.body}

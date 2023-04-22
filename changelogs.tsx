@@ -12,8 +12,14 @@ interface IChangelogImage {
   };
 }
 
+type IChangelogEntity = {
+  thread_id?: string;
+  submitter_id?: string;
+  submit_type?: 'bug' | `suggestion`;
+} & (IChangelogText | IChangelogImage);
+
 export type ChangelogType = {
-  [key: string]: (IChangelogText | IChangelogImage)[];
+  [key: string]: IChangelogEntity[];
 };
 
 // const preReleaseChangelogs: { [version: string]: ChangelogType } = {
@@ -301,6 +307,18 @@ const changelogs: { [version: string]: ChangelogType } = {
         type: 'text',
         content:
           'The Premium subtitle is now being displayed in the theme-dependent color.',
+      },
+    ],
+  },
+  '2.0.15': {
+    Blog: [
+      {
+        type: 'text',
+        thread_id: '1097100301800059090',
+        submitter_id: '242621043561201666',
+        submit_type: 'suggestion',
+        content:
+          'Expanded the size limit for blog comment bodies to 1024 characters.',
       },
     ],
   },
