@@ -23,7 +23,7 @@ import {
 import { FC, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-interface AddRoleInputs {
+interface RoleInputs {
   level?: number;
   role: string;
 }
@@ -46,15 +46,15 @@ const ServerTabRoles: FC<ServerTabRolesProps> = () => {
     register: addRoleRegister,
     handleSubmit: addRoleHandleSubmit,
     formState: { errors: addRoleErrors },
-  } = useForm<AddRoleInputs>();
+  } = useForm<RoleInputs>();
 
   const {
     register: addAutoroleRegister,
     handleSubmit: addAutoroleHandleSubmit,
     formState: { errors: addAutoroleErrors },
-  } = useForm<AddRoleInputs>();
+  } = useForm<RoleInputs>();
 
-  const addRole = (data: /* AddRoleInputs | AddAutoroleInputs */ any) => {
+  const addRole = (data: RoleInputs) => {
     const level = data.level || -1;
 
     if (!guild.currentXPGuild) return;
@@ -78,7 +78,30 @@ const ServerTabRoles: FC<ServerTabRolesProps> = () => {
     setAddRoleModal(false);
     setAddAutoroleModal(false);
   };
-  const onAddRole: SubmitHandler<AddRoleInputs> = (data) => {
+
+  const addRoleLevel = (data: {
+    roleID: string;
+    oldLevel: number;
+    newLevel: number;
+  }) => {
+    if (!guild.currentXPGuild) return;
+    const g = cloneDeep(guild.currentXPGuild);
+    const current = partition(g.levelroles, (role) =>
+      isEqual(role.level, data.oldLevel)
+    );
+    g.levelroles = [{ id: data.roleID, level: data.newLevel }, ...current[1]];
+    guild.updateGuild(
+      {
+        name: `Role ${data.roleID}`,
+        oldValue: `${data.oldLevel}`,
+        newValue: `${data.newLevel}`,
+      },
+      g
+    );
+    setAddRoleModal(false);
+    setAddAutoroleModal(false);
+  };
+  const onAddRole: SubmitHandler<RoleInputs> = (data) => {
     addRole(data);
   };
   const onAddAutorole: SubmitHandler<AddAutoroleInputs> = (data) => {
@@ -129,12 +152,26 @@ const ServerTabRoles: FC<ServerTabRolesProps> = () => {
 
                 if (role)
                   return {
-                    key: `Levelrole-Motion-${role.id}`,
+                    key: `Levelrole-Motion-${levelrole.level}`,
                     element: (
                       <>
                         <LevelrolePanel
-                          requestRemove={(level) => {
-                            setDeleteRoleModal({ level, name: role.name });
+                          availableDiscordRoles={guild.currentDiscordRoles}
+                          requestRemove={() => {
+                            setDeleteRoleModal({
+                              level: levelrole.level,
+                              name: role.name,
+                            });
+                          }}
+                          requestChangeDetails={(roleID, newLevel) => {
+                            if (roleID)
+                              addRole({ level: levelrole.level, role: roleID });
+                            else if (newLevel)
+                              addRoleLevel({
+                                roleID: role.id,
+                                oldLevel: levelrole.level,
+                                newLevel,
+                              });
                           }}
                           level={levelrole.level}
                           role={role}
@@ -169,6 +206,7 @@ const ServerTabRoles: FC<ServerTabRolesProps> = () => {
       <div>
         <PageTitle
           title="Autorole"
+          disableArrow
           tooltipText="The Autorole is automatically assigned to every user upon joining, regardless of level."
         />
         <div className="flex flex-wrap gap-10">
@@ -179,8 +217,8 @@ const ServerTabRoles: FC<ServerTabRolesProps> = () => {
                   requestChange={() => {
                     setAddAutoroleModal(true);
                   }}
-                  requestRemove={(level) => {
-                    setDeleteRoleModal({ level, name: autoroleRole.name });
+                  requestRemove={() => {
+                    setDeleteRoleModal({ level: -1, name: autoroleRole.name });
                   }}
                   level={-1}
                   role={autoroleRole}
