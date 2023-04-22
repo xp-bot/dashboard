@@ -4,7 +4,6 @@ import '@styles/xp-loading.scss';
 import '../styles/markdown.scss';
 
 import { Inter } from '@next/font/google';
-import { apiRoutes } from 'apis/api-helper';
 import FallBackImage from 'components/fallback-image';
 import Modal from 'components/modal';
 import Tooltip from 'components/tooltip';
@@ -22,66 +21,22 @@ import {
   map,
   size,
 } from 'lodash';
-import { IDiscordUserLookup } from 'models/backend/discord-models';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import { ThemeProvider } from 'next-themes';
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import semver from 'semver';
-import { avatarToURL } from 'utils/discord-utils';
 
 import changelog, { ChangelogType } from '../changelogs';
 import MobileNavBar from '../components/mobile/mobile-nav-bar';
 import WavePage from '../components/wave-page';
 import { UserContextProvider } from '../context/user-context';
+import { ChangelogUser } from './changes';
 
 const inter = Inter({
   variable: '--inter-font',
   subsets: ['latin', 'cyrillic', 'greek'],
 });
-
-const SubmitterUser: FC<{ user_id: string }> = ({ user_id }) => {
-  const [user, setUser] = useState<IDiscordUserLookup | undefined>();
-  useEffect(() => {
-    const getUser = async () => {
-      const res = await apiRoutes.discord.lookupUser(user_id);
-
-      if (!res.success) return;
-
-      setUser(res.body);
-    };
-
-    getUser();
-  }, []);
-
-  return (
-    <span className="relative inline-flex w-fit flex-row items-center gap-2 overflow-hidden rounded-md border bg-input text-sm text-darkText shadow-md transition-colors ease-in-out hover:bg-input-border dark:border-none dark:bg-input-darkMode dark:text-darkText-darkMode dark:hover:bg-input-border">
-      {user && (
-        <span className="aspect-square w-7 overflow-hidden">
-          <FallBackImage
-            className="h-full w-full object-cover"
-            src={avatarToURL(user, 128, true)}
-          />
-        </span>
-      )}
-      <span className="pr-3">
-        <span className="absolute -right-1 -top-8 text-5xl opacity-[.03] blur-[1px] dark:blur-0">
-          @
-        </span>
-        <p>
-          {user ? (
-            <>
-              {user.username}
-              <span className="opacity-50">#{user.discriminator}</span>
-            </>
-          ) : (
-            user_id
-          )}
-        </p>
-      </span>
-    </span>
-  );
-};
 
 const ChangelogModal = () => {
   const [localStorage, setLocalStorage, isLocalStorageReady] = useLocalStorage([
@@ -181,7 +136,7 @@ const ChangelogModal = () => {
                                 showContentOnMobile
                                 text={`Thank you for submitting this idea!`}
                               >
-                                <SubmitterUser user_id={change.submitter_id} />
+                                <ChangelogUser user_id={change.submitter_id} />
                               </Tooltip>
                             </div>
                           )}
