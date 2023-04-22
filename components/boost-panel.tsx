@@ -1,4 +1,4 @@
-import { isUndefined, map, slice, sortBy, startsWith } from 'lodash';
+import { isEqual, isUndefined, map, slice, sortBy, startsWith } from 'lodash';
 import { IDiscordChannel, IDiscordRole } from 'models/backend/discord-models';
 import { FC, useState } from 'react';
 import { toColor } from 'utils/discord-utils';
@@ -38,7 +38,8 @@ const BoostPanel: FC<BoostPanelProps> = (props) => {
                 setPercentageInput(e.target.value);
             }}
             onBlur={(e) => {
-              props.requestChangeDetails &&
+              !isEqual(e.target.value, `${props.percentage}`) &&
+                props.requestChangeDetails &&
                 props.requestChangeDetails(
                   undefined,
                   parseInt(e.target.value, 10)
@@ -65,7 +66,9 @@ const BoostPanel: FC<BoostPanelProps> = (props) => {
               className="!h-full"
               value={props.entity.id}
               onChange={(v) => {
-                props.requestChangeDetails && props.requestChangeDetails(v);
+                !isEqual(v, props.entity.id) &&
+                  props.requestChangeDetails &&
+                  props.requestChangeDetails(v);
               }}
               options={map(
                 sortBy(

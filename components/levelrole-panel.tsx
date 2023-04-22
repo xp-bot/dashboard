@@ -1,4 +1,4 @@
-import { map, parseInt, slice, sortBy, startsWith } from 'lodash';
+import { isEqual, map, parseInt, slice, sortBy, startsWith } from 'lodash';
 import { IDiscordRole } from 'models/backend/discord-models';
 import { FC, useState } from 'react';
 import { toColor } from 'utils/discord-utils';
@@ -6,9 +6,6 @@ import { toColor } from 'utils/discord-utils';
 import BlockButton from './block-button';
 import Select from './select';
 
-/**
- * @var onChange Only works if registerForm is undefined
- */
 interface LevelrolePanelProps {
   level: number;
   role: IDiscordRole;
@@ -38,7 +35,8 @@ const LevelrolePanel: FC<LevelrolePanelProps> = (props) => {
                   setLevelInput(e.target.value);
               }}
               onBlur={(e) => {
-                props.requestChangeDetails &&
+                !isEqual(e.target.value, `${props.level}`) &&
+                  props.requestChangeDetails &&
                   props.requestChangeDetails(
                     undefined,
                     parseInt(e.target.value)
@@ -65,7 +63,9 @@ const LevelrolePanel: FC<LevelrolePanelProps> = (props) => {
               className="!h-full"
               value={props.role.id}
               onChange={(v) => {
-                props.requestChangeDetails && props.requestChangeDetails(v);
+                !isEqual(v, props.role.id) &&
+                  props.requestChangeDetails &&
+                  props.requestChangeDetails(v);
               }}
               options={map(
                 sortBy(
