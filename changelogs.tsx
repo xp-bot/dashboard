@@ -27,7 +27,7 @@ const changelogs: { [version: string]: ChangelogType } = {
     Leaderboards: [
       {
         type: 'text',
-        content: 'Panels now have a blurry background when in dark theme.',
+        content: 'Panels now feature a blurred background when in dark theme.',
       },
       {
         type: 'image',
@@ -56,7 +56,7 @@ const changelogs: { [version: string]: ChangelogType } = {
     'Status Page': [
       {
         type: 'text',
-        content: 'Status Page has been added.',
+        content: 'A new Status Page has been added.',
       },
       {
         type: 'image',
@@ -67,12 +67,12 @@ const changelogs: { [version: string]: ChangelogType } = {
       },
       {
         type: 'text',
-        content: 'Charts now only display for MD viewports and bigger.',
+        content: 'Charts now only display for medium to large viewports.',
       },
       {
         type: 'text',
         content:
-          'Incidedents are now collapsabe and optimized for mobile usage.',
+          'Incidents are now collapsible and optimized for mobile usage.',
       },
       {
         type: 'image',
@@ -88,7 +88,7 @@ const changelogs: { [version: string]: ChangelogType } = {
       {
         type: 'text',
         content:
-          'Page detail titles without an arrow now no longer act like a link.',
+          'Page detail titles without an arrow no longer function as a link.',
       },
     ],
   },
@@ -97,7 +97,7 @@ const changelogs: { [version: string]: ChangelogType } = {
     'Status Page': [
       {
         type: 'text',
-        content: 'Improved header appearance.',
+        content: 'Improved appearance of header.',
       },
     ],
   },
@@ -126,11 +126,6 @@ const changelogs: { [version: string]: ChangelogType } = {
           key: '',
         },
       },
-      {
-        type: 'text',
-        content:
-          'A debug window in the top left corner has been added to monitor this behaviour over the next couple of days. ( Only on LG and larger )',
-      },
     ],
   },
 
@@ -149,7 +144,7 @@ const changelogs: { [version: string]: ChangelogType } = {
       {
         type: 'text',
         content:
-          'Fixed sizing bug where some guild icons would randomly be huge.',
+          'Fixed a sizing bug where some guild icons would randomly appear too large.',
       },
     ],
   },
@@ -158,8 +153,7 @@ const changelogs: { [version: string]: ChangelogType } = {
     'Server Dashboard': [
       {
         type: 'text',
-        content:
-          'Icons have been corrected and clusters are now in correct groups.',
+        content: 'Improved clustering of icons and corrected tab groups.',
       },
       {
         type: 'image',
@@ -172,24 +166,22 @@ const changelogs: { [version: string]: ChangelogType } = {
       },
       {
         type: 'text',
-        content: 'Removed incorrect "back"-arrow from settings page.',
+        content: 'Removed incorrect "back"-arrow from the settings page.',
+      },
+      {
+        type: 'text',
+        content: 'Modules requiring server premium are now correctly disabled.',
       },
       {
         type: 'text',
         content:
-          'Modules where server premium is required, are now disabled correctly.',
-      },
-      {
-        type: 'text',
-        content:
-          'Every News and Text channel is now available to be set as the channel for the Dynamic Leaderboard.',
+          'All News and Text channels can now be selected for the Dynamic Leaderboard.',
       },
     ],
     'User Dashboard': [
       {
         type: 'text',
-        content:
-          'Icons have been corrected and clusters are now in correct groups.',
+        content: 'Improved clustering of icons and corrected tab groups.',
       },
       {
         type: 'image',
@@ -216,15 +208,17 @@ const changelogs: { [version: string]: ChangelogType } = {
     'User Dashboard': [
       {
         type: 'text',
-        content: 'Added "Report a Bug" button.',
+        content:
+          'Added "Report a Bug" button to enable users to report issues more easily.',
       },
     ],
   },
   '2.0.9': {
-    Accessiblity: [
+    Accessibility: [
       {
         type: 'text',
-        content: 'Added handy information tooltips. (PC only)',
+        content:
+          'Added information tooltips to improve accessibility. (Desktop only)',
       },
       {
         type: 'image',
@@ -239,23 +233,23 @@ const changelogs: { [version: string]: ChangelogType } = {
     Leaderboards: [
       {
         type: 'text',
-        content: 'Up arrows no longer appear white.',
+        content: 'Fixed issue where up arrows were displaying incorrectly.',
       },
       {
         type: 'text',
-        content: 'Normal users can no longer open the "edit" window.',
+        content: 'Restricted "edit" window to premium users only.',
       },
     ],
-    'Home Page': [
+    Homepage: [
       {
         type: 'text',
         content:
-          'The "Features"-Arrow is now being displayed in the theme-dependent color.',
+          'The "Features" arrow is now displayed in the theme-specific color.',
       },
       {
         type: 'text',
         content:
-          'The Premium subtitle is now being displayed in the theme-dependent color.',
+          'The premium subtitle is now displayed in the theme-specific color.',
       },
     ],
   },
@@ -267,7 +261,7 @@ const changelogs: { [version: string]: ChangelogType } = {
         submitter_id: '242621043561201666',
         submit_type: 'suggestion',
         content:
-          'Expanded the size limit for blog comment bodies to 1024 characters.',
+          'Increased the maximum allowed size for blog comments to 1024 characters.',
       },
     ],
     'Server Dashboard': [
@@ -277,12 +271,28 @@ const changelogs: { [version: string]: ChangelogType } = {
         submitter_id: '235920335021670400',
         submit_type: 'suggestion',
         content:
-          'Roles, Channels, Percentages and Levels can now be changed directly from the list view.',
+          'Users can now edit server roles, channels, percentages, and levels directly from the list view.',
       },
       {
         type: 'image',
         content: {
           pc: 'https://qwq.sh/b71diq',
+          key: '',
+        },
+      },
+    ],
+  },
+  '2.0.16': {
+    Changelogs: [
+      {
+        type: 'text',
+        content:
+          'Implemented a new "Changelogs" page that provides a comprehensive overview of all changes made to the platform over the past several years.',
+      },
+      {
+        type: 'image',
+        content: {
+          pc: 'https://qwq.sh/h1ouc8',
           key: '',
         },
       },
