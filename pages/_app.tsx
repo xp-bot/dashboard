@@ -177,7 +177,7 @@ const ChangelogModal = () => {
                           {change.submitter_id && change.submit_type && (
                             <div className="flex flex-row items-center gap-2">
                               <Tooltip
-                              alignLeft
+                                alignLeft
                                 showContentOnMobile
                                 text={`Thank you for submitting this idea!`}
                               >
