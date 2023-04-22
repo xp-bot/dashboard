@@ -185,7 +185,7 @@ const ChangelogModal = () => {
                 </ul>
               </div>
               {idx + 1 < size(entries(versionChanges)) && (
-                <hr className="mx-auto w-4/5" />
+                <hr className="mx-auto w-4/5 mt-2" />
               )}
             </div>
           );
