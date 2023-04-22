@@ -14,8 +14,10 @@ import {
   find,
   floor,
   isEqual,
+  isNil,
   isUndefined,
   map,
+  partition,
   size,
   slice,
   sortBy,
@@ -26,7 +28,7 @@ import { FC, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { DiscordChannelType } from 'utils/discord-utils';
 
-interface AddRoleInputs {
+interface AddInputs {
   percentage: number;
   entity: string;
 }
@@ -56,25 +58,23 @@ const ServerTabBoosts: FC<ServerTabBoostsProps> = () => {
   }>();
   const guild = useServerDetails();
 
-  const getTypeSpecificDiscordEntires = ():
-    | IDiscordRole[]
-    | IDiscordChannel[] => {
-    if (!isUndefined(addBoostModal))
-      switch (addBoostModal.type) {
-        case 'Role':
-          return slice(guild.currentDiscordRoles, 1);
-        case 'TextChannel':
-          return filter(guild.currentDiscordChannels, (channel) =>
-            isEqual(channel.type, DiscordChannelType.text)
-          ) as IDiscordChannel[];
-        case 'VoiceChannel':
-          return filter(guild.currentDiscordChannels, (channel) =>
-            isEqual(channel.type, DiscordChannelType.voice)
-          ) as IDiscordChannel[];
-        default:
-          return [];
-      }
-    else return [];
+  const getTypeSpecificDiscordEntires = (
+    type: 'Role' | 'TextChannel' | 'VoiceChannel'
+  ): IDiscordRole[] | IDiscordChannel[] => {
+    switch (type) {
+      case 'Role':
+        return slice(guild.currentDiscordRoles, 1);
+      case 'TextChannel':
+        return filter(guild.currentDiscordChannels, (channel) =>
+          isEqual(channel.type, DiscordChannelType.text)
+        ) as IDiscordChannel[];
+      case 'VoiceChannel':
+        return filter(guild.currentDiscordChannels, (channel) =>
+          isEqual(channel.type, DiscordChannelType.voice)
+        ) as IDiscordChannel[];
+      default:
+        return [];
+    }
   };
 
   const addDisabled = !isUndefined(addBoostModal)
@@ -91,25 +91,35 @@ const ServerTabBoosts: FC<ServerTabBoostsProps> = () => {
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm<AddRoleInputs>();
-  const onAddBoost: SubmitHandler<AddRoleInputs> = (data) => {
-    if (!guild.currentXPGuild || !addBoostModal) return;
-    const g = cloneDeep(guild.currentXPGuild);
-    const isRole = isEqual(addBoostModal.type, `Role`);
-    const current = isRole
-      ? filter(g.boosts.roles, (role) => !isEqual(role.id, data.entity))
-      : filter(
-          guild.currentXPGuild.boosts.channels,
-          (channel) => !isEqual(channel.id, data.entity)
-        );
-    current.push({ id: data.entity, percentage: data.percentage });
+  } = useForm<AddInputs>();
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    isRole ? (g.boosts.roles = current) : (g.boosts.channels = current);
+  const addBoost = (
+    data: AddInputs & { isRole?: boolean; oldEntityID?: string }
+  ) => {
+    if (!guild.currentXPGuild) return;
+    const g = cloneDeep(guild.currentXPGuild);
+    const isRole = data.isRole || isEqual(addBoostModal?.type, `Role`);
+    const current = partition(
+      isRole ? g.boosts.roles : guild.currentXPGuild.boosts.channels,
+      (entity) => isEqual(entity.id, data.oldEntityID || data.entity)
+    );
+
+    const newEntities = [
+      { id: data.entity, percentage: data.percentage },
+      ...current[1],
+    ];
+
+    isRole ? (g.boosts.roles = newEntities) : (g.boosts.channels = newEntities);
 
     guild.updateGuild(
       {
-        name: `${addBoostModal.type} Boost - ${data.entity}`,
+        name: `${
+          isNil(data.isRole)
+            ? data.isRole
+              ? `Role`
+              : `Channel`
+            : addBoostModal?.type
+        } Boost - ${data.entity}`,
         oldValue:
           `${
             find(isRole ? g.boosts.roles : g.boosts.channels, (entity) =>
@@ -117,6 +127,47 @@ const ServerTabBoosts: FC<ServerTabBoostsProps> = () => {
             )?.percentage
           }` || `Not Set`,
         newValue: `${data.percentage}`,
+      },
+      g
+    );
+    setAddBoostModal(undefined);
+  };
+
+  const onAddBoost: SubmitHandler<AddInputs> = (data) => {
+    addBoost(data);
+  };
+
+  const editBoostPercentage = (data: {
+    entityID: string;
+    newBoostPercentage: number;
+    type: `roles` | `channels`;
+  }) => {
+    if (!guild.currentXPGuild) return;
+    const g = cloneDeep(guild.currentXPGuild);
+    const isRole = isEqual(data.type, `roles`);
+
+    const current = partition(
+      isRole
+        ? filter(g.boosts.roles, (role) => !isEqual(role.id, data.entityID))
+        : filter(
+            guild.currentXPGuild.boosts.channels,
+            (channel) => !isEqual(channel.id, data.entityID)
+          ),
+      (entity) => isEqual(entity.id, data.entityID)
+    );
+
+    const newEntities = [
+      { id: data.entityID, percentage: data.newBoostPercentage },
+      ...current[1],
+    ];
+
+    isRole ? (g.boosts.roles = newEntities) : (g.boosts.channels = newEntities);
+
+    guild.updateGuild(
+      {
+        name: `${data.type} Boost - ${data.entityID}`,
+        oldValue: `${current[0][0]?.percentage}` || `Not Set`,
+        newValue: `${data.newBoostPercentage}`,
       },
       g
     );
@@ -175,6 +226,27 @@ const ServerTabBoosts: FC<ServerTabBoostsProps> = () => {
                           className="flex w-full flex-col items-center gap-5"
                         >
                           <BoostPanel
+                            availableEntities={getTypeSpecificDiscordEntires(
+                              'Role'
+                            )}
+                            requestChangeDetails={(
+                              newEntity,
+                              newPercentage
+                            ) => {
+                              if (newEntity)
+                                addBoost({
+                                  entity: newEntity,
+                                  oldEntityID: role.id,
+                                  percentage: boostedRole.percentage,
+                                  isRole: true,
+                                });
+                              else if (newPercentage)
+                                editBoostPercentage({
+                                  entityID: role.id,
+                                  newBoostPercentage: newPercentage,
+                                  type: 'roles',
+                                });
+                            }}
                             prefix="@"
                             requestRemove={(id) => {
                               setDeleteBoostModal({
@@ -242,6 +314,26 @@ const ServerTabBoosts: FC<ServerTabBoostsProps> = () => {
                             className="flex w-full flex-col items-center gap-5"
                           >
                             <BoostPanel
+                              availableEntities={getTypeSpecificDiscordEntires(
+                                'TextChannel'
+                              )}
+                              requestChangeDetails={(
+                                newEntity,
+                                newPercentage
+                              ) => {
+                                if (newEntity)
+                                  addBoost({
+                                    entity: newEntity,
+                                    oldEntityID: channel.id,
+                                    percentage: boostedChannel.percentage,
+                                  });
+                                else if (newPercentage)
+                                  editBoostPercentage({
+                                    entityID: channel.id,
+                                    newBoostPercentage: newPercentage,
+                                    type: 'channels',
+                                  });
+                              }}
                               prefix="#"
                               requestRemove={(id) => {
                                 setDeleteBoostModal({
@@ -308,6 +400,26 @@ const ServerTabBoosts: FC<ServerTabBoostsProps> = () => {
                             className="flex w-full flex-col items-center gap-5"
                           >
                             <BoostPanel
+                              availableEntities={getTypeSpecificDiscordEntires(
+                                'VoiceChannel'
+                              )}
+                              requestChangeDetails={(
+                                newEntity,
+                                newPercentage
+                              ) => {
+                                if (newEntity)
+                                  addBoost({
+                                    entity: newEntity,
+                                    oldEntityID: channel.id,
+                                    percentage: boostedChannel.percentage,
+                                  });
+                                else if (newPercentage)
+                                  editBoostPercentage({
+                                    entityID: channel.id,
+                                    newBoostPercentage: newPercentage,
+                                    type: 'channels',
+                                  });
+                              }}
                               prefix=""
                               requestRemove={(id) => {
                                 setDeleteBoostModal({
@@ -406,11 +518,18 @@ const ServerTabBoosts: FC<ServerTabBoostsProps> = () => {
                 disabled={addDisabled}
                 formError={errors.entity}
                 registerForm={register(`entity`, { required: true })}
-                options={getTypeSpecificDiscordEntires().map((entry) => ({
-                  id: entry.id,
-                  title:
-                    typeToPrefix(addBoostModal?.type) + entry.name || `Unknown`,
-                }))}
+                options={
+                  addBoostModal
+                    ? getTypeSpecificDiscordEntires(addBoostModal?.type).map(
+                        (entry) => ({
+                          id: entry.id,
+                          title:
+                            typeToPrefix(addBoostModal?.type) + entry.name ||
+                            `Unknown`,
+                        })
+                      )
+                    : []
+                }
                 label={addBoostModal ? `${addBoostModal.type}` : `Entity`}
                 isInPanel={true}
               />
