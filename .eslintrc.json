@@ -10,10 +10,10 @@
   ],
   "rules": {
     "prettier/prettier": [
-      "error",
+      "off",
       {
         "singleQuote": true,
-        "endOfLine": "auto"
+        "endOfLine": "auto""semi": true
       }
     ]
   },
@@ -43,12 +43,11 @@
         ]
       },
       "rules": {
-        "@typescript-eslint/no-unused-expressions":"off",
-        
-      "react/no-unescaped-entities": "off",
+        "@typescript-eslint/no-unused-expressions": "off",
+        "react/no-unescaped-entities": "off",
         "no-nested-ternary": "off",
         "prettier/prettier": [
-          "error",
+          "off",
           {
             "singleQuote": true,
             "endOfLine": "auto",
