@@ -1,14 +1,14 @@
-import { isUndefined } from 'lodash';
+import { isUndefined } from "lodash";
 import {
   ChangeEventHandler,
   DetailedHTMLProps,
   FC,
   TextareaHTMLAttributes,
-} from 'react';
-import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
+} from "react";
+import { FieldError, UseFormRegisterReturn } from "react-hook-form";
 
-import ErrorLabel from './input-error-label';
-import Label from './input-label';
+import ErrorLabel from "./input-error-label";
+import Label from "./input-label";
 
 interface IBlockTextAreaProps {
   inputProps?: DetailedHTMLProps<
@@ -32,14 +32,14 @@ const BlockTextArea: FC<IBlockTextAreaProps> = (props) => {
         {...props.registerForm}
         {...props.inputProps}
         onChange={(e) => {
-          e.currentTarget.style.height = 'auto';
+          e.currentTarget.style.height = "auto";
           e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`;
 
           props.registerForm?.onChange(e);
           if (!isUndefined(props.onChange)) props.onChange(e);
         }}
         onClick={(e) => {
-          e.currentTarget.style.height = 'auto';
+          e.currentTarget.style.height = "auto";
           e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`;
         }}
         disabled={props.disabled}

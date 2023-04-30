@@ -1,14 +1,14 @@
 // eslint-disable-next-line import/no-cycle
-import { useCommentsSection } from 'context/blog-comments-section';
-import { useUser } from 'context/user-context';
-import { FC } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { avatarToURL } from 'utils/discord-utils';
+import { useCommentsSection } from "context/blog-comments-section";
+import { useUser } from "context/user-context";
+import { FC } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { avatarToURL } from "utils/discord-utils";
 
-import BlockButton, { BlockButtonVariant } from './block-button';
-import BlockInput from './block-input';
-import BlockTextArea from './block-text-area';
-import FallBackImage from './fallback-image';
+import BlockButton, { BlockButtonVariant } from "./block-button";
+import BlockInput from "./block-input";
+import BlockTextArea from "./block-text-area";
+import FallBackImage from "./fallback-image";
 
 interface IBlogCreateCommentProps {}
 
@@ -51,7 +51,7 @@ const BlogCreateComment: FC<IBlogCreateCommentProps> = () => {
               inputProps={{ maxLength: 30 }}
               placeholder="Title your Comment"
               formError={errors.title}
-              registerForm={register('title', {
+              registerForm={register("title", {
                 required: `A Title is required.`,
                 minLength: {
                   value: 5,
@@ -63,7 +63,7 @@ const BlogCreateComment: FC<IBlogCreateCommentProps> = () => {
               <BlockTextArea
                 inputProps={{ maxLength: 1024 }}
                 placeholder="What do you think about the blog post..."
-                registerForm={register('body', {
+                registerForm={register("body", {
                   required: `A Description is required.`,
                   minLength: {
                     value: 25,
@@ -72,7 +72,7 @@ const BlogCreateComment: FC<IBlogCreateCommentProps> = () => {
                   maxLength: {
                     value: 1024,
                     message:
-                      "This message can't be longer than 1024 characters.",
+                      'This message can"t be longer than 1024 characters.',
                   },
                 })}
                 formError={errors.body}
