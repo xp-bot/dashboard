@@ -185,8 +185,7 @@ module.exports = {
     },
   },
   plugins: [
-    require('tailwindcss-hyphens'),
-    require('@tailwindcss/line-clamp'),
+    require('tailwindcss-hyphens'), // Removed line clamp as it is already there
     require('tailwindcss-safe-area'),
     require('./custom-tailwind/tailwind-ios-selector'),
   ],
