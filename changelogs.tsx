@@ -311,13 +311,6 @@ const changelogs: { [version: string]: ChangelogType } = {
         type: "text",
         content: "You can now set levelroles to get assigned at level 0.",
       },
-      {
-        type: "image",
-        content: {
-          pc: "https://cdn.namespace.media/s/qobN2yncMnndWdp/download/level0.png",
-          key: "",
-        },
-      },
     ],
   },
 };
