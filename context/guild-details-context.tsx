@@ -1,25 +1,25 @@
-import { faSave } from '@fortawesome/free-regular-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { motion } from 'framer-motion';
-import { useMediaQuery } from 'hooks/use-media-query';
-import { isUndefined, replace, size } from 'lodash';
+import { faSave } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { motion } from "framer-motion";
+import { useMediaQuery } from "hooks/use-media-query";
+import { isUndefined, replace, size } from "lodash";
 import {
   IDiscordChannel,
   IDiscordGuildsRequest,
   IDiscordRole,
-} from 'models/backend/discord-models';
-import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+} from "models/backend/discord-models";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 
-import { apiRoutes } from '../apis/api-helper';
+import { apiRoutes } from "../apis/api-helper";
 import {
   IServerSettingsBackground,
   IXPChange,
   IXPDBLog,
   IXPGuild,
   IXPServersPremium,
-} from '../models/backend/xp-models';
-import { useUser } from './user-context';
+} from "../models/backend/xp-models";
+import { useUser } from "./user-context";
 
 export interface IGuildDetailsContextValues {
   guildID: string;
@@ -42,7 +42,7 @@ export interface IGuildDetailsContextValues {
 
 export const GuildDetailsContext =
   React.createContext<IGuildDetailsContextValues>({
-    guildID: '',
+    guildID: "",
     updateGuild: async () => false,
     saveGuild: async () => {},
     unsavedChanges: false,
@@ -60,7 +60,7 @@ export function GuildDetailsContextProvider({
 }: IGuildDetailsContextProviderProps): React.ReactElement {
   const router = useRouter();
 
-  const isLg = useMediaQuery('(min-width: 900px)');
+  const isLg = useMediaQuery("(min-width: 900px)");
 
   const [currentXPGuild, setCurrentXPGuild] = useState<IXPGuild | undefined>();
   const [currentXPLogs /* , setCurrentXPLogs */] = useState<
@@ -117,7 +117,6 @@ export function GuildDetailsContextProvider({
     setCurrentDiscordChannels(channels.body);
 
     // const serverLogsRes = await apiRoutes.xp.guild.getLogs(guildID, );
-    // console.log(serverLogsRes);
 
     // if (serverLogsRes.success) setCurrentXPLogs(serverLogsRes.body);
     return true;
@@ -196,11 +195,11 @@ export function GuildDetailsContextProvider({
       <>
         {children}
         <motion.div
-          initial={{ y: '4rem', opacity: 0 }}
+          initial={{ y: "4rem", opacity: 0 }}
           animate={
             unsavedChanges
-              ? { y: isLg ? '-2rem' : '-8rem', opacity: 1 }
-              : { y: '4rem', opacity: 0 }
+              ? { y: isLg ? "-2rem" : "-8rem", opacity: 1 }
+              : { y: "4rem", opacity: 0 }
           }
           className={`pointer-events-none fixed bottom-0 left-0 z-30 flex h-20 w-full justify-center`}
         >
