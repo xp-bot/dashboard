@@ -1,9 +1,9 @@
-import { AnimatePresence, motion } from 'framer-motion';
-import { filter, isEqual, map, size } from 'lodash';
-import { FC, ReactNode } from 'react';
-import { MotionListProps } from 'utils/animation-utils';
+import { AnimatePresence, motion } from "framer-motion";
+import { filter, isEqual, map, size } from "lodash";
+import { FC, ReactNode } from "react";
+import { MotionListProps } from "utils/animation-utils";
 
-import EmptyPanel from './empty-panel';
+import EmptyPanel from "./empty-panel";
 
 interface IAnimatedDivList {
   children: { element: ReactNode; key: string }[];
@@ -18,7 +18,7 @@ const AnimatedDivList: FC<IAnimatedDivList> = ({ children, emptyMessage }) => {
         map(list, (element, idx) => {
           return (
             <motion.div
-              layout={'position'}
+              layout={"position"}
               {...MotionListProps}
               key={element.key}
               className="flex w-full flex-col items-center gap-5"
@@ -33,9 +33,9 @@ const AnimatedDivList: FC<IAnimatedDivList> = ({ children, emptyMessage }) => {
       ) : (
         <motion.div
           key={`motion-div-list-empty`}
-          layout={'position'}
+          layout={"position"}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ type: 'spring' }}
+          transition={{ type: "spring" }}
           className="w-full"
         >
           <EmptyPanel text={emptyMessage} />

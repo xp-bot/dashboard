@@ -1,10 +1,10 @@
-import { isEqual, map, parseInt, slice, sortBy, startsWith } from 'lodash';
-import { IDiscordRole } from 'models/backend/discord-models';
-import { FC, useState } from 'react';
-import { toColor } from 'utils/discord-utils';
+import { isEqual, map, parseInt, slice, sortBy } from "lodash";
+import { IDiscordRole } from "models/backend/discord-models";
+import { FC, useState } from "react";
+import { toColor } from "utils/discord-utils";
 
-import BlockButton from './block-button';
-import Select from './select';
+import BlockButton from "./block-button";
+import Select from "./select";
 
 interface LevelrolePanelProps {
   level: number;
@@ -21,7 +21,7 @@ const LevelrolePanel: FC<LevelrolePanelProps> = (props) => {
   return (
     <div className="flex w-full flex-col gap-3 md:flex-row md:gap-5">
       <div className="flex grow flex-row gap-5">
-        {props.level > 0 && (
+        {props.level >= 0 && (
           <div
             className={`relative h-full whitespace-nowrap rounded-md border-transparent bg-panelBack text-darkText shadow-md focus-within:outline-none dark:bg-panelBack-darkMode dark:text-darkText-darkMode md:w-fit`}
           >
@@ -30,8 +30,8 @@ const LevelrolePanel: FC<LevelrolePanelProps> = (props) => {
             </span>
             <input
               onChange={(e) => {
-                /^(0|[1-9][0-9]*)$/gm.test(e.target.value) &&
-                  !startsWith(e.target.value, `0`) &&
+                /^(?!0\d)\d+$/gm.test(e.target.value) &&
+                  // !startsWith(e.target.value, `0`) &&
                   setLevelInput(e.target.value);
               }}
               onBlur={(e) => {
