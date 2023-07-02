@@ -55,8 +55,6 @@ const ServerTabRoles: FC<ServerTabRolesProps> = () => {
   } = useForm<RoleInputs>();
 
   const addRole = (data: RoleInputs) => {
-    console.log(data);
-
     const level = isUndefined(data.level) ? -1 : data.level;
 
     if (!guild.currentXPGuild) return;
@@ -127,17 +125,12 @@ const ServerTabRoles: FC<ServerTabRolesProps> = () => {
     (r) => r.level >= 0
   );
 
-  console.log(allLevelroles);
-
   const levelroles = allLevelroles[0];
   const autorole = allLevelroles[1][0];
 
   const autoroleRole = autorole
     ? find(guild.currentDiscordRoles, (r) => r.id === autorole.id)
     : undefined;
-
-  console.log(levelroles);
-  console.log(autorole);
 
   return (
     <>
