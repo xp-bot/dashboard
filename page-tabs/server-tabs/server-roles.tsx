@@ -1,13 +1,13 @@
 // eslint-disable-next-line import/no-cycle
-import { faAdd, faRemove } from '@fortawesome/free-solid-svg-icons';
-import AnimatedDivList from 'components/animated-div-list';
-import ButtonCluster, { ButtonFeature } from 'components/button-cluster';
-import LevelrolePanel from 'components/levelrole-panel';
-import Modal from 'components/modal';
-import PageTitle from 'components/page-title';
-import PanelInput from 'components/panel-input';
-import Select from 'components/select';
-import { useServerDetails } from 'context/guild-details-context';
+import { faAdd, faRemove } from "@fortawesome/free-solid-svg-icons";
+import AnimatedDivList from "components/animated-div-list";
+import ButtonCluster, { ButtonFeature } from "components/button-cluster";
+import LevelrolePanel from "components/levelrole-panel";
+import Modal from "components/modal";
+import PageTitle from "components/page-title";
+import PanelInput from "components/panel-input";
+import Select from "components/select";
+import { useServerDetails } from "context/guild-details-context";
 import {
   cloneDeep,
   filter,
@@ -19,9 +19,9 @@ import {
   size,
   slice,
   sortBy,
-} from 'lodash';
-import { FC, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+} from "lodash";
+import { FC, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 interface RoleInputs {
   level?: number;
@@ -55,15 +55,14 @@ const ServerTabRoles: FC<ServerTabRolesProps> = () => {
   } = useForm<RoleInputs>();
 
   const addRole = (data: RoleInputs) => {
-    const level = data.level || -1;
+    console.log(data);
+
+    const level = isUndefined(data.level) ? -1 : data.level;
 
     if (!guild.currentXPGuild) return;
     const g = cloneDeep(guild.currentXPGuild);
-    const current = filter(
-      g.levelroles,
-      (role) => !isEqual(role.level, level || -1)
-    );
-    current.push({ id: data.role, level: level || -1 });
+    const current = filter(g.levelroles, (role) => !isEqual(role.level, level));
+    current.push({ id: data.role, level: level });
     g.levelroles = current;
     guild.updateGuild(
       {
@@ -125,14 +124,20 @@ const ServerTabRoles: FC<ServerTabRolesProps> = () => {
 
   const allLevelroles = partition(
     sortBy(guild.currentXPGuild?.levelroles, (role) => role.level),
-    (r) => r.level > 0
+    (r) => r.level >= 0
   );
+
+  console.log(allLevelroles);
+
   const levelroles = allLevelroles[0];
   const autorole = allLevelroles[1][0];
 
   const autoroleRole = autorole
     ? find(guild.currentDiscordRoles, (r) => r.id === autorole.id)
     : undefined;
+
+  console.log(levelroles);
+  console.log(autorole);
 
   return (
     <>
@@ -166,7 +171,7 @@ const ServerTabRoles: FC<ServerTabRolesProps> = () => {
                           requestChangeDetails={(roleID, newLevel) => {
                             if (roleID)
                               addRole({ level: levelrole.level, role: roleID });
-                            else if (newLevel)
+                            else if (!isUndefined(newLevel))
                               addRoleLevel({
                                 roleID: role.id,
                                 oldLevel: levelrole.level,
@@ -183,7 +188,7 @@ const ServerTabRoles: FC<ServerTabRolesProps> = () => {
                       </>
                     ),
                   };
-                return { element: <></>, key: '' };
+                return { element: <></>, key: "" };
               })}
             </AnimatedDivList>
           </div>
@@ -259,15 +264,15 @@ const ServerTabRoles: FC<ServerTabRolesProps> = () => {
               <PanelInput
                 disabled={size(guild.currentXPGuild?.levelroles) >= 100}
                 registerForm={addRoleRegister(`level`, {
-                  required: 'This Input is required!',
+                  required: "This Input is required!",
                   min: {
-                    value: 1,
+                    value: 0,
                     message:
-                      'You cannot assign levelroles for negative levels.',
+                      "You cannot assign levelroles for negative levels.",
                   },
                 })}
                 label="Level"
-                inputProps={{ type: 'number' }}
+                inputProps={{ type: "number" }}
                 value={12}
                 formError={addRoleErrors.level}
               />
@@ -391,7 +396,7 @@ const ServerTabRoles: FC<ServerTabRolesProps> = () => {
             Are you sure you want to unlink <b>@{deleteRoleModal?.name}</b>
             {deleteRoleModal?.level && deleteRoleModal?.level > 0 ? (
               <>
-                {' '}
+                {" "}
                 from <b>Level {deleteRoleModal?.level}</b>
               </>
             ) : (
