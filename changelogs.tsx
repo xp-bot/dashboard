@@ -326,6 +326,14 @@ const changelogs: { [version: string]: ChangelogType } = {
         content: "Implemented new streamlined blog overview layout.",
       },
     ],
+    "Server Dashboard": [
+      {
+        type: "text",
+        content: "You can now boost and ignore forum channels.",
+        submit_type: "suggestion",
+        submitter_id: "242621043561201666",
+      },
+    ],
   },
 };
 
