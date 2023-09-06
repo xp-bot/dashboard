@@ -83,7 +83,7 @@ const ilumAxios = async <Body>(route: string, options: AxiosRequestConfig) => {
 
 export const apiRoutes = {
   ilum: {
-    getIlumAPIPing: (type: `dashboard` | `api` | `website`) => {
+    getIlumAPIPing: (type: `dashboard` | `backend` | `website`) => {
       return ilumAxios<IIlumChart>(`/data/ping/${type}`, {
         method: `GET`,
       });
