@@ -1,23 +1,23 @@
-import { apiRoutes } from 'apis/api-helper';
-import BasicPanel from 'components/basic-panel';
-import ChartPanel from 'components/chart-panel';
-import HeadSet from 'components/head-set';
-import { headerGradientTypes } from 'components/header';
-import HeaderStatus from 'components/header-content/header-status';
-import IncidentPanel from 'components/incident-panel';
-import PageTitle from 'components/page-title';
-import { useLayout } from 'context/layout-context';
-import useBreakpoints from 'hooks/use-breakpoints';
-import { compact, map, size, sortBy } from 'lodash';
+import { apiRoutes } from "apis/api-helper";
+import BasicPanel from "components/basic-panel";
+import ChartPanel from "components/chart-panel";
+import HeadSet from "components/head-set";
+import { headerGradientTypes } from "components/header";
+import HeaderStatus from "components/header-content/header-status";
+import IncidentPanel from "components/incident-panel";
+import PageTitle from "components/page-title";
+import { useLayout } from "context/layout-context";
+import useBreakpoints from "hooks/use-breakpoints";
+import { compact, map, size, sortBy } from "lodash";
 import {
   IIlumAlivePing,
   IIlumAlivePingContent,
   IIlumChart,
-} from 'models/backend/ilum-models';
-import { IIncident } from 'models/backend/incident-models';
-import { IPage } from 'models/page';
-import type { NextPage } from 'next';
-import { FC, useEffect, useState } from 'react';
+} from "models/backend/ilum-models";
+import { IIncident } from "models/backend/incident-models";
+import { IPage } from "models/page";
+import type { NextPage } from "next";
+import { FC, useEffect, useState } from "react";
 
 interface HomeProps extends IPage {
   incidents: IIncident[];
@@ -25,13 +25,13 @@ interface HomeProps extends IPage {
 
 const statusToClass = {
   Stable:
-    'bg-[#16C172] text-lightText dark:text-lightText-darkMode dark:bg-[#16C172]/25 dark:border-2 dark:border-[#16C172]/60',
+    "bg-[#16C172] text-lightText dark:text-lightText-darkMode dark:bg-[#16C172]/25 dark:border-2 dark:border-[#16C172]/60",
   Unstable:
-    'bg-[#FC9E4F] text-lightText dark:text-lightText-darkMode dark:bg-[#FC9E4F]/25 dark:border-2 dark:border-[#FC9E4F]/60',
+    "bg-[#FC9E4F] text-lightText dark:text-lightText-darkMode dark:bg-[#FC9E4F]/25 dark:border-2 dark:border-[#FC9E4F]/60",
   Offline:
-    'bg-[#FF5964] text-lightText dark:text-lightText-darkMode dark:bg-[#FF5964]/25 dark:border-2 dark:border-[#FF5964]/60',
+    "bg-[#FF5964] text-lightText dark:text-lightText-darkMode dark:bg-[#FF5964]/25 dark:border-2 dark:border-[#FF5964]/60",
   Unknown:
-    'bg-[#3A2D32]/60 dark:bg-[#CC2936]/25 text-lightText dark:text-lightText-darkMode dark:border-2 dark:border-[#CC2936]/60',
+    "bg-[#3A2D32]/60 dark:bg-[#CC2936]/25 text-lightText dark:text-lightText-darkMode dark:border-2 dark:border-[#CC2936]/60",
 };
 
 const ShardPanel: FC<{
@@ -39,16 +39,16 @@ const ShardPanel: FC<{
 }> = ({ shard }) => (
   <div
     className={`flex h-full w-full grow items-center justify-center whitespace-nowrap rounded-md border border-input-border p-2 px-3 text-center shadow-md ${
-      shard.available
+      shard.gateway_connected
         ? statusToClass.Stable
-        : Date.now() - new Date(shard.lastAlivePing).getTime() < 60000
+        : Date.now() - new Date(shard.updated_at).getTime() < 60000
         ? statusToClass.Unstable
         : statusToClass.Offline
     }`}
   >
-    {shard.available
-      ? `Shard ${shard.shardId} - ${shard.serverCount} Servers`
-      : `Shard ${shard.shardId} - Offline`}
+    {shard.gateway_connected
+      ? `Shard ${shard.shard_id} - ${shard.server_count} Servers`
+      : `Shard ${shard.shard_id} - Offline`}
   </div>
 );
 
@@ -60,6 +60,12 @@ const Status: NextPage<HomeProps> = ({ incidents }) => {
   const [ilumWebsite, setIlumWebsite] = useState<IIlumChart | undefined>();
   const { isMd } = useBreakpoints();
 
+  // create a function inside this next page that will be called every 10 seconds
+  // this function will call the api and update the state of the page
+  // this will allow the page to update without having to refresh the page
+  // this will also allow the page to update without having to refresh the page
+  // this will also allow the page to update without having to refresh the page
+
   useEffect(() => {
     layout.changeHeader(
       <HeaderStatus />,
@@ -68,12 +74,15 @@ const Status: NextPage<HomeProps> = ({ incidents }) => {
       undefined,
       size(incidents) > 0 ? headerGradientTypes.premium : undefined
     );
+  }, []);
+
+  const fetchIlumInfo = async () => {
     const getIlum = async () => {
       const [apiRes, dashboardRes, websiteRes, shardAlives] = await Promise.all(
         [
-          apiRoutes.ilum.getIlumAPIPing('api'),
-          apiRoutes.ilum.getIlumAPIPing('dashboard'),
-          apiRoutes.ilum.getIlumAPIPing('website'),
+          apiRoutes.ilum.getIlumAPIPing("api"),
+          apiRoutes.ilum.getIlumAPIPing("dashboard"),
+          apiRoutes.ilum.getIlumAPIPing("website"),
           apiRoutes.ilum.getIlumShardAlivePings(),
         ]
       );
@@ -83,7 +92,17 @@ const Status: NextPage<HomeProps> = ({ incidents }) => {
       if (shardAlives) setIlumShards(shardAlives);
     };
     getIlum();
+  };
+
+  useEffect(() => {
+    fetchIlumInfo();
+    const interval = setInterval(() => {
+      fetchIlumInfo();
+    }, 5000);
+
+    return () => clearInterval(interval);
   }, []);
+
   return (
     <div className="flex flex-col gap-10">
       <HeadSet
@@ -114,11 +133,11 @@ const Status: NextPage<HomeProps> = ({ incidents }) => {
         <div className="flex flex-col gap-5 md:gap-10">
           <div className="flex w-full gap-5 md:gap-10">
             <ChartPanel
-              title={isMd ? 'API Response times in ms' : `XP API`}
+              title={isMd ? "API Response times in ms" : `XP API`}
               hideChart={!isMd}
               chartData={compact([
                 ilumAPI
-                  ? { ...ilumAPI, name: 'API', color: '#3995D3' }
+                  ? { ...ilumAPI, name: "API", color: "#3995D3" }
                   : undefined,
               ])}
             />
@@ -129,7 +148,7 @@ const Status: NextPage<HomeProps> = ({ incidents }) => {
               title="Dashboard"
               chartData={compact([
                 ilumDashboard
-                  ? { ...ilumDashboard, name: 'Dashboard', color: '#082F5F' }
+                  ? { ...ilumDashboard, name: "Dashboard", color: "#082F5F" }
                   : undefined,
               ])}
             />
@@ -138,7 +157,7 @@ const Status: NextPage<HomeProps> = ({ incidents }) => {
               title="Website"
               chartData={compact([
                 ilumWebsite
-                  ? { ...ilumWebsite, name: 'Website', color: '#1161A0' }
+                  ? { ...ilumWebsite, name: "Website", color: "#1161A0" }
                   : undefined,
               ])}
             />
@@ -149,7 +168,7 @@ const Status: NextPage<HomeProps> = ({ incidents }) => {
         <BasicPanel>
           <div className="grid grid-cols-1 flex-wrap gap-3 md:grid-cols-3 lg:grid-cols-4">
             {map(
-              sortBy(ilumShards?.shards, (shard) => shard.shardId),
+              sortBy(ilumShards?.shards, (shard) => shard.shard_id),
               (shard) => (
                 <ShardPanel shard={shard} />
               )
