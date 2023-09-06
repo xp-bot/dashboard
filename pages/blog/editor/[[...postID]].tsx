@@ -1,20 +1,20 @@
-import { apiRoutes } from 'apis/api-helper';
-import BlockButton, { BlockButtonVariant } from 'components/block-button';
-import BlockInput from 'components/block-input';
-import BlockTextArea from 'components/block-text-area';
-import BlogMarkdown from 'components/blog-markdown';
-import HeaderEditBlogPost from 'components/header-content/header-edit-blog-post';
-import PageTitle from 'components/page-title';
-import { useLayout } from 'context/layout-context';
-import { useUser } from 'context/user-context';
-import { isNil, size, startsWith } from 'lodash';
-import { IBlogPost } from 'models/backend/blog-models';
-import { IPage } from 'models/page';
-import { NextPage } from 'next';
-import { useRouter } from 'next/router';
+import { apiRoutes } from "apis/api-helper";
+import BlockButton, { BlockButtonVariant } from "components/block-button";
+import BlockInput from "components/block-input";
+import BlockTextArea from "components/block-text-area";
+import BlogMarkdown from "components/blog-markdown";
+import HeaderEditBlogPost from "components/header-content/header-edit-blog-post";
+import PageTitle from "components/page-title";
+import { useLayout } from "context/layout-context";
+import { useUser } from "context/user-context";
+import { isNil, size, startsWith } from "lodash";
+import { IBlogPost } from "models/backend/blog-models";
+import { IPage } from "models/page";
+import { NextPage } from "next";
+import { useRouter } from "next/router";
 // eslint-disable-next-line import/no-cycle
-import { useEffect } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useEffect } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 interface IBlogPostInputs {
   title: string;
@@ -41,7 +41,7 @@ const BlogEditor: NextPage<UserTabProps> = ({ blogPost }) => {
 
   const currThumnail = watch(
     `thumbnail`,
-    blogPost?.content.thumbnail || 'undefined'
+    blogPost?.content.thumbnail || "undefined"
   );
   const customThumbnail =
     startsWith(currThumnail, `https://cdn.namespace.media/`) ||
@@ -162,7 +162,7 @@ const BlogEditor: NextPage<UserTabProps> = ({ blogPost }) => {
               </div>
               <div className="flex flex-col gap-5">
                 <BlockTextArea
-                  inputProps={{ className: 'text-base' }}
+                  inputProps={{ className: "text-base" }}
                   value={blogPost?.content.body}
                   placeholder="Blog Post Body"
                   formError={errors.body}
@@ -216,6 +216,7 @@ export const getStaticProps = async (context: {
       else
         return {
           notFound: true,
+          revalidate: 1,
         };
     }
 
@@ -228,6 +229,7 @@ export const getStaticProps = async (context: {
   } catch (error) {
     return {
       notFound: true,
+      revalidate: 1,
     };
   }
 };
@@ -237,13 +239,13 @@ export async function getStaticPaths() {
     {
       params: {
         postID: [
-          'contributing_to_user_safety_and_service_guidelines_1657056506533',
+          "contributing_to_user_safety_and_service_guidelines_1657056506533",
         ],
       },
     },
   ];
 
-  return { paths, fallback: 'blocking' };
+  return { paths, fallback: "blocking" };
 }
 
 export default BlogEditor;

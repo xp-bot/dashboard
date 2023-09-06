@@ -1,25 +1,25 @@
-import { faEdit, faRemove } from '@fortawesome/free-solid-svg-icons';
-import { apiRoutes } from 'apis/api-helper';
-import BasicPanel from 'components/basic-panel';
-import ButtonCluster, { ButtonFeature } from 'components/button-cluster';
-import HeadSet from 'components/head-set';
-import HeaderServerLeaderboard from 'components/header-content/header-server-leaderboard';
-import LeaderboardPanel from 'components/leaderboard-panel';
-import LeaderboardPodiumPanel from 'components/leaderboard-podium-panel';
-import Modal from 'components/modal';
-import PageTitle from 'components/page-title';
-import PanelInput from 'components/panel-input';
-import { useLayout } from 'context/layout-context';
-import { useUser } from 'context/user-context';
-import { ceil, isNil, map, size, slice } from 'lodash';
-import { IXPLeaderboard, IXPLeaderboardUser } from 'models/backend/xp-models';
-import { IPage } from 'models/page';
-import { NextPage } from 'next';
-import { useRouter } from 'next/router';
+import { faEdit, faRemove } from "@fortawesome/free-solid-svg-icons";
+import { apiRoutes } from "apis/api-helper";
+import BasicPanel from "components/basic-panel";
+import ButtonCluster, { ButtonFeature } from "components/button-cluster";
+import HeadSet from "components/head-set";
+import HeaderServerLeaderboard from "components/header-content/header-server-leaderboard";
+import LeaderboardPanel from "components/leaderboard-panel";
+import LeaderboardPodiumPanel from "components/leaderboard-podium-panel";
+import Modal from "components/modal";
+import PageTitle from "components/page-title";
+import PanelInput from "components/panel-input";
+import { useLayout } from "context/layout-context";
+import { useUser } from "context/user-context";
+import { ceil, isNil, map, size, slice } from "lodash";
+import { IXPLeaderboard, IXPLeaderboardUser } from "models/backend/xp-models";
+import { IPage } from "models/page";
+import { NextPage } from "next";
+import { useRouter } from "next/router";
 // eslint-disable-next-line import/no-cycle
-import { useEffect, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { guildIconToURL } from 'utils/discord-utils';
+import { useEffect, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { guildIconToURL } from "utils/discord-utils";
 
 interface ServerTabProps extends IPage {
   serverid: string;
@@ -78,9 +78,8 @@ const LeaderboardPage: NextPage<ServerTabProps> = ({ serverid, lbContent }) => {
   useEffect(() => {
     layout.changeHeader(<h1>We are getting ready...</h1>, `server_loading`);
     const getLBPage = async () => {
-      const background = await apiRoutes.xp.guild.settings.background.get(
-        serverid
-      );
+      const background =
+        await apiRoutes.xp.guild.settings.background.get(serverid);
       const loggedInLB = await apiRoutes.xp.leaderboard.getPage(
         `${router.query.serverid}`,
         1
@@ -187,13 +186,13 @@ const LeaderboardPage: NextPage<ServerTabProps> = ({ serverid, lbContent }) => {
               <ButtonCluster
                 buttons={[
                   {
-                    text: 'Previous Page',
+                    text: "Previous Page",
                     link: `/lb/${serverid}/?page=${page > 1 ? page - 1 : page}`,
                     disabled: page <= 1,
                     shallowLink: true,
                   },
                   {
-                    text: 'Next Page',
+                    text: "Next Page",
                     link: `/lb/${serverid}/?page=${
                       page === pages ? page : page + 1
                     }`,
@@ -224,7 +223,7 @@ const LeaderboardPage: NextPage<ServerTabProps> = ({ serverid, lbContent }) => {
                 <div className="grow">
                   <PanelInput
                     registerForm={register(`xp`, {
-                      required: 'This Input is required!',
+                      required: "This Input is required!",
                       min: {
                         value: 0,
                         message: `You can't set a negative amount of xp.`,
@@ -237,7 +236,7 @@ const LeaderboardPage: NextPage<ServerTabProps> = ({ serverid, lbContent }) => {
                     label="XP"
                     inputProps={{ max: 2147483647, min: 0 }}
                     value={modifyUser.xp}
-                    type={'number'}
+                    type={"number"}
                     formError={errors.xp}
                   />
                 </div>
@@ -248,7 +247,7 @@ const LeaderboardPage: NextPage<ServerTabProps> = ({ serverid, lbContent }) => {
                   <LeaderboardPodiumPanel
                     hideBanner
                     key={`modify-LBPodium-${modifyUser.id}`}
-                    user={{ ...modifyUser, xp: watch('xp') || modifyUser.xp }}
+                    user={{ ...modifyUser, xp: watch("xp") || modifyUser.xp }}
                   />
                 </div>
               </div>
@@ -291,6 +290,7 @@ export const getStaticProps = async (context: {
     if (!res.success)
       return {
         notFound: true,
+        revalidate: 10,
       };
 
     return {
@@ -298,11 +298,12 @@ export const getStaticProps = async (context: {
         serverid: context.params.serverid,
         lbContent: res.body,
       },
-      revalidate: 5,
+      revalidate: 10,
     };
   } catch (error) {
     return {
       notFound: true,
+      revalidate: 10,
     };
   }
 };
@@ -311,12 +312,12 @@ export const getStaticPaths = async () => {
   const paths = [
     {
       params: {
-        serverid: '012345678912345678',
+        serverid: "012345678912345678",
       },
     },
   ];
 
-  return { paths, fallback: 'blocking' };
+  return { paths, fallback: "blocking" };
 };
 
 export default LeaderboardPage;

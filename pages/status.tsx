@@ -144,7 +144,7 @@ const Status: NextPage<HomeProps> = ({ incidents }) => {
           </div>
           <div className="grid grid-cols-1 justify-center gap-5 md:grid-cols-2 md:gap-10">
             <ChartPanel
-              // hideChart
+              hideChart
               title="Dashboard"
               chartData={compact([
                 ilumDashboard
@@ -153,7 +153,7 @@ const Status: NextPage<HomeProps> = ({ incidents }) => {
               ])}
             />
             <ChartPanel
-              // hideChart
+              hideChart
               title="Website"
               chartData={compact([
                 ilumWebsite

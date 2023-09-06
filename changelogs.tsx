@@ -313,6 +313,20 @@ const changelogs: { [version: string]: ChangelogType } = {
       },
     ],
   },
+  "2.0.18": {
+    "Status Page": [
+      {
+        type: "text",
+        content: "Implemented IlumV2.",
+      },
+    ],
+    Blog: [
+      {
+        type: "text",
+        content: "Implemented new streamlined blog overview layout.",
+      },
+    ],
+  },
 };
 
 export default changelogs;

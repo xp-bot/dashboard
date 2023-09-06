@@ -1,16 +1,16 @@
-import { faAdd } from '@fortawesome/free-solid-svg-icons';
-import { apiRoutes } from 'apis/api-helper';
-import BlogPostShowcasePanel from 'components/blog-post-showcase-panel';
-import ButtonCluster from 'components/button-cluster';
-import HeadSet from 'components/head-set';
-import HeaderBlogList from 'components/header-content/header-blog-list';
-import { useLayout } from 'context/layout-context';
-import { useUser } from 'context/user-context';
-import { filter, map, orderBy, slice, startsWith } from 'lodash';
-import { IBlogPost } from 'models/backend/blog-models';
-import { IPage } from 'models/page';
-import type { NextPage } from 'next';
-import { useEffect } from 'react';
+import { faAdd } from "@fortawesome/free-solid-svg-icons";
+import { apiRoutes } from "apis/api-helper";
+import BlogPostShowcasePanel from "components/blog-post-showcase-panel";
+import ButtonCluster from "components/button-cluster";
+import HeadSet from "components/head-set";
+import HeaderBlogList from "components/header-content/header-blog-list";
+import { useLayout } from "context/layout-context";
+import { useUser } from "context/user-context";
+import { filter, map, orderBy, slice, startsWith } from "lodash";
+import { IBlogPost } from "models/backend/blog-models";
+import { IPage } from "models/page";
+import type { NextPage } from "next";
+import { useEffect } from "react";
 
 interface HomeProps extends IPage {
   blogPosts: IBlogPost[];
@@ -50,7 +50,7 @@ const Blog: NextPage<HomeProps> = ({ blogPosts }) => {
 
         <div>
           <h2 className="mb-6">Recent Blogposts</h2>
-          <div className="flex flex-col gap-8 lg:flex-row lg:flex-wrap">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {map(
               orderBy(
                 filter(
@@ -58,7 +58,7 @@ const Blog: NextPage<HomeProps> = ({ blogPosts }) => {
                   (post) => !startsWith(post.content.title, `Guide: `)
                 ),
                 (post) => post.content.updated_at,
-                'desc'
+                "desc"
               ),
               (blogPost, idx) => (
                 <BlogPostShowcasePanel key={idx} blogPost={blogPost} />
@@ -71,7 +71,7 @@ const Blog: NextPage<HomeProps> = ({ blogPosts }) => {
           <h2 id="guides" className="mb-6">
             Guides
           </h2>
-          <div className="flex flex-col gap-8 lg:flex-row lg:flex-wrap">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {map(
               slice(
                 orderBy(
@@ -79,7 +79,7 @@ const Blog: NextPage<HomeProps> = ({ blogPosts }) => {
                     startsWith(post.content.title, `Guide: `)
                   ),
                   (post) => post.content.updated_at,
-                  'desc'
+                  "desc"
                 ),
                 0,
                 5
@@ -101,7 +101,7 @@ export async function getStaticProps() {
     props: {
       blogPosts: blogPosts.success ? blogPosts.body : [],
     },
-    revalidate: 300,
+    revalidate: 1,
   };
 }
 

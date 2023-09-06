@@ -8,17 +8,17 @@ import {
   PointElement,
   Title,
   Tooltip,
-} from 'chart.js';
-import day from 'dayjs';
-import { forEach, isEqual, map, size, slice, sum } from 'lodash';
-import { IIlumChart } from 'models/backend/ilum-models';
-import { useTheme } from 'next-themes';
-import { FC, useEffect, useState } from 'react';
-import { Line } from 'react-chartjs-2';
-import { isDark as isDarkTheme } from 'utils/theme-utils';
+} from "chart.js";
+import day from "dayjs";
+import { forEach, isEqual, last, map, size, slice, sum } from "lodash";
+import { IIlumChart } from "models/backend/ilum-models";
+import { useTheme } from "next-themes";
+import { FC, useEffect, useState } from "react";
+import { Line } from "react-chartjs-2";
+import { isDark as isDarkTheme } from "utils/theme-utils";
 
-import BasicPanel, { BasicPanelVariant } from './basic-panel';
-import Select from './select';
+import BasicPanel, { BasicPanelVariant } from "./basic-panel";
+import Select from "./select";
 
 ChartJS.register(
   CategoryScale,
@@ -44,13 +44,13 @@ interface ChartPanelProps {
 
 const statusToClass = {
   Stable:
-    'bg-[#16C172] text-lightText dark:text-lightText-darkMode dark:bg-[#16C172]/25 dark:border-2 dark:border-[#16C172]/60',
+    "bg-[#16C172] text-lightText dark:text-lightText-darkMode dark:bg-[#16C172]/25 dark:border-2 dark:border-[#16C172]/60",
   Unstable:
-    'bg-[#FC9E4F] text-lightText dark:text-lightText-darkMode dark:bg-[#FC9E4F]/25 dark:border-2 dark:border-[#FC9E4F]/60',
+    "bg-[#FC9E4F] text-lightText dark:text-lightText-darkMode dark:bg-[#FC9E4F]/25 dark:border-2 dark:border-[#FC9E4F]/60",
   Offline:
-    'bg-[#FF5964] text-lightText dark:text-lightText-darkMode dark:bg-[#FF5964]/25 dark:border-2 dark:border-[#FF5964]/60',
+    "bg-[#FF5964] text-lightText dark:text-lightText-darkMode dark:bg-[#FF5964]/25 dark:border-2 dark:border-[#FF5964]/60",
   Unknown:
-    'bg-[#3A2D32]/60 text-lightText dark:text-lightText-darkMode dark:bg-[#CC2936]/25 dark:border-2 dark:border-[#CC2936]/60',
+    "bg-[#3A2D32]/60 text-lightText dark:text-lightText-darkMode dark:bg-[#CC2936]/25 dark:border-2 dark:border-[#CC2936]/60",
 };
 
 const ChartPanel: FC<ChartPanelProps> = ({ chartData, title, hideChart }) => {
@@ -70,7 +70,7 @@ const ChartPanel: FC<ChartPanelProps> = ({ chartData, title, hideChart }) => {
     });
     const av = parseInt((sumNumber / (10 * size(chartData))).toFixed(0), 10);
     setAverage(av);
-    if (av === 0) setStatus(`Offline`);
+    if (av === 0 || !last(chartData)?.online) setStatus(`Offline`);
     else if (av > 500) setStatus(`Unstable`);
     else if (av < 1000) setStatus(`Stable`);
   };
@@ -99,18 +99,18 @@ const ChartPanel: FC<ChartPanelProps> = ({ chartData, title, hideChart }) => {
                   }}
                   options={[
                     {
-                      id: '-144',
-                      title: 'Last 24 hours',
+                      id: "-144",
+                      title: "Last 24 hours",
                       selected: timePeriod === -144,
                     },
                     {
-                      id: '-1008',
-                      title: 'Last 7 days',
+                      id: "-1008",
+                      title: "Last 7 days",
                       selected: timePeriod === -1008,
                     },
                     {
-                      id: '-4032',
-                      title: 'Last 30 days',
+                      id: "-4032",
+                      title: "Last 30 days",
                       selected: timePeriod === -4032,
                     },
                   ]}
@@ -136,7 +136,7 @@ const ChartPanel: FC<ChartPanelProps> = ({ chartData, title, hideChart }) => {
                 responsive: true,
                 interaction: {
                   intersect: false,
-                  mode: 'index',
+                  mode: "index",
                 },
                 plugins: {
                   tooltip: {
@@ -149,9 +149,9 @@ const ChartPanel: FC<ChartPanelProps> = ({ chartData, title, hideChart }) => {
                   },
                   legend: {
                     labels: {
-                      color: 'blue',
+                      color: "blue",
                     },
-                    position: 'bottom',
+                    position: "bottom",
                     display: size(chartData) > 1,
                   },
                 },
