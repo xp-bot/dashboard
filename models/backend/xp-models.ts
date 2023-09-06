@@ -1,4 +1,4 @@
-import { IDiscordGuildsRequest, IDiscordUser } from './discord-models';
+import { IDiscordGuildsRequest, IDiscordUser } from "./discord-models";
 
 export interface IXPGuild {
   values: { [name: string]: number };
@@ -16,6 +16,10 @@ export interface IXPGuild {
       percentage: number;
     }>;
     channels: Array<{
+      id: string;
+      percentage: number;
+    }>;
+    categories: Array<{
       id: string;
       percentage: number;
     }>;
