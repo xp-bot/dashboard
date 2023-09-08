@@ -1,23 +1,23 @@
-import { AxiosRequestConfig } from 'axios';
-import axiosApp, { axiosIlumApp } from 'axios-config';
+import { AxiosRequestConfig } from "axios";
+import axiosApp, { axiosIlumApp } from "axios-config";
 import {
   IBlogPost,
   IBlogPostComment,
   IBlogPostCommentContent,
   IBlogPostContent,
-} from 'models/backend/blog-models';
-import { IIlumAlivePing, IIlumChart } from 'models/backend/ilum-models';
-import { IIncident, IIncidentContent } from 'models/backend/incident-models';
-import { RequestInit } from 'next/dist/server/web/spec-extension/request';
+} from "models/backend/blog-models";
+import { IIlumAlivePing, IIlumChart } from "models/backend/ilum-models";
+import { IIncident, IIncidentContent } from "models/backend/incident-models";
+import { RequestInit } from "next/dist/server/web/spec-extension/request";
 
-import { IApiFailure, IApiSuccess } from '../models/api-models';
+import { IApiFailure, IApiSuccess } from "../models/api-models";
 import {
   IDiscordChannel,
   IDiscordGuildsRequest,
   IDiscordRole,
   IDiscordUser,
   IDiscordUserLookup,
-} from '../models/backend/discord-models';
+} from "../models/backend/discord-models";
 import {
   IServerSettingsBackground,
   IXPAPIGuild,
@@ -32,7 +32,7 @@ import {
   IXPUserBan,
   IXPUserPremium,
   IXPUserPremiumServers,
-} from '../models/backend/xp-models';
+} from "../models/backend/xp-models";
 
 export const apiGet = () => {
   return false;
@@ -83,13 +83,13 @@ const ilumAxios = async <Body>(route: string, options: AxiosRequestConfig) => {
 
 export const apiRoutes = {
   ilum: {
-    getIlumAPIPing: (type: `dashboard` | `api` | `website`) => {
-      return ilumAxios<IIlumChart>(`/v1/internal/ping/${type}`, {
+    getIlumAPIPing: (type: `dashboard` | `backend` | `website`) => {
+      return ilumAxios<IIlumChart>(`/data/ping/${type}`, {
         method: `GET`,
       });
     },
     getIlumShardAlivePings: () => {
-      return ilumAxios<IIlumAlivePing>(`/v1/internal/shards/alive`, {
+      return ilumAxios<IIlumAlivePing[]>(`/data/shards`, {
         method: `GET`,
       });
     },
