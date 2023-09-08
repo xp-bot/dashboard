@@ -1,14 +1,14 @@
 // eslint-disable-next-line import/no-cycle
 
-import { faAdd, faCancel, faSave } from '@fortawesome/free-solid-svg-icons';
-import { apiRoutes } from 'apis/api-helper';
-import ButtonCluster from 'components/button-cluster';
-import IncidentPanel from 'components/incident-panel';
-import Modal from 'components/modal';
-import MultilineInput from 'components/multiline-input';
-import PageTitle from 'components/page-title';
-import PanelInput from 'components/panel-input';
-import Select from 'components/select';
+import { faAdd, faCancel, faSave } from "@fortawesome/free-solid-svg-icons";
+import { apiRoutes } from "apis/api-helper";
+import ButtonCluster from "components/button-cluster";
+import IncidentPanel from "components/incident-panel";
+import Modal from "components/modal";
+import MultilineInput from "components/multiline-input";
+import PageTitle from "components/page-title";
+import PanelInput from "components/panel-input";
+import Select from "components/select";
 import {
   compact,
   isEqual,
@@ -17,10 +17,10 @@ import {
   map,
   replace,
   split,
-} from 'lodash';
-import { IIncident, IIncidentContent } from 'models/backend/incident-models';
-import { FC, useEffect, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+} from "lodash";
+import { IIncident, IIncidentContent } from "models/backend/incident-models";
+import { FC, useEffect, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 interface UserTabIncidentsProps {
   tabPath: string;

@@ -3,27 +3,31 @@ import {
   faPen,
   faShareAlt,
   faWarning,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { apiRoutes } from 'apis/api-helper';
-import BlogMarkdown from 'components/blog-markdown';
-import ButtonCluster, { ButtonFeature } from 'components/button-cluster';
-import HeadSet from 'components/head-set';
-import HeaderBlogPost from 'components/header-content/header-blog-post';
-import Modal from 'components/modal';
-import { BlogCommentsSection } from 'context/blog-comments-section';
-import { useLayout } from 'context/layout-context';
-import { useUser } from 'context/user-context';
-import { find, isEqual, isNil, isUndefined, size } from 'lodash';
-import { IBlogPost, IBlogPostComment } from 'models/backend/blog-models';
-import { IDiscordUserLookup } from 'models/backend/discord-models';
-import { IPage } from 'models/page';
-import type { NextPage } from 'next';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { avatarToURL } from 'utils/discord-utils';
-import { shareContent } from 'utils/url-utils';
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { apiRoutes } from "apis/api-helper";
+import BlogMarkdown from "components/blog-markdown";
+import ButtonCluster, { ButtonFeature } from "components/button-cluster";
+import HeadSet from "components/head-set";
+import HeaderBlogPost from "components/header-content/header-blog-post";
+import Modal from "components/modal";
+import { BlogCommentsSection } from "context/blog-comments-section";
+import { useLayout } from "context/layout-context";
+import { useUser } from "context/user-context";
+import { find, isEqual, isNil, isUndefined, size } from "lodash";
+import {
+  BlogPostStatus,
+  IBlogPost,
+  IBlogPostComment,
+} from "models/backend/blog-models";
+import { IDiscordUserLookup } from "models/backend/discord-models";
+import { IPage } from "models/page";
+import type { NextPage } from "next";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { avatarToURL } from "utils/discord-utils";
+import { shareContent } from "utils/url-utils";
 
 interface BlogPostProps extends IPage {
   blogPost: IBlogPost;
@@ -166,22 +170,35 @@ const BlogPost: NextPage<BlogPostProps> = ({ blogPost, comments }) => {
 };
 
 export async function getStaticProps(context: { params: { blogID: string } }) {
-  const blogPost = await apiRoutes.blog.get.specificPost(context.params.blogID);
-  const blogPostComments = await apiRoutes.blog.get.postComments(
-    context.params.blogID
-  );
+  try {
+    const blogPost = await apiRoutes.blog.get.specificPost(
+      context.params.blogID
+    );
+    const blogPostComments = await apiRoutes.blog.get.postComments(
+      context.params.blogID
+    );
 
-  if (!blogPost.success)
+    if (
+      !blogPost.success ||
+      blogPost.body.content.status === BlogPostStatus.DRAFT
+    )
+      return {
+        notFound: true,
+        revalidate: 10,
+      };
+    return {
+      props: {
+        blogPost: blogPost.body,
+        comments: blogPostComments.success ? blogPostComments.body : [],
+      },
+      revalidate: 10,
+    };
+  } catch (error) {
     return {
       notFound: true,
+      revalidate: 10,
     };
-  return {
-    props: {
-      blogPost: blogPost.body,
-      comments: blogPostComments.success ? blogPostComments.body : [],
-    },
-    revalidate: 30,
-  };
+  }
 }
 
 export async function getStaticPaths() {
@@ -191,7 +208,7 @@ export async function getStaticPaths() {
         params: { blogID: `guide_announcements_1660342055312` },
       },
     ],
-    fallback: 'blocking',
+    fallback: "blocking",
   };
 }
 
