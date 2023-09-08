@@ -20,9 +20,9 @@ import {
   last,
   map,
 } from "lodash";
-import { ThemeProvider } from "next-themes";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
+import { ThemeProvider } from "next-themes";
 import { useEffect, useState } from "react";
 import semver from "semver";
 
@@ -95,7 +95,7 @@ const ChangelogModal = () => {
       } v${envVersion}`}
     >
       <div className="flex flex-col gap-5">
-        {map(entries(versionChanges), ([title, changePart], idx) => {
+        {map(entries(versionChanges), ([title, changePart]) => {
           return (
             <div
               className="flex flex-col gap-5"
