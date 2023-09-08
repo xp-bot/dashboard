@@ -39,21 +39,21 @@ const XPValues = {
   Games: {
     lootXP: {
       name: `Loot XP`,
-      description: `The amount of XP a user gets for playing /loot.`,
+      description: `The amount of XP a user gets for playing /loot, before being multiplied (x1-6).`,
       default: 25,
       premiumFeature: false,
       unit: `%s% xp`,
     },
     fishXP: {
       name: `Fish XP`,
-      description: `The amount of XP a user gets for playing /fish.`,
+      description: `The amount of XP a user gets for playing /fish, before being multiplied (x1-6).`,
       default: 25,
       premiumFeature: false,
       unit: `%s% xp`,
     },
     rollXP: {
       name: `Roll XP`,
-      description: `The amount of XP a user gets for playing /roll.`,
+      description: `The amount of XP a user gets for playing /roll, before being multiplied (x1-6).`,
       default: 25,
       premiumFeature: false,
       unit: `%s% xp`,

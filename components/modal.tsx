@@ -1,9 +1,9 @@
-import { faClose } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { AnimatePresence, motion } from 'framer-motion';
-import useWindowSize from 'hooks/use-window-size';
-import { isUndefined, random } from 'lodash';
-import { FC, ReactNode, useRef } from 'react';
+import { faClose } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { AnimatePresence, motion } from "framer-motion";
+import useWindowSize from "hooks/use-window-size";
+import { isUndefined, random } from "lodash";
+import { FC, ReactNode, useRef } from "react";
 
 interface IModalProps {
   requestClose?: () => void;
@@ -44,13 +44,13 @@ const ModalPanel: FC<IModalProps> = ({
       // dragSnapToOrigin={true}
       // dragConstraints={{ left: 0, top: 0, right: 0 }}
       variants={{
-        exit: { y: isLG ? '-20px' : `100%`, opacity: 0 },
+        exit: { y: isLG ? "-20px" : `100%`, opacity: 0 },
         base: {
           y: 0,
           opacity: 1,
         },
       }}
-      transition={{ type: 'tween', duration: 0.3 }}
+      transition={{ type: "tween", duration: 0.3 }}
       // className={`max-h-[90%]   rounded-lg bg-panelBack p-10 dark:bg-panelBack-darkMode`}
       className={`absolute bottom-0 z-10 max-h-[90%] w-full min-w-[30%] overflow-auto rounded-t-lg bg-panelBack p-10 pb-[110px] dark:bg-panelBack-darkMode 2sm:w-4/5 2sm:md:w-fit lg:relative lg:rounded-lg lg:pb-10`}
     >
@@ -99,9 +99,9 @@ const Modal: FC<IModalProps> = ({
       {isOpen && (
         <motion.div
           key={`modal_${title}_${customKey || random(1.534)}_container`}
-          initial={'exit'}
-          animate={'base'}
-          exit={'exit'}
+          initial={"exit"}
+          animate={"base"}
+          exit={"exit"}
           className="fixed left-0 top-0 z-30 flex h-full w-full items-center justify-center"
         >
           <motion.div
@@ -110,7 +110,7 @@ const Modal: FC<IModalProps> = ({
               requestClose && requestClose();
             }}
             variants={{ exit: { opacity: 0 }, base: { opacity: 1 } }}
-            transition={{ type: 'tween', duration: 0.3 }}
+            transition={{ type: "tween", duration: 0.3 }}
             className={`fixed left-0 top-0 z-0 flex h-full w-full bg-black/75 p-5 pb-[90px]`}
           />
           <ModalPanel

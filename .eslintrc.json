@@ -13,7 +13,7 @@
       "off",
       {
         "singleQuote": true,
-        "endOfLine": "auto""semi": true
+        "endOfLine": "auto"
       }
     ]
   },

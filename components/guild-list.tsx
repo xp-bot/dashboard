@@ -1,12 +1,12 @@
-import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { map, size } from 'lodash';
-import Link from 'next/link';
-import { FC, MouseEventHandler, useState } from 'react';
+import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { map, size } from "lodash";
+import Link from "next/link";
+import { FC, MouseEventHandler, useState } from "react";
 
-import { IDiscordGuildsRequest } from '../models/backend/discord-models';
-import { guildIconToURL } from '../utils/discord-utils';
-import FallBackImage from './fallback-image';
+import { IDiscordGuildsRequest } from "../models/backend/discord-models";
+import { guildIconToURL } from "../utils/discord-utils";
+import FallBackImage from "./fallback-image";
 
 interface IMobileGuildListItem {
   guild: IDiscordGuildsRequest;
@@ -14,7 +14,7 @@ interface IMobileGuildListItem {
 }
 
 export enum ButtonFeature {
-  'danger' = 'bg-button-red text-lightText',
+  "danger" = "bg-button-red text-lightText",
 }
 
 interface GuildListProps {
@@ -50,7 +50,7 @@ const GuildList: FC<GuildListProps> = ({ buttons, title }) => {
                   />
                 </div>
                 <div className="ml-4 flex flex-col overflow-hidden break-words tiny:ml-0">
-                  <span className="-mb-1 font-montserrat text-[20px] line-clamp-1">
+                  <span className="-mb-1 line-clamp-1 font-montserrat text-[20px]">
                     {guild.name}
                   </span>
                   <h4 className="text-darkText dark:text-darkText-darkMode">
@@ -103,7 +103,7 @@ const GuildList: FC<GuildListProps> = ({ buttons, title }) => {
                   />
                 </div>
                 <div className="ml-4 flex shrink grow flex-col overflow-hidden break-words pl-28 tiny:ml-0">
-                  <span className="-mb-1 font-montserrat text-[20px] line-clamp-1">
+                  <span className="-mb-1 line-clamp-1 font-montserrat text-[20px]">
                     {guild.name}
                   </span>
                   <h4 className="truncate text-darkText dark:text-darkText-darkMode">

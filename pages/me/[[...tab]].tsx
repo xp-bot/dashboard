@@ -4,18 +4,17 @@ import {
   faPeopleCarryBox,
   faPowerOff,
   faUserSecret,
-} from '@fortawesome/free-solid-svg-icons';
-import changelogs from 'changelogs';
-import ButtonCluster from 'components/button-cluster';
-import TabBar from 'components/desktop/tab-bar';
-import HeadSet from 'components/head-set';
-import PageNavigationAnimator from 'components/page-navigation-animator';
-import PageTitle from 'components/page-title';
-import Select from 'components/select';
-import { useLayout } from 'context/layout-context';
-import { useUser } from 'context/user-context';
-import { UserDetailsContextProvider } from 'context/user-details-context';
-import { useAccessRestriction } from 'hooks/use-access-restriction';
+} from "@fortawesome/free-solid-svg-icons";
+import changelogs from "changelogs";
+import ButtonCluster from "components/button-cluster";
+import TabBar from "components/desktop/tab-bar";
+import HeadSet from "components/head-set";
+import PageNavigationAnimator from "components/page-navigation-animator";
+import PageTitle from "components/page-title";
+import Select from "components/select";
+import { useLayout } from "context/layout-context";
+import { useUser } from "context/user-context";
+import { UserDetailsContextProvider } from "context/user-details-context";
 import {
   filter,
   includes,
@@ -25,19 +24,19 @@ import {
   keys,
   map,
   size,
-} from 'lodash';
-import { NextPage } from 'next';
-import { useRouter } from 'next/router';
-import { useTheme } from 'next-themes';
-import UserPageLayout from 'page-tabs/user-tabs/user-page-layout';
+} from "lodash";
+import { NextPage } from "next";
+import { useRouter } from "next/router";
+import { useTheme } from "next-themes";
+import UserPageLayout from "page-tabs/user-tabs/user-page-layout";
 // eslint-disable-next-line import/no-cycle
-import { UserRoutes } from 'page-tabs/user-tabs/user-routes';
-import { useEffect } from 'react';
-import { userBannerToURL } from 'utils/discord-utils';
-import { splitUserArrayByMarginLeft } from 'utils/object-utils';
+import { UserRoutes } from "page-tabs/user-tabs/user-routes";
+import { useEffect } from "react";
+import { userBannerToURL } from "utils/discord-utils";
+import { splitUserArrayByMarginLeft } from "utils/object-utils";
 
-import HeaderUserProfile from '../../components/header-content/header-user-profile';
-import { IPage } from '../../models/page';
+import HeaderUserProfile from "../../components/header-content/header-user-profile";
+import { IPage } from "../../models/page";
 
 interface UserTabProps extends IPage {
   tab: keyof typeof UserRoutes; // Future Mo: Does not work with shallow routing (In TabBar). That's why we're using router.query.tab below.
@@ -48,7 +47,7 @@ const UserTab: NextPage<UserTabProps> = () => {
   const layout = useLayout();
   const user = useUser();
   const theme = useTheme();
-  useAccessRestriction(true, false);
+  // useAccessRestriction(false, false);
 
   const tabName = router.query.tab ? router.query.tab[0] : null;
   const tab = tabName
@@ -169,23 +168,23 @@ const UserTab: NextPage<UserTabProps> = () => {
                     ]}
                   />
                   <div className="w-full">
-                    <PageTitle title={'Appearance'} disableArrow />
+                    <PageTitle title={"Appearance"} disableArrow />
                     <Select
                       onChange={(v) => theme.setTheme(v)}
                       options={[
                         {
-                          id: 'system',
-                          title: 'Use System Settings',
+                          id: "system",
+                          title: "Use System Settings",
                           selected: isEqual(theme.theme, `system`),
                         },
                         {
-                          id: 'light',
-                          title: 'Light Mode',
+                          id: "light",
+                          title: "Light Mode",
                           selected: isEqual(theme.theme, `light`),
                         },
                         {
-                          id: 'dark',
-                          title: 'Dark Mode',
+                          id: "dark",
+                          title: "Dark Mode",
                           selected: isEqual(theme.theme, `dark`),
                         },
                       ]}
@@ -255,7 +254,7 @@ export async function getStaticPaths() {
     },
   ];
 
-  return { paths, fallback: 'blocking' };
+  return { paths, fallback: "blocking" };
 }
 
 export default UserTab;

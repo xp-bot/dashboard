@@ -1,11 +1,18 @@
+export enum BlogPostStatus {
+  DRAFT = "draft",
+  PUBLISHED = "published",
+  UNLISTED = "unlisted",
+}
+
 export interface IBlogPostContent {
   title: string;
   creator: string;
   body: string;
   description: string;
   thumbnail?: string;
-  updated_at?: number;
-  created_at?: number;
+  updated_at?: Date;
+  created_at?: Date;
+  status: BlogPostStatus;
 }
 
 export interface IBlogPost {
