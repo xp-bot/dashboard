@@ -26,8 +26,8 @@ import {
   size,
 } from "lodash";
 import { NextPage } from "next";
-import { useRouter } from "next/router";
 import { useTheme } from "next-themes";
+import { useRouter } from "next/router";
 import UserPageLayout from "page-tabs/user-tabs/user-page-layout";
 // eslint-disable-next-line import/no-cycle
 import { UserRoutes } from "page-tabs/user-tabs/user-routes";
@@ -228,6 +228,7 @@ export const getStaticProps = async (context: {
   ) {
     return {
       notFound: true,
+      revalidate: 1,
     };
   }
 
@@ -236,11 +237,12 @@ export const getStaticProps = async (context: {
       props: {
         tab: context.params.tab ? context.params.tab[0] : null,
       },
-      revalidate: 300,
+      revalidate: 1,
     };
   } catch (error) {
     return {
       notFound: true,
+      revalidate: 1,
     };
   }
 };

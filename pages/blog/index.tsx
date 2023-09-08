@@ -117,7 +117,7 @@ export async function getStaticProps() {
     props: {
       blogPosts: blogPosts.success ? blogPosts.body : [],
     },
-    revalidate: 300,
+    revalidate: 5,
   };
 }
 
