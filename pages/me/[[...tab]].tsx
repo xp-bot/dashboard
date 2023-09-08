@@ -26,8 +26,8 @@ import {
   size,
 } from "lodash";
 import { NextPage } from "next";
-import { useTheme } from "next-themes";
 import { useRouter } from "next/router";
+import { useTheme } from "next-themes";
 import UserPageLayout from "page-tabs/user-tabs/user-page-layout";
 // eslint-disable-next-line import/no-cycle
 import { UserRoutes } from "page-tabs/user-tabs/user-routes";
