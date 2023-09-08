@@ -323,7 +323,8 @@ const changelogs: { [version: string]: ChangelogType } = {
     Blog: [
       {
         type: "text",
-        content: "Implemented new streamlined blog overview layout.",
+        content:
+          "Implemented new streamlined blog overview layout and improved sorting.",
       },
     ],
     "Server Dashboard": [
