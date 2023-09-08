@@ -74,12 +74,20 @@ const Home: NextPage<HomeProps> = ({ blogPosts }) => {
 };
 
 export async function getStaticProps() {
-  const blogPosts = await apiRoutes.blog.get.posts();
-  return {
-    props: {
-      blogPosts: blogPosts.success ? blogPosts.body : [],
-    },
-  };
+  try {
+    const blogPosts = await apiRoutes.blog.get.posts();
+    return {
+      props: {
+        blogPosts: blogPosts.success ? blogPosts.body : [],
+      },
+      revalidate: 10,
+    };
+  } catch (error) {
+    return {
+      notFound: true,
+      revalidate: 10,
+    };
+  }
 }
 
 export default Home;

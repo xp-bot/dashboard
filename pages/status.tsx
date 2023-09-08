@@ -199,27 +199,34 @@ const Status: NextPage<HomeProps> = ({
 };
 
 export async function getStaticProps() {
-  const incidents = await apiRoutes.incidents.getActiveIncidents();
+  try {
+    const incidents = await apiRoutes.incidents.getActiveIncidents();
 
-  const [apiChart, dashboardChart, websiteChart, shardPings] =
-    await Promise.all([
-      apiRoutes.ilum.getIlumAPIPing("backend"),
-      apiRoutes.ilum.getIlumAPIPing("dashboard"),
-      apiRoutes.ilum.getIlumAPIPing("website"),
-      apiRoutes.ilum.getIlumShardAlivePings(),
-    ]);
-  return {
-    props: {
-      incidents: incidents.success
-        ? sortBy(incidents.body, (incident) => incident.createdAt)
-        : [],
-      apiChart,
-      dashboardChart,
-      websiteChart,
-      shardPings,
-    },
-    revalidate: 10,
-  };
+    const [apiChart, dashboardChart, websiteChart, shardPings] =
+      await Promise.all([
+        apiRoutes.ilum.getIlumAPIPing("backend"),
+        apiRoutes.ilum.getIlumAPIPing("dashboard"),
+        apiRoutes.ilum.getIlumAPIPing("website"),
+        apiRoutes.ilum.getIlumShardAlivePings(),
+      ]);
+    return {
+      props: {
+        incidents: incidents.success
+          ? sortBy(incidents.body, (incident) => incident.createdAt)
+          : [],
+        apiChart,
+        dashboardChart,
+        websiteChart,
+        shardPings,
+      },
+      revalidate: 10,
+    };
+  } catch (error) {
+    return {
+      notFound: true,
+      revalidate: 10,
+    };
+  }
 }
 
 export default Status;

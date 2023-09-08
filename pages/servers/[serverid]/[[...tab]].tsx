@@ -1,15 +1,15 @@
-import ButtonCluster from 'components/button-cluster';
-import TabBar from 'components/desktop/tab-bar';
-import HeadSet from 'components/head-set';
-import HeaderServer from 'components/header-content/header-server';
-import PageNavigationAnimator from 'components/page-navigation-animator';
+import ButtonCluster from "components/button-cluster";
+import TabBar from "components/desktop/tab-bar";
+import HeadSet from "components/head-set";
+import HeaderServer from "components/header-content/header-server";
+import PageNavigationAnimator from "components/page-navigation-animator";
 import {
   GuildDetailsContextProvider,
   useServerDetails,
-} from 'context/guild-details-context';
-import { useLayout } from 'context/layout-context';
-import { useUser } from 'context/user-context';
-import { AnimatePresence, motion } from 'framer-motion';
+} from "context/guild-details-context";
+import { useLayout } from "context/layout-context";
+import { useUser } from "context/user-context";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   filter,
   includes,
@@ -20,15 +20,15 @@ import {
   map,
   replace,
   size,
-} from 'lodash';
-import { IPage } from 'models/page';
-import { NextPage } from 'next';
-import { useRouter } from 'next/router';
-import ServerPageLayout from 'page-tabs/server-tabs/server-page-layout';
-import { ServerRoutes } from 'page-tabs/server-tabs/server-routes';
+} from "lodash";
+import { IPage } from "models/page";
+import { NextPage } from "next";
+import { useRouter } from "next/router";
+import ServerPageLayout from "page-tabs/server-tabs/server-page-layout";
+import { ServerRoutes } from "page-tabs/server-tabs/server-routes";
 // eslint-disable-next-line import/no-cycle
-import { FC, useEffect } from 'react';
-import { splitServerArrayByMarginLeft } from 'utils/object-utils';
+import { FC, useEffect } from "react";
+import { splitServerArrayByMarginLeft } from "utils/object-utils";
 
 interface ServerTabProps extends IPage {
   tab: keyof typeof ServerRoutes; // Future Mo: Does not work with shallow routing (In TabBar). That's why we're using router.query.tab below.
@@ -227,6 +227,7 @@ export const getStaticProps = async (context: {
   ) {
     return {
       notFound: true,
+      revalidate: 1,
     };
   }
 
@@ -236,11 +237,12 @@ export const getStaticProps = async (context: {
         serverid: context.params.serverid,
         tab: context.params.tab ? context.params.tab[0] : null,
       },
-      revalidate: 300,
+      revalidate: 1,
     };
   } catch (error) {
     return {
       notFound: true,
+      revalidate: 1,
     };
   }
 };
@@ -249,13 +251,13 @@ export const getStaticPaths = async () => {
   const paths = [
     {
       params: {
-        serverid: '012345678912345678',
+        serverid: "012345678912345678",
         tab: map(ServerRoutes, (k, v) => v),
       },
     },
   ];
 
-  return { paths, fallback: 'blocking' };
+  return { paths, fallback: "blocking" };
 };
 
 export default ServerTab;

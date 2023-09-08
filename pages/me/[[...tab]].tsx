@@ -228,6 +228,7 @@ export const getStaticProps = async (context: {
   ) {
     return {
       notFound: true,
+      revalidate: 1,
     };
   }
 
@@ -236,11 +237,12 @@ export const getStaticProps = async (context: {
       props: {
         tab: context.params.tab ? context.params.tab[0] : null,
       },
-      revalidate: 300,
+      revalidate: 1,
     };
   } catch (error) {
     return {
       notFound: true,
+      revalidate: 1,
     };
   }
 };

@@ -244,6 +244,7 @@ export const getStaticProps = async (context: {
       else
         return {
           notFound: true,
+          revalidate: 1,
         };
     }
 
@@ -256,6 +257,7 @@ export const getStaticProps = async (context: {
   } catch (error) {
     return {
       notFound: true,
+      revalidate: 1,
     };
   }
 };
