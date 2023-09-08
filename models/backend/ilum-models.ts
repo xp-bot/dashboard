@@ -5,10 +5,6 @@ export interface IIlumChart {
 }
 
 export interface IIlumAlivePing {
-  shards: IIlumAlivePingContent[];
-}
-
-export interface IIlumAlivePingContent {
   shard_id: number;
   server_count: number;
   websocket_ping: number;

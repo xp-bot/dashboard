@@ -1,19 +1,19 @@
-import { apiRoutes } from 'apis/api-helper';
-import BasicPanel from 'components/basic-panel';
-import FallBackImage from 'components/fallback-image';
-import HeadSet from 'components/head-set';
-import HeaderChangelogs from 'components/header-content/header-changelogs';
-import PageTitle from 'components/page-title';
-import Tooltip from 'components/tooltip';
-import { useLayout } from 'context/layout-context';
-import { entries, map, reverse, size } from 'lodash';
-import { IDiscordUserLookup } from 'models/backend/discord-models';
-import { IPage } from 'models/page';
-import type { NextPage } from 'next';
-import { FC, useEffect, useState } from 'react';
-import { avatarToURL } from 'utils/discord-utils';
+import { apiRoutes } from "apis/api-helper";
+import BasicPanel from "components/basic-panel";
+import FallBackImage from "components/fallback-image";
+import HeadSet from "components/head-set";
+import HeaderChangelogs from "components/header-content/header-changelogs";
+import PageTitle from "components/page-title";
+import Tooltip from "components/tooltip";
+import { useLayout } from "context/layout-context";
+import { entries, isEqual, map, reverse, size } from "lodash";
+import { IDiscordUserLookup } from "models/backend/discord-models";
+import { IPage } from "models/page";
+import type { NextPage } from "next";
+import { FC, useEffect, useState } from "react";
+import { avatarToURL } from "utils/discord-utils";
 
-import changelog from '../changelogs';
+import changelog from "../changelogs";
 
 interface HomeProps extends IPage {}
 
@@ -49,7 +49,9 @@ export const ChangelogUser: FC<{ user_id: string }> = ({ user_id }) => {
           {user ? (
             <>
               {user.username}
-              <span className="opacity-50">#{user.discriminator}</span>
+              {user.discriminator && !isEqual(user.discriminator, "0") && (
+                <span className="opacity-50">#{user.discriminator}</span>
+              )}
             </>
           ) : (
             user_id
@@ -97,7 +99,7 @@ const Blog: NextPage<HomeProps> = () => {
                                 <h2>{title}</h2>
                                 <ul className="flex flex-col gap-2">
                                   {map(changes, (change, changesIDX) => {
-                                    return change.type === 'image' ? (
+                                    return change.type === "image" ? (
                                       <div
                                         key={`changelog-modal-version-change-${change.type}-${changesIDX}`}
                                         className="my-5 px-5 py-2 pt-0"

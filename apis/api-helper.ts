@@ -89,7 +89,7 @@ export const apiRoutes = {
       });
     },
     getIlumShardAlivePings: () => {
-      return ilumAxios<IIlumAlivePing>(`/data/shards`, {
+      return ilumAxios<IIlumAlivePing[]>(`/data/shards`, {
         method: `GET`,
       });
     },

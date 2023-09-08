@@ -9,11 +9,7 @@ import PageTitle from "components/page-title";
 import { useLayout } from "context/layout-context";
 import useBreakpoints from "hooks/use-breakpoints";
 import { compact, map, size, sortBy } from "lodash";
-import {
-  IIlumAlivePing,
-  IIlumAlivePingContent,
-  IIlumChart,
-} from "models/backend/ilum-models";
+import { IIlumAlivePing, IIlumChart } from "models/backend/ilum-models";
 import { IIncident } from "models/backend/incident-models";
 import { IPage } from "models/page";
 import type { NextPage } from "next";
@@ -35,7 +31,7 @@ const statusToClass = {
 };
 
 const ShardPanel: FC<{
-  shard: IIlumAlivePingContent;
+  shard: IIlumAlivePing;
 }> = ({ shard }) => (
   <div
     className={`flex h-full w-full grow items-center justify-center whitespace-nowrap rounded-md border border-input-border p-2 px-3 text-center shadow-md ${
@@ -54,7 +50,7 @@ const ShardPanel: FC<{
 
 const Status: NextPage<HomeProps> = ({ incidents }) => {
   const layout = useLayout();
-  const [ilumShards, setIlumShards] = useState<IIlumAlivePing | undefined>();
+  const [ilumShards, setIlumShards] = useState<IIlumAlivePing[]>([]);
   const [ilumAPI, setIlumAPI] = useState<IIlumChart | undefined>();
   const [ilumDashboard, setIlumDashboard] = useState<IIlumChart | undefined>();
   const [ilumWebsite, setIlumWebsite] = useState<IIlumChart | undefined>();
@@ -168,7 +164,7 @@ const Status: NextPage<HomeProps> = ({ incidents }) => {
         <BasicPanel>
           <div className="grid grid-cols-1 flex-wrap gap-3 md:grid-cols-3 lg:grid-cols-4">
             {map(
-              sortBy(ilumShards?.shards, (shard) => shard.shard_id),
+              sortBy(ilumShards, (shard) => shard.shard_id),
               (shard) => (
                 <ShardPanel shard={shard} />
               )
