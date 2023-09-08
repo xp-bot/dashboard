@@ -15,6 +15,7 @@ import Select from "components/select";
 import { useLayout } from "context/layout-context";
 import { useUser } from "context/user-context";
 import { UserDetailsContextProvider } from "context/user-details-context";
+import { useAccessRestriction } from "hooks/use-access-restriction";
 import {
   filter,
   includes,
@@ -47,7 +48,7 @@ const UserTab: NextPage<UserTabProps> = () => {
   const layout = useLayout();
   const user = useUser();
   const theme = useTheme();
-  // useAccessRestriction(false, false);
+  useAccessRestriction(true, false);
 
   const tabName = router.query.tab ? router.query.tab[0] : null;
   const tab = tabName

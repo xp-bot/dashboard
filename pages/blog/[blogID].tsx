@@ -58,6 +58,15 @@ const BlogPost: NextPage<BlogPostProps> = ({ blogPost, comments }) => {
         .lookupUser(selectedComment.content.creator)
         .then((res) => (res.success ? setSelectedLookup(res.body) : undefined));
   }, []);
+
+  const handleDeletePost = async () => {
+    const res = await apiRoutes.blog.deletePost(blogPost.postID);
+    if (res.success) router.push("/blog");
+    else console.log(res.message);
+
+    // TODO: Toast
+  };
+
   return (
     <div>
       {!isUndefined(selectedComment) ? (
@@ -158,7 +167,7 @@ const BlogPost: NextPage<BlogPostProps> = ({ blogPost, comments }) => {
               {
                 text: `Yes, i want to permanently delete this blog post!`,
                 feature: ButtonFeature.danger,
-                onClick: () => {},
+                onClick: handleDeletePost,
                 icon: faWarning,
               },
             ]}
