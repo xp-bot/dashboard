@@ -1,20 +1,22 @@
 import {
   faArrowCircleLeft,
   faInfoCircle,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { motion } from 'framer-motion';
-import { join, slice, split } from 'lodash';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { motion } from "framer-motion";
+import { join, slice, split } from "lodash";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { ReactNode } from "react";
 
-import Tooltip from './tooltip';
+import Tooltip from "./tooltip";
 
 const PageTitle = (props: {
   motionTextKey?: string;
   disableArrow?: boolean;
   title: string;
   tooltipText?: string;
+  children?: ReactNode;
 }) => {
   const router = useRouter();
   const splitted = split(router.asPath, `/`);
@@ -22,7 +24,7 @@ const PageTitle = (props: {
 
   return (
     <>
-      <div className="lg:hidden">
+      <div className="flex flex-row justify-between lg:hidden">
         <Link
           href={props.disableArrow ? `#` : previousSlug}
           className={`lg:hidden ${
@@ -30,7 +32,7 @@ const PageTitle = (props: {
           }`}
         >
           <motion.h2
-            transition={{ type: 'tween' }}
+            transition={{ type: "tween" }}
             layoutId={props.motionTextKey}
             className={`relative mb-6 mt-2 flex flex-row items-center gap-2 transition ease-in-out active:-translate-x-1`}
           >
@@ -44,16 +46,19 @@ const PageTitle = (props: {
           </motion.h2>
         </Link>
       </div>
-      <div className="hidden flex-row items-center gap-2 lg:flex">
-        <h2 className="my-6 w-fit">{props.title}</h2>
-        {props.tooltipText && (
-          <Tooltip text={props.tooltipText}>
-            <FontAwesomeIcon
-              className="text-darkText opacity-25 transition ease-in-out hover:opacity-75 dark:text-darkText-darkMode"
-              icon={faInfoCircle}
-            />
-          </Tooltip>
-        )}
+      <div className="hidden flex-row items-center justify-between lg:flex">
+        <div className="flex-row items-center gap-2 lg:flex">
+          <h2 className="my-6 w-fit">{props.title}</h2>
+          {props.tooltipText && (
+            <Tooltip text={props.tooltipText}>
+              <FontAwesomeIcon
+                className="text-darkText opacity-25 transition ease-in-out hover:opacity-75 dark:text-darkText-darkMode"
+                icon={faInfoCircle}
+              />
+            </Tooltip>
+          )}
+        </div>
+        {props.children}
       </div>
     </>
   );

@@ -11,7 +11,7 @@ Thank you for contributing to XP!
 # Contribute
 For testing, you only need to set up this codebase. By default, all requests will go directly to our official backend server, so you can test your changes without any hassle and everything would work precisely as it would on a production level.
 
-1. [Fork](https://github.com/xp-bot/dashboard/fork) the project.
+1. [Fork](https://github.com/xp-bot/dashboard/fork) the **develop** branch.
 2. Push your changes as commits on your fork.
 3. [Create a Pull Request](https://github.com/xp-bot/dashboard/compare). Make sure to use a descriptive title and detailed description.
 > Please avoid submitting large pull requests with multiple changes as they will be categorically rejected. Always create one pull request per change.

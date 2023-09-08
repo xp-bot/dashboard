@@ -12,7 +12,7 @@ const HeaderPremium: FC<HeaderPremiumProps> = () => {
           <h1 className="tracking-[.1em] md:whitespace-nowrap md:text-[4.5vw]">
             Even better with Premium
           </h1>
-          <span className="font-montserrat text-sm font-semibold text-lightText dark:text-lightText-darkMode opacity-75 lg:text-[1.4vw] xl:text-[1vw]">
+          <span className="font-montserrat text-sm font-semibold text-lightText opacity-75 dark:text-lightText-darkMode lg:text-[1.4vw] xl:text-[1vw]">
             Get even more in-depth with XP Premium!
           </span>
         </div>

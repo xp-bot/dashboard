@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require("path");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -7,13 +7,14 @@ const nextConfig = {
 
   images: {
     domains: [
-      'localhost',
-      'xpwebv1.xp-bot.net',
-      'namespace.media',
-      'cdn.namespace.media',
-      'qwq.sh',
-      'api.beta.xp-bot.net',
-      'api.xp-bot.net',
+      "localhost",
+      "xpwebv1.xp-bot.net",
+      "namespace.media",
+      "cdn.namespace.media",
+      "qwq.sh",
+      "cny.sh",
+      "api.beta.xp-bot.net",
+      "api.xp-bot.net",
     ],
   },
 
@@ -22,7 +23,7 @@ const nextConfig = {
     ILUM_DOMAIN: process.env.ILUM_DOMAIN,
   },
   sassOptions: {
-    includePaths: [path.join(__dirname, 'styles')],
+    includePaths: [path.join(__dirname, "styles")],
   },
 };
 

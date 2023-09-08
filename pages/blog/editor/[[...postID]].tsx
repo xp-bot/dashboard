@@ -1,20 +1,20 @@
-import { apiRoutes } from 'apis/api-helper';
-import BlockButton, { BlockButtonVariant } from 'components/block-button';
-import BlockInput from 'components/block-input';
-import BlockTextArea from 'components/block-text-area';
-import BlogMarkdown from 'components/blog-markdown';
-import HeaderEditBlogPost from 'components/header-content/header-edit-blog-post';
-import PageTitle from 'components/page-title';
-import { useLayout } from 'context/layout-context';
-import { useUser } from 'context/user-context';
-import { isNil, size, startsWith } from 'lodash';
-import { IBlogPost } from 'models/backend/blog-models';
-import { IPage } from 'models/page';
-import { NextPage } from 'next';
-import { useRouter } from 'next/router';
+import { apiRoutes } from "apis/api-helper";
+import BlockButton, { BlockButtonVariant } from "components/block-button";
+import BlockInput from "components/block-input";
+import BlockTextArea from "components/block-text-area";
+import BlogMarkdown from "components/blog-markdown";
+import HeaderEditBlogPost from "components/header-content/header-edit-blog-post";
+import PageTitle from "components/page-title";
+import { useLayout } from "context/layout-context";
+import { useUser } from "context/user-context";
+import { isNil, size, startsWith } from "lodash";
+import { BlogPostStatus, IBlogPost } from "models/backend/blog-models";
+import { IPage } from "models/page";
+import { NextPage } from "next";
+import { useRouter } from "next/router";
 // eslint-disable-next-line import/no-cycle
-import { useEffect } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useEffect } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 interface IBlogPostInputs {
   title: string;
@@ -41,37 +41,53 @@ const BlogEditor: NextPage<UserTabProps> = ({ blogPost }) => {
 
   const currThumnail = watch(
     `thumbnail`,
-    blogPost?.content.thumbnail || 'undefined'
+    blogPost?.content.thumbnail || "undefined"
   );
   const customThumbnail =
     startsWith(currThumnail, `https://cdn.namespace.media/`) ||
-    startsWith(currThumnail, `https://qwq.sh/`)
+    startsWith(currThumnail, `https://qwq.sh/`) ||
+    startsWith(currThumnail, `https://cny.sh/`)
       ? currThumnail
       : undefined;
 
-  const postBlogPost: SubmitHandler<IBlogPostInputs> = async (data) => {
-    if (!user.currentUser) return;
-    if (isNil(blogPost)) {
-      const res = await apiRoutes.blog.createPost({
-        title: data.title,
-        body: data.body,
-        creator: user.currentUser.discordUser.id,
-        description: data.description,
-        thumbnail: data.thumbnail,
-      });
-      if (res.success) router.push(`/blog/${res.body.postID}`);
-      else null; // TODO: TOAST
+  const handlePostBlogPost = async (
+    data: IBlogPostInputs,
+    status: BlogPostStatus
+  ) => {
+    if (!user.currentUser || isNil(blogPost)) return;
+
+    const postData = {
+      title: data.title,
+      body: data.body,
+      creator: user.currentUser.discordUser.id,
+      description: data.description,
+      thumbnail: data.thumbnail,
+      status,
+    };
+
+    const apiCall = isNil(blogPost)
+      ? apiRoutes.blog.createPost(postData)
+      : apiRoutes.blog.updatePost(blogPost.postID, postData);
+
+    const res = await apiCall;
+
+    if (res.success) {
+      const route =
+        status === BlogPostStatus.DRAFT ? "/blog" : `/blog/${res.body.postID}`;
+      router.push(route);
     } else {
-      const res = await apiRoutes.blog.updatePost(blogPost.postID, {
-        title: data.title,
-        body: data.body,
-        creator: user.currentUser.discordUser.id,
-        description: data.description,
-        thumbnail: data.thumbnail,
-      });
-      if (res.success) router.push(`/blog/${blogPost.postID}`);
-      else null; // TODO: TOAST
+      // TODO: TOAST
     }
+  };
+
+  const postPublicBlogPost: SubmitHandler<IBlogPostInputs> = async (data) => {
+    handlePostBlogPost(data, BlogPostStatus.PUBLISHED);
+  };
+  const postPrivateBlogPost: SubmitHandler<IBlogPostInputs> = async (data) => {
+    handlePostBlogPost(data, BlogPostStatus.UNLISTED);
+  };
+  const postDraftBlogPost: SubmitHandler<IBlogPostInputs> = async (data) => {
+    handlePostBlogPost(data, BlogPostStatus.DRAFT);
   };
 
   useEffect(() => {
@@ -105,10 +121,10 @@ const BlogEditor: NextPage<UserTabProps> = ({ blogPost }) => {
         />
       </div>
       {user.currentUser?.developer && (
-        <div className="relative left-0 grid h-fit w-full grid-cols-1 gap-5 overflow-auto px-12 xl:grid-cols-[1fr_1px_1fr]">
+        <div className="relative left-0 grid h-fit w-full grid-cols-1 gap-5 overflow-auto xl:grid-cols-[1fr_1px_1fr]">
           <div>
             <form
-              onSubmit={handleSubmit(postBlogPost)}
+              onSubmit={handleSubmit(postPublicBlogPost)}
               className="flex w-full flex-col gap-5"
             >
               <div className="flex w-full flex-row gap-5">
@@ -162,7 +178,7 @@ const BlogEditor: NextPage<UserTabProps> = ({ blogPost }) => {
               </div>
               <div className="flex flex-col gap-5">
                 <BlockTextArea
-                  inputProps={{ className: 'text-base' }}
+                  inputProps={{ className: "text-base" }}
                   value={blogPost?.content.body}
                   placeholder="Blog Post Body"
                   formError={errors.body}
@@ -179,7 +195,19 @@ const BlogEditor: NextPage<UserTabProps> = ({ blogPost }) => {
                   })}
                 />
               </div>
-              <div className="flex justify-end">
+              <div className="flex flex-row justify-end gap-2">
+                <BlockButton
+                  variant={BlockButtonVariant.blog}
+                  onClick={handleSubmit(postDraftBlogPost)}
+                >
+                  Save as Draft
+                </BlockButton>
+                <BlockButton
+                  variant={BlockButtonVariant.blog}
+                  onClick={handleSubmit(postPrivateBlogPost)}
+                >
+                  {isNil(blogPost) ? `Post Unlisted` : `Save & Post Unlisted`}
+                </BlockButton>
                 <BlockButton variant={BlockButtonVariant.blog} type="submit">
                   {isNil(blogPost) ? `Publish` : `Save & Publish`}
                 </BlockButton>
@@ -237,13 +265,13 @@ export async function getStaticPaths() {
     {
       params: {
         postID: [
-          'contributing_to_user_safety_and_service_guidelines_1657056506533',
+          "contributing_to_user_safety_and_service_guidelines_1657056506533",
         ],
       },
     },
   ];
 
-  return { paths, fallback: 'blocking' };
+  return { paths, fallback: "blocking" };
 }
 
 export default BlogEditor;
