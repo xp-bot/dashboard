@@ -1,14 +1,14 @@
-import { faSave } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { motion } from 'framer-motion';
-import { useMediaQuery } from 'hooks/use-media-query';
-import { isUndefined } from 'lodash';
-import React, { useRef, useState } from 'react';
-import { captureRankingBackground } from 'utils/image-utils';
+import { faSave } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { motion } from "framer-motion";
+import { useMediaQuery } from "hooks/use-media-query";
+import { isUndefined } from "lodash";
+import React, { useRef, useState } from "react";
+import { captureRankingBackground } from "utils/image-utils";
 
-import { apiRoutes } from '../apis/api-helper';
-import { IXPBackground, IXPUser } from '../models/backend/xp-models';
-import { useUser } from './user-context';
+import { apiRoutes } from "../apis/api-helper";
+import { IXPBackground, IXPUser } from "../models/backend/xp-models";
+import { useUser } from "./user-context";
 
 interface IUserDetailsContextValues {
   currentXPUser?: IXPUser;
@@ -44,7 +44,7 @@ export function UserDetailsContextProvider({
   children,
 }: IUserDetailsContextProviderProps): React.ReactElement {
   const userContext = useUser();
-  const isLg = useMediaQuery('(min-width: 900px)');
+  const isLg = useMediaQuery("(min-width: 900px)");
 
   const [currentXPUser, setCurrentXPUser] = useState<IXPUser | undefined>();
 
@@ -140,7 +140,7 @@ export function UserDetailsContextProvider({
           type="file"
           id="upload-button"
           ref={tempRankingCardImageUploadButton}
-          style={{ display: 'none' }}
+          style={{ display: "none" }}
           accept={`.png,.jpg`}
           onChange={(e) => {
             if (e.target.files && e.target.files[0]) {
@@ -154,25 +154,25 @@ export function UserDetailsContextProvider({
         />
 
         <motion.div
-          initial={{ y: '4rem', opacity: 0 }}
+          initial={{ y: "4rem", opacity: 0 }}
           animate={
             !isUndefined(currentXPUser) || unsavedTempRankingCardImage
-              ? { y: isLg ? '-2rem' : '-8rem', opacity: 1 }
-              : { y: '4rem', opacity: 0 }
+              ? { y: isLg ? "-2rem" : "-5rem", opacity: 1 }
+              : { y: "4rem", opacity: 0 }
           }
           className={`pointer-events-none fixed bottom-0 left-0 z-30 flex h-20 w-full justify-center`}
         >
           <div className={`container mx-auto box-border px-10`}>
             <div className={`relative h-full w-full`}>
-              <div
+              <button
                 onClick={() => {
                   saveUser();
                 }}
-                className="pointer-events-auto absolute bottom-0 right-0 flex h-14 w-14 cursor-pointer items-center justify-center gap-2 rounded-full bg-green-500 p-3 px-5 text-lg ring-green-600/25 drop-shadow-lg transition ease-in-out active:bg-green-600 active:ring lg:right-5 lg:h-10 lg:w-fit lg:text-base lg:hover:-translate-y-1"
+                className="pointer-events-auto ring ring-green-500/25 text-white absolute bottom-0 right-0 flex h-14 w-14 cursor-pointer items-center justify-center gap-2 rounded-full bg-green-500 p-3 px-5 text-lg drop-shadow-lg transition ease-in-out active:bg-green-600 active:ring lg:right-5 lg:h-10 lg:w-fit lg:text-base lg:hover:-translate-y-1"
               >
                 <FontAwesomeIcon icon={faSave} />
                 {isLg && ` Save Profile`}
-              </div>
+              </button>
             </div>
           </div>
         </motion.div>

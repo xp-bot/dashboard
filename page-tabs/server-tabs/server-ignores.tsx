@@ -1,11 +1,11 @@
 // eslint-disable-next-line import/no-cycle
-import { faAdd, faRemove } from '@fortawesome/free-solid-svg-icons';
-import ButtonCluster, { ButtonFeature } from 'components/button-cluster';
-import Modal from 'components/modal';
-import PageTitle from 'components/page-title';
-import PanelInput from 'components/panel-input';
-import Select from 'components/select';
-import { useServerDetails } from 'context/guild-details-context';
+import { faAdd, faRemove } from "@fortawesome/free-solid-svg-icons";
+import ButtonCluster, { ButtonFeature } from "components/button-cluster";
+import Modal from "components/modal";
+import PageTitle from "components/page-title";
+import PanelInput from "components/panel-input";
+import Select from "components/select";
+import { useServerDetails } from "context/guild-details-context";
 import {
   cloneDeep,
   filter,
@@ -15,31 +15,30 @@ import {
   size,
   slice,
   upperFirst,
-} from 'lodash';
-import { IDiscordChannel, IDiscordRole } from 'models/backend/discord-models';
-import { FC, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { DiscordChannelType } from 'utils/discord-utils';
+} from "lodash";
+import { IDiscordChannel, IDiscordRole } from "models/backend/discord-models";
+import { FC, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { DiscordChannelType } from "utils/discord-utils";
 
-import IgnoredCategories from './ignore-parts/ignored-category';
-import IgnoredRoles from './ignore-parts/ignored-roles';
-import IgnoredTextChannels from './ignore-parts/ignored-text';
-import IgnoredVoiceChannels from './ignore-parts/ignored-voice';
+import IgnoredRoles from "./ignore-parts/ignored-roles";
+import IgnoredTextChannels from "./ignore-parts/ignored-text";
+import IgnoredVoiceChannels from "./ignore-parts/ignored-voice";
 
 interface AddRoleInputs {
   percentage: number;
   entity: string;
 }
 
-const typeToPrefix = (type?: 'Role' | 'TextChannel' | 'VoiceChannel') => {
+const typeToPrefix = (type?: "Role" | "TextChannel" | "VoiceChannel") => {
   switch (type) {
-    case 'TextChannel':
+    case "TextChannel":
       return `# `;
 
     case `Role`:
       return `@ `;
     default:
-      return '';
+      return "";
   }
 };
 
@@ -61,13 +60,13 @@ const ServerTabIgnores: FC<ServerTabIgnoresProps> = () => {
     | IDiscordChannel[] => {
     if (!isUndefined(addBoostModal))
       switch (addBoostModal.type) {
-        case 'Role':
+        case "Role":
           return slice(guild.currentDiscordRoles, 1);
-        case 'TextChannel':
+        case "TextChannel":
           return filter(guild.currentDiscordChannels, (channel) =>
             isEqual(channel.type, DiscordChannelType.text)
           ) as IDiscordChannel[];
-        case 'VoiceChannel':
+        case "VoiceChannel":
           return filter(guild.currentDiscordChannels, (channel) =>
             isEqual(channel.type, DiscordChannelType.voice)
           ) as IDiscordChannel[];
@@ -110,11 +109,9 @@ const ServerTabIgnores: FC<ServerTabIgnoresProps> = () => {
       {
         name: `${addBoostModal.type} Boost - ${data.entity}`,
         oldValue:
-          `${
-            find(isRole ? g.boosts.roles : g.boosts.channels, (entity) =>
-              isEqual(entity.id, data.entity)
-            )?.percentage
-          }` || `Not Set`,
+          `${find(isRole ? g.boosts.roles : g.boosts.channels, (entity) =>
+            isEqual(entity.id, data.entity)
+          )?.percentage}` || `Not Set`,
         newValue: `${data.percentage}`,
       },
       g
@@ -173,7 +170,8 @@ const ServerTabIgnores: FC<ServerTabIgnoresProps> = () => {
           <IgnoredVoiceChannels />
         </div>
       </div>
-      <hr className="mx-auto mt-1 w-4/5 md:-mb-4" />
+      {/* TODO: Uncomment when XP8 launches. */}
+      {/* <hr className="mx-auto mt-1 w-4/5 md:-mb-4" />
       <div>
         <PageTitle
           disableArrow
@@ -181,105 +179,7 @@ const ServerTabIgnores: FC<ServerTabIgnoresProps> = () => {
           tooltipText="Ignored Categories allow you to specify categories where voice xp and message xp is always disabled."
         />
         <IgnoredCategories />
-      </div>
-      <Modal
-        title={`Add ${addBoostModal ? `${addBoostModal.type}-` : ``}Boost`}
-        isOpen={!isUndefined(addBoostModal)}
-        requestClose={() => {
-          setAddBoostModal(undefined);
-        }}
-      >
-        <form
-          onSubmit={handleSubmit(onAddBoost)}
-          className="flex flex-col gap-10"
-        >
-          <div className="flex w-full flex-wrap gap-5">
-            <div className="grow">
-              <PanelInput
-                disabled={addDisabled}
-                registerForm={register(`percentage`, {
-                  required: 'This Input is required!',
-                })}
-                label="Percentage"
-                inputProps={{ type: 'number' }}
-                value={12}
-                formError={errors.percentage}
-              />
-            </div>
-            <div className="grow">
-              <Select
-                disabled={addDisabled}
-                formError={errors.entity}
-                registerForm={register(`entity`, { required: true })}
-                options={getTypeSpecificDiscordEntires().map((entry) => ({
-                  id: entry.id,
-                  title:
-                    typeToPrefix(addBoostModal?.type) + entry.name || `Unknown`,
-                }))}
-                label={addBoostModal ? `${addBoostModal.type}` : `Entity`}
-                isInPanel={true}
-              />
-            </div>
-          </div>
-
-          <div className="flex flex-col items-center gap-5">
-            {addDisabled ? (
-              <div className="flex flex-col items-center text-center">
-                <h2>
-                  You've reached the maximum of 100 Boosted{' '}
-                  {addBoostModal?.type}s!
-                </h2>
-                <span>Delete some in order to create a new one.</span>
-              </div>
-            ) : (
-              <div className="w-full">
-                <ButtonCluster
-                  isInPanel
-                  buttons={[
-                    {
-                      disabled: addDisabled,
-                      submitType: true,
-                      icon: faAdd,
-                      text: `Add Boost`,
-                    },
-                  ]}
-                />
-              </div>
-            )}
-          </div>
-        </form>
-      </Modal>
-      <Modal
-        title={`Unlink Boost for ${deleteBoostModal?.name}?`}
-        isOpen={!isUndefined(deleteBoostModal)}
-        requestClose={() => {
-          setDeleteBoostModal(undefined);
-        }}
-      >
-        <div className="flex w-full flex-col gap-5">
-          <div>
-            Are you sure you want to remove the boost from{' '}
-            <b>{deleteBoostModal?.name}</b>?
-          </div>
-          <ButtonCluster
-            isInPanel
-            buttons={[
-              {
-                onClick: () => {
-                  if (deleteBoostModal) {
-                    onDeleteBoost(deleteBoostModal.type, deleteBoostModal.id);
-                    setDeleteBoostModal(undefined);
-                  }
-                },
-                submitType: true,
-                icon: faRemove,
-                feature: ButtonFeature.danger,
-                text: `Unlink Boost`,
-              },
-            ]}
-          />
-        </div>
-      </Modal>
+      </div> */}
     </>
   );
 };
