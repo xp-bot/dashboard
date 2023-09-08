@@ -32,4 +32,5 @@ export interface IBlogPostComment {
   content: IBlogPostCommentContent;
   createdAt: string;
   updatedAt: string;
+  childComments: IBlogPostComment[];
 }

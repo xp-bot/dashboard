@@ -14,7 +14,7 @@ import Modal from "components/modal";
 import { BlogCommentsSection } from "context/blog-comments-section";
 import { useLayout } from "context/layout-context";
 import { useUser } from "context/user-context";
-import { find, isEqual, isNil, isUndefined, size } from "lodash";
+import { find, isEqual, isNil, isUndefined, map, size } from "lodash";
 import {
   BlogPostStatus,
   IBlogPost,
@@ -142,7 +142,18 @@ const BlogPost: NextPage<BlogPostProps> = ({ blogPost, comments }) => {
       <hr className="mb-10 mt-3" />
       <BlogCommentsSection
         selectedComment={selectedComment}
-        comments={comments}
+        comments={map(comments, (comment) => ({
+          ...comment,
+          childComments: [
+            {
+              ...comment,
+              childComments: [
+                { ...comment, childComments: [{ ...comment }] },
+                { ...comment, childComments: [{ ...comment }] },
+              ],
+            },
+          ],
+        }))}
         blogPost={blogPost}
       />
       <Modal
