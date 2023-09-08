@@ -1,15 +1,15 @@
-import '@styles/globals.scss';
-import '@styles/checkmark.scss';
-import '@styles/xp-loading.scss';
-import '../styles/markdown.scss';
+import "@styles/checkmark.scss";
+import "@styles/globals.scss";
+import "@styles/xp-loading.scss";
+import "../styles/markdown.scss";
 
-import { Inter } from '@next/font/google';
-import FallBackImage from 'components/fallback-image';
-import Modal from 'components/modal';
-import Tooltip from 'components/tooltip';
-import { LayoutContextProvider } from 'context/layout-context';
-import SocketManager from 'context/socket-manager';
-import { useLocalStorage } from 'hooks/use-local-storage';
+import { Inter } from "@next/font/google";
+import FallBackImage from "components/fallback-image";
+import Modal from "components/modal";
+import Tooltip from "components/tooltip";
+import { LayoutContextProvider } from "context/layout-context";
+import SocketManager from "context/socket-manager";
+import { useLocalStorage } from "hooks/use-local-storage";
 import {
   entries,
   forEach,
@@ -19,23 +19,22 @@ import {
   keys,
   last,
   map,
-  size,
-} from 'lodash';
-import type { AppProps } from 'next/app';
-import { useRouter } from 'next/router';
-import { ThemeProvider } from 'next-themes';
-import { useEffect, useState } from 'react';
-import semver from 'semver';
+} from "lodash";
+import type { AppProps } from "next/app";
+import { useRouter } from "next/router";
+import { ThemeProvider } from "next-themes";
+import { useEffect, useState } from "react";
+import semver from "semver";
 
-import changelog, { ChangelogType } from '../changelogs';
-import MobileNavBar from '../components/mobile/mobile-nav-bar';
-import WavePage from '../components/wave-page';
-import { UserContextProvider } from '../context/user-context';
-import { ChangelogUser } from './changes';
+import changelog, { ChangelogType } from "../changelogs";
+import MobileNavBar from "../components/mobile/mobile-nav-bar";
+import WavePage from "../components/wave-page";
+import { UserContextProvider } from "../context/user-context";
+import { ChangelogUser } from "./changes";
 
 const inter = Inter({
-  variable: '--inter-font',
-  subsets: ['latin', 'cyrillic', 'greek'],
+  variable: "--inter-font",
+  subsets: ["latin", "cyrillic", "greek"],
 });
 
 const ChangelogModal = () => {
@@ -44,7 +43,7 @@ const ChangelogModal = () => {
   ]);
   const [versionModalOpen, setVersionModalOpen] = useState(false);
   const [versionChanges, setVersionChanges] = useState<ChangelogType>({});
-  const envVersion = last(keys(changelog)) || '0.0.0';
+  const envVersion = last(keys(changelog)) || "0.0.0";
 
   useEffect(() => {
     if (!localStorage || !isLocalStorageReady) return;
@@ -88,7 +87,7 @@ const ChangelogModal = () => {
       customKey="changelog"
       isOpen={versionModalOpen}
       requestClose={() => {
-        setLocalStorage('last_version', envVersion);
+        setLocalStorage("last_version", envVersion);
         setVersionModalOpen(false);
       }}
       title={`Changelog ${
@@ -96,7 +95,7 @@ const ChangelogModal = () => {
       } v${envVersion}`}
     >
       <div className="flex flex-col gap-5">
-        {map(entries(versionChanges), ([title, changePart], idx) => {
+        {map(entries(versionChanges), ([title, changePart]) => {
           return (
             <div
               className="flex flex-col gap-5"
@@ -106,7 +105,7 @@ const ChangelogModal = () => {
                 <h2>{title}</h2>
                 <ul className="flex flex-col gap-2">
                   {map(changePart, (change, idxx) => {
-                    return change.type === 'image' ? (
+                    return change.type === "image" ? (
                       <div
                         key={`changelog-modal-version-change-${change.type}-${idxx}`}
                         className="my-5 px-5 py-2 pt-0"
@@ -146,9 +145,9 @@ const ChangelogModal = () => {
                   })}
                 </ul>
               </div>
-              {idx + 1 < size(entries(versionChanges)) && (
+              {/* {idx + 1 < size(entries(versionChanges)) && (
                 <hr className="mx-auto mt-2 w-4/5" />
-              )}
+              )} */}
             </div>
           );
         })}
