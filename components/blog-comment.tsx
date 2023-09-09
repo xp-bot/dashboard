@@ -32,19 +32,6 @@ interface IBlogCommentProps {
   childLayer?: number;
 }
 
-const layersOfGray = [
-  "#f9fafb",
-  "#f4f5f7",
-  "#e5e7eb",
-  "#d2d6dc",
-  "#9fa6b2",
-  "#6b7280",
-  "#4b5563",
-  "#374151",
-  "#1f2937",
-  "#111827",
-];
-
 const BlogComment: FC<IBlogCommentProps> = ({
   comment,
   removeDelete,
