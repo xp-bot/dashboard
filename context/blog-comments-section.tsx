@@ -1,23 +1,26 @@
-import { faCancel, faRemove } from '@fortawesome/free-solid-svg-icons';
-import { apiRoutes } from 'apis/api-helper';
+import { faCancel, faRemove } from "@fortawesome/free-solid-svg-icons";
+import { apiRoutes } from "apis/api-helper";
 // eslint-disable-next-line import/no-cycle
-import BlogComment from 'components/blog-comment';
+import BlogComment from "components/blog-comment";
 // eslint-disable-next-line import/no-cycle
-import BlogCreateComment from 'components/blog-create-comment';
-import ButtonCluster, { ButtonFeature } from 'components/button-cluster';
-import Modal from 'components/modal';
-import { AnimatePresence, motion } from 'framer-motion';
-import { isEqual, isUndefined, join, map, orderBy, size, slice } from 'lodash';
+import BlogCreateComment from "components/blog-create-comment";
+import ButtonCluster, { ButtonFeature } from "components/button-cluster";
+import Modal from "components/modal";
+import { AnimatePresence, motion } from "framer-motion";
+import { isEqual, isUndefined, join, map, orderBy, size, slice } from "lodash";
 import {
   IBlogPost,
   IBlogPostComment,
   IBlogPostCommentContent,
-} from 'models/backend/blog-models';
-import { createContext, useContext, useEffect, useRef, useState } from 'react';
+} from "models/backend/blog-models";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 interface IBlogCommentsSectionValues {
   deleteComment: (comment: IBlogPostComment) => void;
-  postComment: (comment: IBlogPostCommentContent) => void;
+  postComment: (
+    comment: IBlogPostCommentContent,
+    parentCommentId?: string
+  ) => void;
 }
 
 export const BlogCommentsSectionContext =
@@ -53,11 +56,18 @@ export function BlogCommentsSection({
     await apiRoutes.blog.deleteComment(blogPost.postID, comment.commentID);
     await refetchComments();
   };
-  const postComment = async (comment: IBlogPostCommentContent) => {
-    await apiRoutes.blog.postComment(blogPost.postID, {
-      ...comment,
-      title: join(slice(comment.title, 0, 30), ``),
-    });
+  const postComment = async (
+    comment: IBlogPostCommentContent,
+    parentCommentId?: string
+  ) => {
+    await apiRoutes.blog.postComment(
+      blogPost.postID,
+      {
+        ...comment,
+        title: join(slice(comment.title, 0, 30), ``),
+      },
+      parentCommentId
+    );
     await refetchComments();
   };
 
@@ -66,7 +76,7 @@ export function BlogCommentsSection({
       if (selectedRef.current) {
         // eslint-disable-next-line no-promise-executor-return
         await new Promise((resolve) => setTimeout(resolve, 1000));
-        selectedRef.current.scrollIntoView({ behavior: 'smooth' });
+        selectedRef.current.scrollIntoView({ behavior: "smooth" });
       }
     };
     scroll();
@@ -89,7 +99,7 @@ export function BlogCommentsSection({
         {size(comments) > 0 && <hr />}
         <AnimatePresence initial={false} mode="popLayout">
           {map(
-            orderBy(comments, (comment) => comment.updatedAt, 'desc'),
+            orderBy(comments, (comment) => comment.updatedAt, "desc"),
             (comment, idx) => (
               <>
                 <motion.div
@@ -116,6 +126,7 @@ export function BlogCommentsSection({
                     )}
                     comment={comment}
                     key={`comment_${comment.postID}_${comment.commentID}`}
+                    childComments={comment.childComments}
                   />
                 </motion.div>
                 {size(comments) > 0 && !isEqual(idx, size(comments) - 1) && (

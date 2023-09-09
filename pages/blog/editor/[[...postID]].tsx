@@ -54,7 +54,7 @@ const BlogEditor: NextPage<UserTabProps> = ({ blogPost }) => {
     data: IBlogPostInputs,
     status: BlogPostStatus
   ) => {
-    if (!user.currentUser || isNil(blogPost)) return;
+    if (!user.currentUser) return;
 
     const postData = {
       title: data.title,
@@ -76,6 +76,8 @@ const BlogEditor: NextPage<UserTabProps> = ({ blogPost }) => {
         status === BlogPostStatus.DRAFT ? "/blog" : `/blog/${res.body.postID}`;
       router.push(route);
     } else {
+      console.log(res.message);
+
       // TODO: TOAST
     }
   };
