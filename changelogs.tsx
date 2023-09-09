@@ -345,6 +345,22 @@ const changelogs: { [version: string]: ChangelogType } = {
     //   },
     // ],
   },
+  "2.0.19": {
+    Blogs: [
+      {
+        type: "text",
+        content:
+          "You can now reply to comments! Engage in seamless conversations by replying directly to comments on our blog.",
+      },
+      {
+        type: "image",
+        content: {
+          pc: "http://cdn.namespace.media/s/n5oZesybgrRPDJr/download/comment-replies.png",
+          key: "",
+        },
+      },
+    ],
+  },
 };
 
 export default changelogs;

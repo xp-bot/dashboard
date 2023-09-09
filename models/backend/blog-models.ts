@@ -32,4 +32,7 @@ export interface IBlogPostComment {
   content: IBlogPostCommentContent;
   createdAt: string;
   updatedAt: string;
+  parentComment?: string;
+  childComments?: IBlogPostComment[];
+  deleted: boolean;
 }

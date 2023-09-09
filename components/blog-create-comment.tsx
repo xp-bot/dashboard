@@ -10,9 +10,15 @@ import BlockInput from "./block-input";
 import BlockTextArea from "./block-text-area";
 import FallBackImage from "./fallback-image";
 
-interface IBlogCreateCommentProps {}
+interface IBlogCreateCommentProps {
+  parentCommentId?: string;
+  postedCallback?: () => void;
+}
 
-const BlogCreateComment: FC<IBlogCreateCommentProps> = () => {
+const BlogCreateComment: FC<IBlogCreateCommentProps> = ({
+  parentCommentId,
+  postedCallback,
+}) => {
   const user = useUser();
   const commentsSection = useCommentsSection();
 
@@ -26,11 +32,15 @@ const BlogCreateComment: FC<IBlogCreateCommentProps> = () => {
     title: string;
     body: string;
   }> = ({ body, title }) => {
-    commentsSection.postComment({
-      title,
-      body,
-      creator: user.currentUser?.discordUser.id || ``,
-    });
+    commentsSection.postComment(
+      {
+        title,
+        body,
+        creator: user.currentUser?.discordUser.id || ``,
+      },
+      parentCommentId
+    );
+    postedCallback?.();
   };
 
   return (
@@ -86,7 +96,7 @@ const BlogCreateComment: FC<IBlogCreateCommentProps> = () => {
               variant={BlockButtonVariant.blog}
               className="absolute -bottom-3 right-0"
             >
-              Post Comment
+              {parentCommentId ? "Post Reply" : "Post Comment"}
             </BlockButton>
           </div>
         </form>
