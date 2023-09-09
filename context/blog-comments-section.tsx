@@ -17,7 +17,10 @@ import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 interface IBlogCommentsSectionValues {
   deleteComment: (comment: IBlogPostComment) => void;
-  postComment: (comment: IBlogPostCommentContent) => void;
+  postComment: (
+    comment: IBlogPostCommentContent,
+    parentCommentId?: string
+  ) => void;
 }
 
 export const BlogCommentsSectionContext =
@@ -53,11 +56,18 @@ export function BlogCommentsSection({
     await apiRoutes.blog.deleteComment(blogPost.postID, comment.commentID);
     await refetchComments();
   };
-  const postComment = async (comment: IBlogPostCommentContent) => {
-    await apiRoutes.blog.postComment(blogPost.postID, {
-      ...comment,
-      title: join(slice(comment.title, 0, 30), ``),
-    });
+  const postComment = async (
+    comment: IBlogPostCommentContent,
+    parentCommentId?: string
+  ) => {
+    await apiRoutes.blog.postComment(
+      blogPost.postID,
+      {
+        ...comment,
+        title: join(slice(comment.title, 0, 30), ``),
+      },
+      parentCommentId
+    );
     await refetchComments();
   };
 

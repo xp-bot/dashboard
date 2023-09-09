@@ -168,9 +168,15 @@ export const apiRoutes = {
         method: `GET`,
       });
     },
-    postComment: (blogPostID: string, comment: IBlogPostCommentContent) => {
+    postComment: (
+      blogPostID: string,
+      comment: IBlogPostCommentContent,
+      parentCommentId?: string
+    ) => {
       return backendAxios<IBlogPostComment>(
-        `/blog/post/${blogPostID}/comment`,
+        `/blog/post/${blogPostID}/comment${
+          parentCommentId ? `?parent_id=${parentCommentId}` : ``
+        }`,
         {
           method: `PUT`,
           data: comment,

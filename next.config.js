@@ -21,6 +21,7 @@ const nextConfig = {
   env: {
     BACKEND_DOMAIN: process.env.NEXT_PUBLIC_BACKEND_DOMAIN,
     ILUM_DOMAIN: process.env.ILUM_DOMAIN,
+    DEVELOPERS: process.env.DEVELOPERS,
   },
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")],
