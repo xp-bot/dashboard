@@ -164,14 +164,16 @@ const BlogComment: FC<IBlogCommentProps> = ({
         </div>
         {size(childComments) > 0 && (
           <div
-            className={`flex flex-col ${
-              (childLayer || 0) > 0 ? "pl-2" : "py-2 lg:ml-32 lg:pr-0"
+            className={`flex flex-col border-l-4 hover:border-l-gray-300 ${
+              (childLayer || 0) > 0 ? "ml-2" : "mb-2 lg:ml-32 lg:pr-0"
             }`}
           >
             {map(childComments, (child) => (
               <div
-                className={`w-full border-l-4 ${
-                  isIdDeveloper(child.content.creator) ? "border-xpBlue" : ""
+                className={`w-full  ${
+                  isIdDeveloper(child.content.creator)
+                    ? "-ml-1 border-l-4 border-xpBlue"
+                    : ""
                 } `}
               >
                 <BlogComment

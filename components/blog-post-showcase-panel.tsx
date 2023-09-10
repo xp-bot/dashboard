@@ -25,7 +25,7 @@ const BlogPostShowcaseGridPanel: FC<BlogPostShowcasePanelProps> = ({
       <div className="relative h-[50%] w-full grow">
         {user.currentUser?.developer &&
           blogPost.content.status !== BlogPostStatus.PUBLISHED && (
-            <div className="absolute right-2 top-2 w-fit rounded-bl-md rounded-tr-md bg-panelBack p-3 py-2 text-sm text-darkText shadow-md dark:bg-panelBack-darkMode dark:text-darkText-darkMode">
+            <div className="absolute right-2 top-2 z-10 w-fit rounded-bl-md rounded-tr-md bg-panelBack p-3 py-2 text-sm text-darkText shadow-md dark:bg-panelBack-darkMode dark:text-darkText-darkMode">
               {blogStatusIcons[blogPost.content.status]}{" "}
               {capitalize(blogPost.content.status)}
             </div>
