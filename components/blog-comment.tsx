@@ -96,7 +96,7 @@ const BlogComment: FC<IBlogCommentProps> = ({
               </h1>
             )}
             <span
-              className={`flex w-full select-text flex-col justify-center whitespace-pre-wrap break-words opacity-75 md:group-hover:opacity-100`}
+              className={`flex w-full select-text flex-col justify-center whitespace-pre-wrap break-words opacity-75 transition ease-in-out md:group-hover:opacity-100`}
             >
               {/* {parse(
               fixDiscordMarkdownFormat(
@@ -164,7 +164,7 @@ const BlogComment: FC<IBlogCommentProps> = ({
         </div>
         {size(childComments) > 0 && (
           <div
-            className={`flex flex-col border-l-4 hover:border-l-gray-300 ${
+            className={`flex flex-col border-l-4 transition ease-in-out hover:border-l-gray-300 dark:hover:border-l-white/30 ${
               (childLayer || 0) > 0 ? "ml-2" : "mb-2 lg:ml-32 lg:pr-0"
             }`}
           >
