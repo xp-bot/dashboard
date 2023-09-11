@@ -2,25 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-@import 'node_modules/@fortawesome/fontawesome-svg-core/styles';
-
-// @font-face {
-//   font-family: 'Montserrat';
-//   src: url(/fonts/Montserrat.ttf) format('truetype');
-//   font-weight: 400;
-//   font-style: normal;
-// }
-
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800&display=swap');
-
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
-
 @font-face {
-  font-family: 'Whitney Semibold';
-  src: url(/fonts/Whitney-Semibold.ttf) format('truetype');
+  font-family: "Whitney Semibold";
+  src: url(/fonts/Whitney-Semibold.ttf) format("truetype");
 }
-
-
 
 html,
 body {
@@ -38,7 +23,7 @@ a {
 * {
   box-sizing: border-box;
   // @apply transition ease-in-out // Pfui deibel
-  @apply select-none
+  @apply select-none;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -77,23 +62,21 @@ h3 {
 
 h4 {
   font-size: 12px;
-  letter-spacing: .5px;
+  letter-spacing: 0.5px;
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   @apply text-lightText dark:text-lightText-darkMode;
-  opacity: .5;
+  opacity: 0.5;
 }
 
 h5 {
   font-size: 10px;
-  letter-spacing: .5px;
+  letter-spacing: 0.5px;
   font-family: "Roboto", sans-serif;
   font-weight: 500;
   @apply text-lightText dark:text-lightText-darkMode;
-  opacity: .5;
+  opacity: 0.5;
 }
-
-
 
 hr {
   border-color: hsla(0, 0%, 73%, 0.25);
@@ -102,13 +85,17 @@ hr {
 
 header {
   hr {
-    border-color: hsla(0, 0%, 85%, 0.15)
+    border-color: hsla(0, 0%, 85%, 0.15);
   }
 }
 
 .headerGradient {
   @apply opacity-75;
-  background: linear-gradient(30deg, rgba(58, 68, 222, 1) 0%, rgba(103, 111, 227, 1) 100%);
+  background: linear-gradient(
+    30deg,
+    rgba(58, 68, 222, 1) 0%,
+    rgba(103, 111, 227, 1) 100%
+  );
 }
 
 .headerImage {
@@ -116,9 +103,8 @@ header {
 }
 
 hr {
-  @apply dark:opacity-50
+  @apply dark:opacity-50;
 }
-
 
 .LoadingDots {
   justify-self: center;
@@ -127,6 +113,7 @@ hr {
   width: 80px;
   height: 80px;
 }
+
 .LoadingDots div {
   position: absolute;
   top: 33px;
@@ -136,42 +123,52 @@ hr {
   background: #fff;
   animation-timing-function: cubic-bezier(0, 1, 1, 0);
 }
+
 .LoadingDots div:nth-child(1) {
   left: 8px;
   animation: Loading1 0.6s infinite;
 }
+
 .LoadingDots div:nth-child(2) {
   left: 8px;
   animation: Loading2 0.6s infinite;
 }
+
 .LoadingDots div:nth-child(3) {
   left: 32px;
   animation: Loading2 0.6s infinite;
 }
+
 .LoadingDots div:nth-child(4) {
   left: 56px;
   animation: Loading3 0.6s infinite;
 }
+
 @keyframes Loading1 {
   0% {
     transform: scale(0);
   }
+
   100% {
     transform: scale(1);
   }
 }
+
 @keyframes Loading3 {
   0% {
     transform: scale(1);
   }
+
   100% {
     transform: scale(0);
   }
 }
+
 @keyframes Loading2 {
   0% {
     transform: translate(0, 0);
   }
+
   100% {
     transform: translate(24px, 0);
   }
@@ -197,7 +194,6 @@ hr {
   border-radius: 10px;
 }
 
-
 .RankingCardPreview {
   width: 100%;
   display: flex;
@@ -205,6 +201,7 @@ hr {
   // overflow: hidden;
   border-radius: 10px;
 }
+
 #RankingCapture {
   position: absolute;
   top: -2000px;
@@ -214,6 +211,7 @@ hr {
   background-position: center;
   background-size: cover;
 }
+
 .RankingCardContainer {
   border-radius: 10px;
   @apply shadow-md;
@@ -227,6 +225,7 @@ hr {
   // border-radius: 10px;
   background-size: cover;
   position: relative;
+
   .RankingCardHover {
     border-radius: 10px;
     position: absolute;
@@ -240,9 +239,11 @@ hr {
     justify-content: center;
     align-items: center;
     backdrop-filter: saturate(0.5);
+
     &.active {
       opacity: 1;
     }
+
     & > p {
       color: white;
       font-size: 20px;
@@ -250,11 +251,13 @@ hr {
       font-weight: normal;
       // margin-top: 30px;
     }
+
     &:hover {
       opacity: 1;
       cursor: pointer;
     }
   }
+
   .RankingCardHeader {
     max-height: 81px;
     min-height: 81px;
@@ -262,6 +265,7 @@ hr {
     background-position: center;
     background-size: cover;
     width: 100%;
+
     .RankingCardImage {
       border-radius: 300px;
       width: 120px;
@@ -271,6 +275,7 @@ hr {
       margin-left: 35px;
       z-index: 6;
     }
+
     .RankingCardHeaderPreviewImageContainer {
       display: flex;
       height: 81px;
@@ -278,6 +283,7 @@ hr {
       position: absolute;
       overflow: hidden;
       align-items: center;
+
       .RankingCardHeaderPreviewImage {
         width: 100%;
         height: 351px;
@@ -287,12 +293,14 @@ hr {
       }
     }
   }
+
   .RankingCardCanvas {
     border-radius: 0 0 10px 10px;
     height: 100%;
     width: 100%;
     position: relative;
     overflow: hidden;
+
     // border-radius: 0 0 10px 10px;
     .RankingCardCanvasBackground {
       // background-color: #18181c;
@@ -304,6 +312,7 @@ hr {
       background-position: center;
       border-radius: 0 0 11px 11px;
     }
+
     .RankingCardCanvasOverlay {
       background-color: rgba(24, 24, 28, 0.85);
       height: 100%;
@@ -311,6 +320,7 @@ hr {
       position: absolute;
       border-radius: 0 0 10px 10px;
     }
+
     .RankingCardUsername {
       font-family: "Whitney Semibold", sans-serif;
       font-size: 30px;
@@ -321,6 +331,7 @@ hr {
       margin-left: 25px;
       font-weight: bold;
     }
+
     .RankingCardTitle {
       font-family: "Roboto";
       font-size: 11.5px;
@@ -332,6 +343,7 @@ hr {
       font-weight: 400;
       opacity: 0.5;
     }
+
     .RankingCardProgress {
       height: 2px;
       background-color: #5a62ed;
@@ -340,6 +352,7 @@ hr {
       left: 0;
       position: absolute;
     }
+
     .RankingCardLevel {
       font-family: "Roboto";
       font-size: 60px;
@@ -350,6 +363,7 @@ hr {
       margin-left: 20px;
       font-weight: 100;
     }
+
     .RankingCardXP {
       font-family: "Roboto";
       font-size: 14px;
@@ -374,16 +388,20 @@ hr {
       aspect-ratio: 1/1;
     }
   }
+
   .RankingCardCanvas {
     .RankingCardUsername {
       display: none;
     }
+
     .RankingCardTitle {
       display: none;
     }
+
     .RankingCardLevel {
       display: none;
     }
+
     .RankingCardXP {
       display: none;
     }
@@ -392,39 +410,48 @@ hr {
 
 .FeatureArrow {
   cursor: pointer;
-  margin-top: -105px;  
+  margin-top: -105px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 5px;
+
   @keyframes bounceArrow {
     0% {
       transform: translateY(0px);
     }
+
     10% {
       transform: translateY(10px);
     }
+
     30% {
       transform: translateY(0px);
     }
+
     100% {
       transform: translateY(0px);
     }
   }
+
   @keyframes bounceText {
     0% {
       transform: translateY(0px);
     }
+
     10% {
       transform: translateY(5px);
     }
+
     30% {
       transform: translateY(0px);
     }
+
     100% {
       transform: translateY(0px);
     }
   }
+
   p {
     animation: bounceText 5s infinite cubic-bezier(0.4, 0, 0, 1);
     font-family: Montserrat;
@@ -438,10 +465,13 @@ hr {
     margin: 0;
     font-variant: small-caps;
   }
+
   svg {
     animation: bounceArrow 5s infinite cubic-bezier(0.4, 0, 0, 1);
-    g{
+
+    g {
       opacity: 0.5;
+
       line {
         @apply stroke-darkText dark:stroke-darkText-darkMode;
       }

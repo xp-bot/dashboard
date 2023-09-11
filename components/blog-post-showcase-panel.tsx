@@ -45,10 +45,8 @@ const BlogPostShowcaseGridPanel: FC<BlogPostShowcasePanelProps> = ({
           alt={"jeje"}
         />
       </div>
-      <div className="z-10 h-fit w-full bg-panelBack p-3 text-center text-darkText transition ease-in-out dark:bg-panelBack-darkMode dark:text-darkText-darkMode md:text-start">
-        <h2 className="mb-1 truncate drop-shadow-md">
-          {blogPost.content.title}
-        </h2>
+      <div className="z-10 h-fit w-full  bg-panelBack p-3 text-center text-darkText transition ease-in-out dark:bg-panelBack-darkMode dark:text-darkText-darkMode md:text-start">
+        <h2 className="mb-1 truncate">{blogPost.content.title}</h2>
         <p className="line-clamp-2 text-xs text-darkText opacity-75 dark:text-darkText-darkMode">
           {blogPost.content.description}
         </p>

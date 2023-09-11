@@ -1,4 +1,5 @@
-import { Head, Html, Main, NextScript } from 'next/document';
+/* eslint-disable @next/next/no-css-tags */
+import { Head, Html, Main, NextScript } from "next/document";
 
 export default function Document() {
   return (
@@ -46,6 +47,19 @@ export default function Document() {
           src="https://www.googletagmanager.com/gtag/js?id=G-JW52ZNXQ6B"
         />
         <script async src="/scripts/ga.js" />
+
+        <link
+          rel="stylesheet"
+          href="node_modules/@fortawesome/fontawesome-svg-core/styles.css"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+          rel="stylesheet"
+        />
       </Head>
       <body className="bg-wavePage dark:bg-wavePage-darkMode">
         <Main />
