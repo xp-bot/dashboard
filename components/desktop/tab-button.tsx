@@ -1,13 +1,13 @@
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { motion } from 'framer-motion';
-import { isUndefined } from 'lodash';
-import { IXPAPIUser } from 'models/backend/xp-models';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { FC } from 'react';
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { motion } from "framer-motion";
+import { isUndefined } from "lodash";
+import { IXPAPIUser } from "models/backend/xp-models";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { FC } from "react";
 
-import { getRouteParts } from '../../utils/url-utils';
+import { getRouteParts } from "../../utils/url-utils";
 
 interface TabButtonProps {
   button: ITabButton;
@@ -17,8 +17,8 @@ interface TabButtonProps {
 }
 
 export enum TabButtonTheme {
-  'Page',
-  'Title',
+  "Page",
+  "Title",
 }
 
 export interface ITabButton {
@@ -31,6 +31,7 @@ export interface ITabButton {
   marginLeft?: boolean;
   disabled?: boolean;
   icon?: IconProp;
+  executeFunction?: number;
 }
 
 const ButtonStyle = (
@@ -39,7 +40,7 @@ const ButtonStyle = (
   fixedMode?: boolean
 ) => {
   const BaseStyle =
-    'relative font-inter text-tiny transition ease-in-out flex flex-row items-center justify-center gap-2';
+    "relative font-inter text-tiny transition ease-in-out flex flex-row items-center justify-center gap-2";
 
   switch (theme) {
     case TabButtonTheme.Page:
@@ -69,6 +70,38 @@ const TabButton: FC<TabButtonProps> = ({
   const router = useRouter();
   const currentPath = getRouteParts(router);
 
+  const ButtonContents = () => (
+    <>
+      {button.element}
+      {button.text}
+      {button.icon && (
+        <FontAwesomeIcon className="opacity-75" icon={button.icon} />
+      )}
+
+      {isUndefined(button.isActive)
+        ? false
+        : button.isActive(currentPath) && (
+            <motion.div
+              transition={{ type: "spring", bounce: 0.2 }}
+              layoutId="selectedDot"
+              initial={false}
+              // eslint-disable-next-line tailwindcss/no-custom-classname
+              className={`selectedDot ${
+                theme === TabButtonTheme.Title
+                  ? `${
+                      fixedMode
+                        ? `text-darkText`
+                        : `text-lightText dark:text-lightText-darkMode`
+                    }`
+                  : `text-xpBlue`
+              } absolute bottom-[-5px]`}
+            >
+              •
+            </motion.div>
+          )}
+    </>
+  );
+
   return (
     <div
       className={`${
@@ -79,43 +112,29 @@ const TabButton: FC<TabButtonProps> = ({
         button.disabled ? `pointer-events-none opacity-75` : ``
       }`}
     >
-      <Link
-        className={`${ButtonStyle(
-          theme,
-          button.isActive ? button.isActive(currentPath) : false,
-          fixedMode
-        )} ${className}`}
-        shallow={button.shallowRouting}
-        href={button.link || ``}
-      >
-        {button.element}
-        {button.text}
-        {button.icon && (
-          <FontAwesomeIcon className="opacity-75" icon={button.icon} />
-        )}
-
-        {isUndefined(button.isActive)
-          ? false
-          : button.isActive(currentPath) && (
-              <motion.div
-                transition={{ type: 'spring', bounce: 0.2 }}
-                layoutId="selectedDot"
-                initial={false}
-                // eslint-disable-next-line tailwindcss/no-custom-classname
-                className={`selectedDot ${
-                  theme === TabButtonTheme.Title
-                    ? `${
-                        fixedMode
-                          ? `text-darkText`
-                          : `text-lightText dark:text-lightText-darkMode`
-                      }`
-                    : `text-xpBlue`
-                } absolute bottom-[-5px]`}
-              >
-                •
-              </motion.div>
-            )}
-      </Link>
+      {button.link ? (
+        <Link
+          className={`${ButtonStyle(
+            theme,
+            button.isActive ? button.isActive(currentPath) : false,
+            fixedMode
+          )} ${className}`}
+          shallow={button.shallowRouting}
+          href={button.link || ``}
+        >
+          <ButtonContents />
+        </Link>
+      ) : (
+        <div
+          className={`${ButtonStyle(
+            theme,
+            button.isActive ? button.isActive(currentPath) : false,
+            fixedMode
+          )} ${className}`}
+        >
+          <ButtonContents />
+        </div>
+      )}
     </div>
   );
 };

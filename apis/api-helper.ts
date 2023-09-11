@@ -7,6 +7,7 @@ import {
   IBlogPostContent,
 } from "models/backend/blog-models";
 import { IIlumAlivePing, IIlumChart } from "models/backend/ilum-models";
+import { IInboxItem } from "models/backend/inbox-interfaces";
 import { IIncident, IIncidentContent } from "models/backend/incident-models";
 import { RequestInit } from "next/dist/server/web/spec-extension/request";
 
@@ -82,6 +83,13 @@ const ilumAxios = async <Body>(route: string, options: AxiosRequestConfig) => {
 };
 
 export const apiRoutes = {
+  inbox: {
+    getInbox: () => {
+      return backendAxios<IInboxItem[]>(`/inbox`, {
+        method: `GET`,
+      });
+    }
+  },
   ilum: {
     getIlumAPIPing: (type: `dashboard` | `backend` | `website`) => {
       return ilumAxios<IIlumChart>(`/data/ping/${type}`, {
@@ -174,8 +182,7 @@ export const apiRoutes = {
       parentCommentId?: string
     ) => {
       return backendAxios<IBlogPostComment>(
-        `/blog/post/${blogPostID}/comment${
-          parentCommentId ? `?parent_id=${parentCommentId}` : ``
+        `/blog/post/${blogPostID}/comment${parentCommentId ? `?parent_id=${parentCommentId}` : ``
         }`,
         {
           method: `PUT`,
@@ -327,11 +334,11 @@ export const apiRoutes = {
       get: (guildID: string, fetch?: boolean) =>
         fetch
           ? backendFetch<IXPGuild>(`/xp/guild/${guildID}`, {
-              method: `GET`,
-            })
+            method: `GET`,
+          })
           : backendAxios<IXPGuild>(`/xp/guild/${guildID}`, {
-              method: `GET`,
-            }),
+            method: `GET`,
+          }),
       update: (
         guildID: string,
         body: Partial<IXPGuild>,

@@ -1,7 +1,6 @@
 import {
   faHeartPulse,
   faInfoCircle,
-  faPeopleCarryBox,
   faPowerOff,
   faUserSecret,
 } from "@fortawesome/free-solid-svg-icons";
@@ -133,16 +132,6 @@ const UserTab: NextPage<UserTabProps> = () => {
                       />
                     )
                   )}
-                  <ButtonCluster
-                    title={`Dashboard Beta`}
-                    buttons={[
-                      {
-                        text: `Report a Bug`,
-                        link: `https://discord.xp-bot.net/`,
-                        icon: faPeopleCarryBox,
-                      },
-                    ]}
-                  />
                   <ButtonCluster
                     title={`Legal`}
                     buttons={[

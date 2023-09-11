@@ -1,25 +1,26 @@
-import { XPLoading } from 'components/svg/logos';
-import { AnimatePresence, motion } from 'framer-motion';
-import { isEqual, size } from 'lodash';
-import { ISocketIO } from 'models/backend/socket-models';
-import { useRouter } from 'next/router';
-import { createContext, useContext, useEffect, useState } from 'react';
-import { io } from 'socket.io-client';
+import { XPLoading } from "components/svg/logos";
+import { AnimatePresence, motion } from "framer-motion";
+import { isEqual, size } from "lodash";
+import { IInboxItem } from "models/backend/inbox-interfaces";
+import { ISocketIO } from "models/backend/socket-models";
+import { useRouter } from "next/router";
+import { createContext, useContext, useEffect, useState } from "react";
+import { io } from "socket.io-client";
 
-import { apiRoutes } from '../apis/api-helper';
-import { IApiFailure, IApiSuccess } from '../models/api-models';
-import { IDiscordGuildsRequest } from '../models/backend/discord-models';
+import { apiRoutes } from "../apis/api-helper";
+import { IApiFailure, IApiSuccess } from "../models/api-models";
+import { IDiscordGuildsRequest } from "../models/backend/discord-models";
 import {
   IXPAPIUser,
   IXPGuild,
   IXPUser,
   IXPUserPremiumServers,
-} from '../models/backend/xp-models';
+} from "../models/backend/xp-models";
 
 export enum LoginStatus {
-  'checking',
-  'loggedIn',
-  'notLoggedIn',
+  "checking",
+  "loggedIn",
+  "notLoggedIn",
 }
 
 interface IUserContextValues {
@@ -40,6 +41,10 @@ interface IUserContextValues {
 
   loading: {
     discordGuilds: boolean;
+  };
+
+  inbox: {
+    inboxItems: IInboxItem[];
   };
 
   guild: {
@@ -74,9 +79,13 @@ export const UserContext = createContext<IUserContextValues>({
     discordGuilds: true,
   },
 
+  inbox: {
+    inboxItems: [],
+  },
+
   guild: {
-    fetchXPGuild: async () => ({ message: ``, success: false } as IApiFailure),
-    updateXPGuild: async () => ({ message: ``, success: false } as IApiFailure),
+    fetchXPGuild: async () => ({ message: ``, success: false }) as IApiFailure,
+    updateXPGuild: async () => ({ message: ``, success: false }) as IApiFailure,
   },
 
   debug: {
@@ -101,6 +110,8 @@ export function UserContextProvider({
     []
   );
   const [currentUser, setCurrentUser] = useState<IXPAPIUser | undefined>();
+
+  const [inboxItems, setInboxItems] = useState<IInboxItem[]>([]);
 
   /* SOCKET */
   const [socket, setSocket] = useState<ISocketIO<{}> | undefined>();
@@ -199,6 +210,15 @@ export function UserContextProvider({
     }
   }
 
+  async function fetchInbox() {
+    try {
+      const res = await apiRoutes.inbox.getInbox();
+      if (res.success) setInboxItems(res.body);
+    } catch (error) {
+      setInboxItems([]);
+    }
+  }
+
   useEffect(() => {
     setSocket(io(process.env.BACKEND_DOMAIN || ``, { reconnection: true }));
   }, []);
@@ -211,6 +231,7 @@ export function UserContextProvider({
     if (loginStatus === LoginStatus.loggedIn) {
       if (isEqual(router.asPath, `/`)) router.push(`/home`);
       fetchDiscordGuilds();
+      fetchInbox();
     } else if (
       loginStatus === LoginStatus.notLoggedIn &&
       isEqual(router.asPath, `/home`)
@@ -240,6 +261,9 @@ export function UserContextProvider({
         loading: {
           discordGuilds: isDiscordGuildsLoading,
         },
+        inbox: {
+          inboxItems,
+        },
       }}
     >
       <div
@@ -254,7 +278,7 @@ export function UserContextProvider({
         {isEqual(loginStatus, LoginStatus.checking) && (
           <motion.div
             key={`motion-transition-main-page-loading`}
-            animate={'base'}
+            animate={"base"}
             exit="exit"
             initial="initial"
             variants={{

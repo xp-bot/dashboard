@@ -1,19 +1,25 @@
 // eslint-disable-next-line import/no-cycle
-import { faPeoplePulling } from '@fortawesome/free-solid-svg-icons';
+import { faPeoplePulling } from "@fortawesome/free-solid-svg-icons";
+import BasicPanel from "components/basic-panel";
 // eslint-disable-next-line import/no-cycle
-import { headerGradientTypes } from 'components/header';
-import { motion } from 'framer-motion';
-import { filter, isEqual, isUndefined, map } from 'lodash';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { FC } from 'react';
-import { getRouteParts } from 'utils/url-utils';
+import { headerGradientTypes } from "components/header";
+import InboxItem from "components/inbox-item";
+import { AnimatePresence, motion } from "framer-motion";
+import { filter, isEqual, isUndefined, map } from "lodash";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { FC, useEffect, useState } from "react";
+import { getRouteParts } from "utils/url-utils";
 
-import { useUser } from '../../context/user-context';
-import { avatarToURL } from '../../utils/discord-utils';
-import FallBackImage from '../fallback-image';
-import { XPLogo } from '../svg/logos';
-import TabButton, { ITabButton, TabButtonTheme } from './tab-button';
+import { useUser } from "../../context/user-context";
+import { avatarToURL } from "../../utils/discord-utils";
+import FallBackImage from "../fallback-image";
+import { XPLogo } from "../svg/logos";
+import TabButton, { ITabButton, TabButtonTheme } from "./tab-button";
+
+enum ExecuteFunctions {
+  ToggleInbox = 1,
+}
 
 const NavigationItems: ITabButton[] = [
   {
@@ -79,37 +85,94 @@ const DesktopNavBar: FC<DesktopNavBarProps> = () => {
   const useBigHeader =
     isEqual(router.asPath, `/`) || isEqual(router.asPath, `/premium`);
 
+  const [showInbox, setShowInbox] = useState(false);
+
+  const [additionalLinks, setAdditionalLinks] = useState<ITabButton[]>([
+    {
+      text: `Inbox (1)`,
+      isVisible: (u) => !isUndefined(u),
+      marginLeft: true,
+      executeFunction: ExecuteFunctions.ToggleInbox,
+    },
+  ]);
+
+  const executeFunction = (functionNumber: ExecuteFunctions) => {
+    switch (functionNumber) {
+      case ExecuteFunctions.ToggleInbox:
+        setShowInbox(!showInbox);
+        break;
+      default:
+        break;
+    }
+  };
+
+  useEffect(() => {}, [router.asPath]);
+
   return (
     <div className="relative z-10 -mb-2 hidden h-fit w-full justify-center lg:flex">
       <motion.div
+        key={"header"}
         animate={{
-          position: 'absolute',
+          position: "absolute",
           padding: `0px 2.5rem`,
-          backdropFilter: 'blur(0px)',
+          backdropFilter: "blur(0px)",
           justifyContent: useBigHeader ? `center` : `end`,
         }}
-        className={`container top-[27px] flex w-full flex-row items-center  overflow-hidden rounded-md border-opacity-[.25] font-normal`}
+        className={`container top-[27px] z-20 flex w-full flex-row items-center rounded-md border-opacity-[.25] font-normal`}
       >
         {map(
           filter(
-            NavigationItems,
+            [...NavigationItems, ...additionalLinks],
             (item) =>
               isUndefined(item.isVisible) ||
               item.isVisible(user.currentUser, currentPath)
           ),
           (item) => (
             <div
-              className="flex items-center"
+              className="relative z-30 flex h-fit items-center"
               key={`${item.text}${item.isActive}`}
             >
               {item.marginLeft && (
                 <div className="h-6 w-[1px] bg-white opacity-25" />
               )}
-              <TabButton
-                theme={TabButtonTheme.Title}
-                className="p-[12px]"
-                button={item}
-              />
+              <button
+                onClick={
+                  item.executeFunction
+                    ? () =>
+                        item.executeFunction &&
+                        executeFunction(item.executeFunction)
+                    : undefined
+                }
+              >
+                <TabButton
+                  theme={TabButtonTheme.Title}
+                  className="p-[12px]"
+                  button={{
+                    ...item,
+                    link: item.executeFunction ? undefined : item.link,
+                  }}
+                />
+              </button>
+              {item.executeFunction === ExecuteFunctions.ToggleInbox && (
+                <AnimatePresence>
+                  {showInbox && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      className="absolute right-0 top-[calc(100%+20px)] h-full"
+                    >
+                      <BasicPanel title="Inbox">
+                        <div className="flex flex-col gap-2">
+                          {map(user.inbox.inboxItems, (inboxItem) => (
+                            <InboxItem inboxItem={inboxItem} />
+                          ))}
+                        </div>
+                      </BasicPanel>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              )}
             </div>
           )
         )}
@@ -125,7 +188,7 @@ const DesktopNavBar: FC<DesktopNavBarProps> = () => {
             <div className="ml-3 drop-shadow-md transition ease-in-out hover:scale-95 active:scale-90">
               <FallBackImage
                 src={avatarToURL(user.currentUser?.discordUser)}
-                className={'aspect-square w-[37px] rounded-full object-cover'}
+                className={"aspect-square w-[37px] rounded-full object-cover"}
               />
             </div>
           </Link>

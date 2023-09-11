@@ -1,16 +1,16 @@
-import { AnimatePresence, motion } from 'framer-motion';
-import useBreakpoints from 'hooks/use-breakpoints';
-import { isEqual, isNumber, isUndefined } from 'lodash';
-import { useRouter } from 'next/router';
-import { FC, ReactNode } from 'react';
+import { AnimatePresence, motion } from "framer-motion";
+import useBreakpoints from "hooks/use-breakpoints";
+import { isEqual, isNumber, isUndefined } from "lodash";
+import { useRouter } from "next/router";
+import { FC, ReactNode } from "react";
 
 // eslint-disable-next-line import/no-cycle
-import DesktopNavBar from './desktop/desktop-nav-bar';
-import FallBackImage from './fallback-image';
-import { BigIndexWave, DesktopWave, MobileWave } from './svg/waves';
+import DesktopNavBar from "./desktop/desktop-nav-bar";
+import FallBackImage from "./fallback-image";
+import { BigIndexWave, DesktopWave, MobileWave } from "./svg/waves";
 
 export const headerGradientTypes = {
-  premium: { bottomLeft: '#de3a3a', topRight: '#e3ac67' },
+  premium: { bottomLeft: "#de3a3a", topRight: "#e3ac67" },
 };
 
 interface HeaderProps {
@@ -40,7 +40,7 @@ const Header: FC<HeaderProps> = ({
           height: useBigHeader ? (breakpoints.isLg ? `100vh` : 275) : 275,
         }}
         transition={{ duration: 0.5 }}
-        className={`relative z-20 w-full overflow-hidden`}
+        className={`relative w-full`}
       >
         <DesktopNavBar
           customGradient={customGradient}
@@ -80,7 +80,7 @@ const Header: FC<HeaderProps> = ({
                   ? `${customBlur === 0 ? `scale-100` : `scale-110`}`
                   : `scale-[1.3] blur-[25px]`
               } absolute bottom-0 left-0 my-auto h-full w-full object-cover transition-all ease-in-out`}
-              src={customImage || '/images/header.jpg'}
+              src={customImage || "/images/header.jpg"}
               alt="gugugaga"
               resolution={1920}
             />
