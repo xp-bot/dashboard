@@ -38,7 +38,7 @@ const InboxItem: FC<IInboxItemProps> = ({ inboxItem }) => {
                 />
               </span>
             )}
-            <p className="text-xs opacity-75">
+            <p className="text-sm opacity-75">
               {lookupUser?.username} replied to you:
             </p>
           </div>
@@ -49,10 +49,10 @@ const InboxItem: FC<IInboxItemProps> = ({ inboxItem }) => {
   };
 
   return (
-    <Link href={inboxItem.link || ""}>
-      <div className="flex w-60 flex-col gap-1 border-l-2 bg-white/5 pl-2 transition ease-in-out">
+    <Link className="w-full" href={inboxItem.link || ""}>
+      <div className="flex flex-col gap-1 rounded-md border bg-input py-2 pl-2 transition ease-in-out dark:bg-input-darkMode">
         <Subject />
-        <p className="line-clamp-2 text-sm italic">{inboxItem.body}</p>
+        <p className="line-clamp-2 italic">{inboxItem.body}</p>
       </div>
     </Link>
   );

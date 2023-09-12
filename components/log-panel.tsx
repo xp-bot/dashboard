@@ -1,15 +1,15 @@
-import { useServerDetails } from 'context/guild-details-context';
-import parse from 'html-react-parser';
-import { IXPLogHit } from 'models/backend/xp-models';
-import { FC } from 'react';
+import { useServerDetails } from "context/guild-details-context";
+import parse from "html-react-parser";
+import { IXPLogHit } from "models/backend/xp-models";
+import { FC } from "react";
 import {
   fixDiscordMarkdownFormat,
   formatNumber,
   formatVoiceTime,
   getAnnounceMessage,
-} from 'utils/text-utils';
+} from "utils/text-utils";
 
-import BasicPanel, { BasicPanelVariant } from './basic-panel';
+import BasicPanel, { BasicPanelVariant } from "./basic-panel";
 
 interface ILogPanelProps {
   log: IXPLogHit;
@@ -18,7 +18,7 @@ interface ILogPanelProps {
 const LogPanel: FC<ILogPanelProps> = ({ log }) => {
   const guild = useServerDetails();
   switch (log.type) {
-    case 'settings':
+    case "settings":
       return (
         <BasicPanel
           borderColor="#f94c4c"
@@ -27,7 +27,7 @@ const LogPanel: FC<ILogPanelProps> = ({ log }) => {
           description={`${log.whoChanged} changed **${log.whatChanged}** from ${log.oldValue} to **${log.newValue}**.`}
         />
       );
-    case 'commands':
+    case "commands":
       return (
         <BasicPanel
           md
@@ -36,7 +36,7 @@ const LogPanel: FC<ILogPanelProps> = ({ log }) => {
           description={`/${log.command}`}
         />
       );
-    case 'voicetime':
+    case "voicetime":
       return (
         <BasicPanel
           md
@@ -47,7 +47,7 @@ const LogPanel: FC<ILogPanelProps> = ({ log }) => {
           )}\n**XP added:** ${formatNumber(log.newXP - log.oldXP)}xp`}
         />
       );
-    case 'levelup':
+    case "levelup":
       return (
         <BasicPanel borderColor="#6767EA" md title={`Level-up Announcement.`}>
           <BasicPanel variant={BasicPanelVariant.inPanel}>
@@ -66,11 +66,11 @@ const LogPanel: FC<ILogPanelProps> = ({ log }) => {
           </BasicPanel>
         </BasicPanel>
       );
-    case 'xpchanged':
+    case "xpchanged":
       return (
         <BasicPanel
           md
-          borderColor={log.xpChange > 0 ? '#4fc980' : `#f94c4c`}
+          borderColor={log.xpChange > 0 ? "#4fc980" : `#f94c4c`}
           title={`${log.username} ${
             log.xpChange > 0 ? `gained` : `lost`
           } ${formatNumber(log.xpChange)}xp.`}
@@ -78,7 +78,7 @@ const LogPanel: FC<ILogPanelProps> = ({ log }) => {
         />
       );
 
-    case 'exceptions':
+    case "exceptions":
       return (
         <BasicPanel borderColor="#f94c4c" md title={log.title}>
           <pre>

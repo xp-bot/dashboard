@@ -14,6 +14,7 @@ interface TabButtonProps {
   theme?: TabButtonTheme;
   className?: string;
   fixedMode?: boolean;
+  layoutId: string;
 }
 
 export enum TabButtonTheme {
@@ -22,7 +23,7 @@ export enum TabButtonTheme {
 }
 
 export interface ITabButton {
-  text: string;
+  text?: string;
   link?: string;
   shallowRouting?: boolean;
   isActive?: (path: string[]) => boolean;
@@ -31,7 +32,7 @@ export interface ITabButton {
   marginLeft?: boolean;
   disabled?: boolean;
   icon?: IconProp;
-  executeFunction?: number;
+  onClick?: () => void;
 }
 
 const ButtonStyle = (
@@ -66,39 +67,18 @@ const TabButton: FC<TabButtonProps> = ({
   theme,
   className,
   fixedMode,
+  layoutId,
 }) => {
   const router = useRouter();
   const currentPath = getRouteParts(router);
 
-  const ButtonContents = () => (
+  const ButtonContent = () => (
     <>
       {button.element}
       {button.text}
       {button.icon && (
         <FontAwesomeIcon className="opacity-75" icon={button.icon} />
       )}
-
-      {isUndefined(button.isActive)
-        ? false
-        : button.isActive(currentPath) && (
-            <motion.div
-              transition={{ type: "spring", bounce: 0.2 }}
-              layoutId="selectedDot"
-              initial={false}
-              // eslint-disable-next-line tailwindcss/no-custom-classname
-              className={`selectedDot ${
-                theme === TabButtonTheme.Title
-                  ? `${
-                      fixedMode
-                        ? `text-darkText`
-                        : `text-lightText dark:text-lightText-darkMode`
-                    }`
-                  : `text-xpBlue`
-              } absolute bottom-[-5px]`}
-            >
-              •
-            </motion.div>
-          )}
     </>
   );
 
@@ -108,7 +88,7 @@ const TabButton: FC<TabButtonProps> = ({
         (isUndefined(button.isActive) ? false : button.isActive(currentPath))
           ? ``
           : `hover:-translate-y-1 focus:translate-y-0 active:translate-y-0`
-      } group transition ease-in-out ${
+      } group relative flex justify-center transition ease-in-out ${
         button.disabled ? `pointer-events-none opacity-75` : ``
       }`}
     >
@@ -122,19 +102,42 @@ const TabButton: FC<TabButtonProps> = ({
           shallow={button.shallowRouting}
           href={button.link || ``}
         >
-          <ButtonContents />
+          <ButtonContent />
         </Link>
       ) : (
-        <div
+        <button
+          onClick={button.onClick}
           className={`${ButtonStyle(
             theme,
             button.isActive ? button.isActive(currentPath) : false,
             fixedMode
           )} ${className}`}
         >
-          <ButtonContents />
-        </div>
+          <ButtonContent />
+        </button>
       )}
+      {isUndefined(button.isActive)
+        ? false
+        : button.isActive(currentPath) && (
+            <motion.div
+              transition={{ type: "spring", bounce: 0.2 }}
+              layoutId={`selectedDot-${layoutId || "tab-bar"}`}
+              initial={false}
+              // eslint-disable-next-line tailwindcss/no-custom-classname
+              className={`selectedDot ${
+                theme === TabButtonTheme.Title
+                  ? `${
+                      fixedMode
+                        ? `text-darkText`
+                        : `text-lightText dark:text-lightText-darkMode`
+                    }`
+                  : `text-xpBlue`
+              } absolute bottom-[-5px]`}
+              // left-[calc(50%-5px)]
+            >
+              •
+            </motion.div>
+          )}
     </div>
   );
 };

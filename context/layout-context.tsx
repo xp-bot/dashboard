@@ -1,5 +1,7 @@
+// eslint-disable-next-line import/no-cycle
 import Header, { headerGradientTypes } from "components/header";
 import HeaderNavigationAnimator from "components/header-navigation-animator";
+import InboxPopout from "components/inbox-popout";
 import PageNavigationAnimator from "components/page-navigation-animator";
 import { isNumber, size, split } from "lodash";
 import { useRouter } from "next/router";
@@ -15,10 +17,12 @@ interface ILayoutContextValues {
     customGradient?: typeof headerGradientTypes.premium,
     setImageColorsAsGradient?: boolean
   ) => void;
+  toggleInbox: () => void;
 }
 
 export const LayoutContext = createContext<ILayoutContextValues>({
   changeHeader: () => {},
+  toggleInbox: () => {},
 });
 
 interface ILayoutContextProviderProps {
@@ -36,6 +40,8 @@ export function LayoutContextProvider({
     useState<typeof headerGradientTypes.premium>();
 
   const router = useRouter();
+
+  const [inboxOpen, setInboxOpen] = useState(false);
 
   const rootRoute = split(router.asPath, `/`)[1];
 
@@ -68,6 +74,9 @@ export function LayoutContextProvider({
     <LayoutContext.Provider
       value={{
         changeHeader,
+        toggleInbox: () => {
+          setInboxOpen(!inboxOpen);
+        },
       }}
     >
       <div className="flex h-fit min-h-full flex-col overflow-y-auto overflow-x-hidden">
@@ -95,6 +104,12 @@ export function LayoutContextProvider({
           </PageNavigationAnimator>
         </div>
       </div>
+      <InboxPopout
+        inboxOpen={inboxOpen}
+        requestClose={() => {
+          setInboxOpen(false);
+        }}
+      />
     </LayoutContext.Provider>
   );
 }

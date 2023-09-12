@@ -77,6 +77,7 @@ const UserTab: NextPage<UserTabProps> = () => {
       <HeadSet title={`${tabData.name}`} />
       <div className="hidden lg:block">
         <TabBar
+          layoutId="user-tab-bar"
           buttons={[
             ...map(
               filter(Object.entries(UserRoutes), (r) =>

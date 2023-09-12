@@ -1,14 +1,13 @@
 // eslint-disable-next-line import/no-cycle
-import { faPeoplePulling } from "@fortawesome/free-solid-svg-icons";
-import BasicPanel from "components/basic-panel";
+import { faInbox, faPeoplePulling } from "@fortawesome/free-solid-svg-icons";
 // eslint-disable-next-line import/no-cycle
 import { headerGradientTypes } from "components/header";
-import InboxItem from "components/inbox-item";
-import { AnimatePresence, motion } from "framer-motion";
-import { filter, isEqual, isUndefined, map, size } from "lodash";
+import { useLayout } from "context/layout-context";
+import { motion } from "framer-motion";
+import { filter, isEqual, isUndefined, map } from "lodash";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { FC, ReactNode, useEffect, useState } from "react";
+import { FC } from "react";
 import { getRouteParts } from "utils/url-utils";
 
 import { useUser } from "../../context/user-context";
@@ -16,10 +15,6 @@ import { avatarToURL } from "../../utils/discord-utils";
 import FallBackImage from "../fallback-image";
 import { XPLogo } from "../svg/logos";
 import TabButton, { ITabButton, TabButtonTheme } from "./tab-button";
-
-enum ExecuteFunctions {
-  ToggleInbox = 1,
-}
 
 const NavigationItems: ITabButton[] = [
   {
@@ -80,123 +75,63 @@ interface DesktopNavBarProps {
 
 const DesktopNavBar: FC<DesktopNavBarProps> = () => {
   const user = useUser();
+  const layout = useLayout();
   const router = useRouter();
   const currentPath = getRouteParts(router);
   const useBigHeader =
     isEqual(router.asPath, `/`) || isEqual(router.asPath, `/premium`);
 
-  const [showInbox, setShowInbox] = useState(true);
-
-  const [additionalLinks, setAdditionalLinks] = useState<ITabButton[]>([]);
-
-  useEffect(() => {
-    const newLinks: ITabButton[] = [];
-    if (size(user.inbox.inboxItems) > 0) {
-      newLinks.push({
-        text: `Inbox (${size(user.inbox.inboxItems)})`,
-        isVisible: (u) => !isUndefined(u),
-        marginLeft: true,
-        executeFunction: ExecuteFunctions.ToggleInbox,
-      });
-    }
-    setAdditionalLinks(newLinks);
-  }, [user.inbox.inboxItems]);
-
-  const getExecuteFunction = (
-    eF: ExecuteFunctions
-  ):
-    | {
-        buttonFunction: () => void;
-        component: ReactNode;
-      }
-    | undefined => {
-    switch (eF) {
-      case ExecuteFunctions.ToggleInbox:
-        return {
-          buttonFunction: () => {
-            setShowInbox(!showInbox);
-          },
-          component: (
-            <AnimatePresence>
-              {showInbox && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  className="absolute right-3 top-[calc(100%+5px)] h-full"
-                >
-                  <BasicPanel className="!rounded-tr-none" title="Inbox">
-                    <div className="flex flex-col gap-2">
-                      {map(user.inbox.inboxItems, (inboxItem) => (
-                        <InboxItem inboxItem={inboxItem} />
-                      ))}
-                    </div>
-                  </BasicPanel>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          ),
-        };
-
-      default:
-        return undefined;
-    }
-  };
-
-  useEffect(() => {}, [router.asPath]);
-
   return (
     <div className="relative z-10 -mb-2 hidden h-fit w-full justify-center lg:flex">
       <motion.div
-        key={"header"}
         animate={{
           position: "absolute",
           padding: `0px 2.5rem`,
           backdropFilter: "blur(0px)",
           justifyContent: useBigHeader ? `center` : `end`,
         }}
-        className={`container top-[27px] z-20 flex w-full flex-row items-center rounded-md border-opacity-[.25] font-normal`}
+        className={`container top-[27px] flex w-full flex-row items-center rounded-md border-opacity-[.25] font-normal`}
       >
         {map(
           filter(
-            [...NavigationItems, ...additionalLinks],
+            NavigationItems,
             (item) =>
               isUndefined(item.isVisible) ||
               item.isVisible(user.currentUser, currentPath)
           ),
           (item) => (
             <div
-              className=" z-30 flex h-fit items-center"
+              className="flex items-center"
               key={`${item.text}${item.isActive}`}
             >
               {item.marginLeft && (
                 <div className="h-6 w-[1px] bg-white opacity-25" />
               )}
-              <button
-                onClick={
-                  item.executeFunction
-                    ? () =>
-                        item.executeFunction &&
-                        getExecuteFunction(
-                          item.executeFunction
-                        )?.buttonFunction()
-                    : undefined
-                }
-              >
-                <TabButton
-                  theme={TabButtonTheme.Title}
-                  className="p-[12px]"
-                  button={{
-                    ...item,
-                    link: item.executeFunction ? undefined : item.link,
-                  }}
-                />
-              </button>
-              {item.executeFunction &&
-                getExecuteFunction(item.executeFunction)?.component}
+              <TabButton
+                layoutId="desktop-nav-bar"
+                theme={TabButtonTheme.Title}
+                className="p-[12px]"
+                button={item}
+              />
             </div>
           )
         )}
+
+        <div className="flex items-center" key={`Sign Infalse`}>
+          <div className="h-6 w-[1px] bg-white opacity-25" />
+          <TabButton
+            layoutId="desktop-nav-bar"
+            theme={TabButtonTheme.Title}
+            className="p-[12px]"
+            button={{
+              icon: faInbox,
+              text: `Inbox`,
+              onClick: () => {
+                layout.toggleInbox();
+              },
+            }}
+          />
+        </div>
 
         {user.isLoggedIn ? (
           <Link
@@ -218,6 +153,7 @@ const DesktopNavBar: FC<DesktopNavBarProps> = () => {
             <div className="h-6 w-[1px] bg-white opacity-25" />
             <div className="flex items-center" key={`Sign Infalse`}>
               <TabButton
+                layoutId="desktop-nav-bar"
                 theme={TabButtonTheme.Title}
                 className="p-[12px]"
                 button={{
