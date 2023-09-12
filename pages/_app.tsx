@@ -10,18 +10,8 @@ import Tooltip from "components/tooltip";
 import { LayoutContextProvider } from "context/layout-context";
 import SocketManager from "context/socket-manager";
 import { useLocalStorage } from "hooks/use-local-storage";
-import {
-  entries,
-  forEach,
-  isEmpty,
-  isEqual,
-  isNil,
-  keys,
-  last,
-  map,
-} from "lodash";
+import { entries, forEach, isEmpty, isNil, keys, last, map } from "lodash";
 import type { AppProps } from "next/app";
-import { useRouter } from "next/router";
 import { ThemeProvider } from "next-themes";
 import { useEffect, useState } from "react";
 import semver from "semver";
@@ -157,8 +147,6 @@ const ChangelogModal = () => {
 };
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const router = useRouter();
-
   return (
     <>
       <ThemeProvider attribute="class">
@@ -167,10 +155,11 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Component {...pageProps} />
           ) : ( */}
           <div
-            className={`h-fit min-h-[100vh] overflow-hidden ${
-              isEqual(router.asPath, `/`) || isEqual(router.asPath, `/premium`)
-                ? `pb-20 lg:pb-0`
-                : `pb-20`
+            className={`h-[100vh] ${
+              ""
+              // isEqual(router.asPath, `/`) || isEqual(router.asPath, `/premium`)
+              //   ? `pb-20 lg:pb-0`
+              //   : `pb-20`
             } ${inter.variable}`}
           >
             <LayoutContextProvider>

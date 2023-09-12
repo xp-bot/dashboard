@@ -1,10 +1,10 @@
-import Header, { headerGradientTypes } from 'components/header';
-import HeaderNavigationAnimator from 'components/header-navigation-animator';
-import PageNavigationAnimator from 'components/page-navigation-animator';
-import { isNumber, size, split } from 'lodash';
-import { useRouter } from 'next/router';
-import { createContext, useContext, useState } from 'react';
-import { getAverageImageColors } from 'utils/image-utils';
+import Header, { headerGradientTypes } from "components/header";
+import HeaderNavigationAnimator from "components/header-navigation-animator";
+import PageNavigationAnimator from "components/page-navigation-animator";
+import { isNumber, size, split } from "lodash";
+import { useRouter } from "next/router";
+import { createContext, useContext, useState } from "react";
+import { getAverageImageColors } from "utils/image-utils";
 
 interface ILayoutContextValues {
   changeHeader: (
@@ -70,27 +70,31 @@ export function LayoutContextProvider({
         changeHeader,
       }}
     >
-      <Header
-        customGradient={headerGradient}
-        customBlur={headerBlur}
-        customImage={headerImage}
-      >
-        <HeaderNavigationAnimator headerKey={`header_${headerStateKey}`}>
-          {headerState}
-        </HeaderNavigationAnimator>
-      </Header>
+      <div className="flex h-fit min-h-full flex-col overflow-y-auto overflow-x-hidden">
+        <Header
+          customGradient={headerGradient}
+          customBlur={headerBlur}
+          customImage={headerImage}
+        >
+          <HeaderNavigationAnimator headerKey={`header_${headerStateKey}`}>
+            {headerState}
+          </HeaderNavigationAnimator>
+        </Header>
 
-      <PageNavigationAnimator
-        customKey={
-          rootRoute === `blog`
-            ? undefined
-            : rootRoute === `servers`
-            ? `layout_${rootRoute}_${split(router.asPath, `/`)[2] || ``}`
-            : `layout_${rootRoute || `home`}`
-        }
-      >
-        {children}
-      </PageNavigationAnimator>
+        <div className="grow bg-wavePage dark:bg-wavePage-darkMode">
+          <PageNavigationAnimator
+            customKey={
+              rootRoute === `blog`
+                ? undefined
+                : rootRoute === `servers`
+                ? `layout_${rootRoute}_${split(router.asPath, `/`)[2] || ``}`
+                : `layout_${rootRoute || `home`}`
+            }
+          >
+            {children}
+          </PageNavigationAnimator>
+        </div>
+      </div>
     </LayoutContext.Provider>
   );
 }

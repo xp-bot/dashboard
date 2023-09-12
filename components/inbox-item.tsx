@@ -50,9 +50,9 @@ const InboxItem: FC<IInboxItemProps> = ({ inboxItem }) => {
 
   return (
     <Link href={inboxItem.link || ""}>
-      <div className="flex w-60 flex-col gap-1 rounded-md bg-white/5 p-2 transition ease-in-out">
+      <div className="flex w-60 flex-col gap-1 border-l-2 bg-white/5 pl-2 transition ease-in-out">
         <Subject />
-        <p className="line-clamp-2 text-sm">{inboxItem.body}</p>
+        <p className="line-clamp-2 text-sm italic">{inboxItem.body}</p>
       </div>
     </Link>
   );

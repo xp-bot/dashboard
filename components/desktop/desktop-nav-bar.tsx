@@ -5,10 +5,10 @@ import BasicPanel from "components/basic-panel";
 import { headerGradientTypes } from "components/header";
 import InboxItem from "components/inbox-item";
 import { AnimatePresence, motion } from "framer-motion";
-import { filter, isEqual, isUndefined, map } from "lodash";
+import { filter, isEqual, isUndefined, map, size } from "lodash";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { FC, useEffect, useState } from "react";
+import { FC, ReactNode, useEffect, useState } from "react";
 import { getRouteParts } from "utils/url-utils";
 
 import { useUser } from "../../context/user-context";
@@ -85,24 +85,61 @@ const DesktopNavBar: FC<DesktopNavBarProps> = () => {
   const useBigHeader =
     isEqual(router.asPath, `/`) || isEqual(router.asPath, `/premium`);
 
-  const [showInbox, setShowInbox] = useState(false);
+  const [showInbox, setShowInbox] = useState(true);
 
-  const [additionalLinks, setAdditionalLinks] = useState<ITabButton[]>([
-    {
-      text: `Inbox (1)`,
-      isVisible: (u) => !isUndefined(u),
-      marginLeft: true,
-      executeFunction: ExecuteFunctions.ToggleInbox,
-    },
-  ]);
+  const [additionalLinks, setAdditionalLinks] = useState<ITabButton[]>([]);
 
-  const executeFunction = (functionNumber: ExecuteFunctions) => {
-    switch (functionNumber) {
+  useEffect(() => {
+    const newLinks: ITabButton[] = [];
+    if (size(user.inbox.inboxItems) > 0) {
+      newLinks.push({
+        text: `Inbox (${size(user.inbox.inboxItems)})`,
+        isVisible: (u) => !isUndefined(u),
+        marginLeft: true,
+        executeFunction: ExecuteFunctions.ToggleInbox,
+      });
+    }
+    setAdditionalLinks(newLinks);
+  }, [user.inbox.inboxItems]);
+
+  const getExecuteFunction = (
+    eF: ExecuteFunctions
+  ):
+    | {
+        buttonFunction: () => void;
+        component: ReactNode;
+      }
+    | undefined => {
+    switch (eF) {
       case ExecuteFunctions.ToggleInbox:
-        setShowInbox(!showInbox);
-        break;
+        return {
+          buttonFunction: () => {
+            setShowInbox(!showInbox);
+          },
+          component: (
+            <AnimatePresence>
+              {showInbox && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="absolute right-3 top-[calc(100%+5px)] h-full"
+                >
+                  <BasicPanel className="!rounded-tr-none" title="Inbox">
+                    <div className="flex flex-col gap-2">
+                      {map(user.inbox.inboxItems, (inboxItem) => (
+                        <InboxItem inboxItem={inboxItem} />
+                      ))}
+                    </div>
+                  </BasicPanel>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          ),
+        };
+
       default:
-        break;
+        return undefined;
     }
   };
 
@@ -129,7 +166,7 @@ const DesktopNavBar: FC<DesktopNavBarProps> = () => {
           ),
           (item) => (
             <div
-              className="relative z-30 flex h-fit items-center"
+              className=" z-30 flex h-fit items-center"
               key={`${item.text}${item.isActive}`}
             >
               {item.marginLeft && (
@@ -140,7 +177,9 @@ const DesktopNavBar: FC<DesktopNavBarProps> = () => {
                   item.executeFunction
                     ? () =>
                         item.executeFunction &&
-                        executeFunction(item.executeFunction)
+                        getExecuteFunction(
+                          item.executeFunction
+                        )?.buttonFunction()
                     : undefined
                 }
               >
@@ -153,26 +192,8 @@ const DesktopNavBar: FC<DesktopNavBarProps> = () => {
                   }}
                 />
               </button>
-              {item.executeFunction === ExecuteFunctions.ToggleInbox && (
-                <AnimatePresence>
-                  {showInbox && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      className="absolute right-0 top-[calc(100%+20px)] h-full"
-                    >
-                      <BasicPanel title="Inbox">
-                        <div className="flex flex-col gap-2">
-                          {map(user.inbox.inboxItems, (inboxItem) => (
-                            <InboxItem inboxItem={inboxItem} />
-                          ))}
-                        </div>
-                      </BasicPanel>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              )}
+              {item.executeFunction &&
+                getExecuteFunction(item.executeFunction)?.component}
             </div>
           )
         )}
