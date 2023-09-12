@@ -1,12 +1,15 @@
 // eslint-disable-next-line import/no-cycle
 import Header, { headerGradientTypes } from "components/header";
 import HeaderNavigationAnimator from "components/header-navigation-animator";
+import InboxItem from "components/inbox-item";
 import InboxPopout from "components/inbox-popout";
 import PageNavigationAnimator from "components/page-navigation-animator";
-import { isNumber, size, split } from "lodash";
+import { isNumber, map, size, split } from "lodash";
 import { useRouter } from "next/router";
 import { createContext, useContext, useState } from "react";
 import { getAverageImageColors } from "utils/image-utils";
+
+import { useUser } from "./user-context";
 
 interface ILayoutContextValues {
   changeHeader: (
@@ -40,6 +43,8 @@ export function LayoutContextProvider({
     useState<typeof headerGradientTypes.premium>();
 
   const router = useRouter();
+
+  const user = useUser();
 
   const [inboxOpen, setInboxOpen] = useState(false);
 
@@ -110,6 +115,11 @@ export function LayoutContextProvider({
           setInboxOpen(false);
         }}
       />
+      <div className="fixed bottom-5 right-5 flex w-80 flex-col gap-5">
+        {map(user.inbox.inboxItems, (inboxItem) => (
+          <InboxItem inboxItem={inboxItem} />
+        ))}
+      </div>
     </LayoutContext.Provider>
   );
 }

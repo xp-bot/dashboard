@@ -3,7 +3,7 @@ import "@styles/globals.scss";
 import "@styles/xp-loading.scss";
 import "../styles/markdown.scss";
 
-import { Inter } from "@next/font/google";
+import { Inter } from "next/font/google";
 import FallBackImage from "components/fallback-image";
 import Modal from "components/modal";
 import Tooltip from "components/tooltip";

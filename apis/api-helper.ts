@@ -88,6 +88,16 @@ export const apiRoutes = {
       return backendAxios<IInboxItem[]>(`/inbox`, {
         method: `GET`,
       });
+    },
+    markRead: (inboxItemID: string) => {
+      return backendAxios<IInboxItem[]>(`/inbox/${inboxItemID}/read`, {
+        method: `PATCH`,
+      });
+    },
+    dismissItem: (inboxItemID: string) => {
+      return backendAxios<IInboxItem[]>(`/inbox/${inboxItemID}`, {
+        method: `DELETE`,
+      });
     }
   },
   ilum: {

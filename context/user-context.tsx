@@ -45,6 +45,8 @@ interface IUserContextValues {
 
   inbox: {
     inboxItems: IInboxItem[];
+    markInboxItemRead: (inboxItem: IInboxItem) => void;
+    dismissInboxItem: (inboxItem: IInboxItem) => void;
   };
 
   guild: {
@@ -81,6 +83,8 @@ export const UserContext = createContext<IUserContextValues>({
 
   inbox: {
     inboxItems: [],
+    markInboxItemRead: () => {},
+    dismissInboxItem: () => {},
   },
 
   guild: {
@@ -219,6 +223,24 @@ export function UserContextProvider({
     }
   }
 
+  const markInboxItemRead = async (inboxItem: IInboxItem) => {
+    try {
+      // eslint-disable-next-line no-underscore-dangle
+      const res = await apiRoutes.inbox.markRead(inboxItem._id);
+      if (res.success) fetchInbox();
+      // eslint-disable-next-line no-empty
+    } catch (error) {}
+  };
+
+  const dismissInboxItem = async (inboxItem: IInboxItem) => {
+    try {
+      // eslint-disable-next-line no-underscore-dangle
+      const res = await apiRoutes.inbox.dismissItem(inboxItem._id);
+      if (res.success) fetchInbox();
+      // eslint-disable-next-line no-empty
+    } catch (error) {}
+  };
+
   useEffect(() => {
     setSocket(io(process.env.BACKEND_DOMAIN || ``, { reconnection: true }));
   }, []);
@@ -263,6 +285,8 @@ export function UserContextProvider({
         },
         inbox: {
           inboxItems,
+          markInboxItemRead,
+          dismissInboxItem,
         },
       }}
     >

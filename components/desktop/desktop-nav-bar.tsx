@@ -4,7 +4,7 @@ import { faInbox, faPeoplePulling } from "@fortawesome/free-solid-svg-icons";
 import { headerGradientTypes } from "components/header";
 import { useLayout } from "context/layout-context";
 import { motion } from "framer-motion";
-import { filter, isEqual, isUndefined, map } from "lodash";
+import { filter, isEqual, isUndefined, map, size } from "lodash";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { FC } from "react";
@@ -117,21 +117,23 @@ const DesktopNavBar: FC<DesktopNavBarProps> = () => {
           )
         )}
 
-        <div className="flex items-center" key={`Sign Infalse`}>
-          <div className="h-6 w-[1px] bg-white opacity-25" />
-          <TabButton
-            layoutId="desktop-nav-bar"
-            theme={TabButtonTheme.Title}
-            className="p-[12px]"
-            button={{
-              icon: faInbox,
-              text: `Inbox`,
-              onClick: () => {
-                layout.toggleInbox();
-              },
-            }}
-          />
-        </div>
+        {user.isLoggedIn && size(user.inbox.inboxItems) > 0 && (
+          <div className="flex items-center" key={`Sign Infalse`}>
+            <div className="h-6 w-[1px] bg-white opacity-25" />
+            <TabButton
+              layoutId="desktop-nav-bar"
+              theme={TabButtonTheme.Title}
+              className="p-[12px]"
+              button={{
+                icon: faInbox,
+                text: `Inbox (${size(user.inbox.inboxItems)})`,
+                onClick: () => {
+                  layout.toggleInbox();
+                },
+              }}
+            />
+          </div>
+        )}
 
         {user.isLoggedIn ? (
           <Link
