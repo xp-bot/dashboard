@@ -50,13 +50,13 @@ const SocketManager: FC<ISocketMangerProps> = () => {
 
     user.socketIO.currentSocket.on("new-inbox-item", (item: IInboxItem) => {
       // TODO: Investigate why its not working
-      if (window.Notification.permission === "granted") {
-        // eslint-disable-next-line no-new
-        new window.Notification(`You have received a new message on XP!`, {
-          body: item.body,
-          tag: "new-inbox-item",
-        });
-      }
+      // if (window.Notification.permission === "granted") {
+      //   // eslint-disable-next-line no-new
+      //   new window.Notification(`You have received a new message on XP!`, {
+      //     body: item.body,
+      //     tag: "new-inbox-item",
+      //   });
+      // }
       user.inbox.fetchInbox();
       toast({
         text: item.body || `You have received a new message!`,

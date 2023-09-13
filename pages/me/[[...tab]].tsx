@@ -149,17 +149,17 @@ const UserTab: NextPage<UserTabProps> = () => {
                         link: `/changes`,
                         icon: faInfoCircle,
                       },
-                      ...(window.Notification.permission === `granted`
-                        ? []
-                        : [
-                            {
-                              text: `Stay Updated`,
-                              icon: faInfoCircle,
-                              onClick: () => {
-                                window.Notification.requestPermission();
-                              },
-                            },
-                          ]),
+                      // ...(window.Notification.permission === `granted`
+                      //   ? []
+                      //   : [
+                      //       {
+                      //         text: `Stay Updated`,
+                      //         icon: faInfoCircle,
+                      //         onClick: () => {
+                      //           window.Notification.requestPermission();
+                      //         },
+                      //       },
+                      //     ]),
                     ]}
                   />
                   <ButtonCluster
