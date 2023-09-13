@@ -1,9 +1,9 @@
-import Link from 'next/link';
-import { FC } from 'react';
+import Link from "next/link";
+import { FC } from "react";
 
-import { IDiscordPartialGuild } from '../models/backend/discord-models';
-import { guildIconToURL } from '../utils/discord-utils';
-import FallBackImage from './fallback-image';
+import { IDiscordPartialGuild } from "../models/backend/discord-models";
+import { guildIconToURL } from "../utils/discord-utils";
+import FallBackImage from "./fallback-image";
 
 interface RecentlyPanelProps {
   guild: IDiscordPartialGuild;
@@ -13,15 +13,14 @@ const RecentlyPanel: FC<RecentlyPanelProps> = ({ guild }) => {
   return (
     <Link
       href={`/servers/${guild.id}`}
-      className="group flex aspect-square w-[95px] select-none flex-col gap-3 overflow-hidden rounded-md border bg-panelBack/5 p-1 transition-all ease-in-out hover:-translate-y-1 hover:bg-panelBack/10 focus:translate-y-0 active:translate-y-0"
+      className="peer shrink-0 transition-all duration-200 ease-in-out active:scale-90 md:px-4 md:hover:scale-110 md:hover:px-6 md:active:scale-100"
     >
-      <FallBackImage
-        className="h-full w-full rounded-md shadow-lg"
-        src={guildIconToURL(guild, 256)}
-      />
-      {/* <h4 className="w-full break-words px-2 text-center hyphens-auto line-clamp-1">
-        {guild.name}
-      </h4> */}
+      <div className="mt-4 flex aspect-square w-20 shrink-0 overflow-hidden rounded-md bg-gray-700 drop-shadow-md focus-within:scale-100 sm:mt-2 sm:w-24">
+        <FallBackImage
+          className={`h-full w-full object-cover`}
+          src={guildIconToURL(guild, 256)}
+        />
+      </div>
     </Link>
   );
 };

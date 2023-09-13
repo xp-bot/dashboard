@@ -1,7 +1,7 @@
-import { AnimatePresence, motion } from 'framer-motion';
-import { useMediaQuery } from 'hooks/use-media-query';
-import { useRouter } from 'next/router';
-import { FC, ReactNode } from 'react';
+import { AnimatePresence, motion } from "framer-motion";
+import { useMediaQuery } from "hooks/use-media-query";
+import { useRouter } from "next/router";
+import { FC, ReactNode } from "react";
 
 interface IPageNavigationAnimatorProps {
   children: ReactNode;
@@ -12,7 +12,7 @@ const PageNavigationAnimator: FC<IPageNavigationAnimatorProps> = ({
   children,
   customKey,
 }) => {
-  const windowIsSmall = useMediaQuery('(min-width: 900px)');
+  const windowIsSmall = useMediaQuery("(min-width: 900px)");
   const router = useRouter();
   return (
     <AnimatePresence initial={false} mode="wait">
@@ -35,8 +35,8 @@ const PageNavigationAnimator: FC<IPageNavigationAnimatorProps> = ({
         initial="hidden"
         animate="show"
         exit="close"
-        transition={{ type: 'just' }}
-        className="relative z-20"
+        transition={{ type: "just" }}
+        className="relative"
       >
         {children}
       </motion.div>

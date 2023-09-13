@@ -1,7 +1,7 @@
 import {
   faHeartPulse,
+  faInbox,
   faInfoCircle,
-  faPeopleCarryBox,
   faPowerOff,
   faUserSecret,
 } from "@fortawesome/free-solid-svg-icons";
@@ -78,6 +78,7 @@ const UserTab: NextPage<UserTabProps> = () => {
       <HeadSet title={`${tabData.name}`} />
       <div className="hidden lg:block">
         <TabBar
+          layoutId="user-tab-bar"
           buttons={[
             ...map(
               filter(Object.entries(UserRoutes), (r) =>
@@ -134,13 +135,31 @@ const UserTab: NextPage<UserTabProps> = () => {
                     )
                   )}
                   <ButtonCluster
-                    title={`Dashboard Beta`}
+                    title={`Updates`}
                     buttons={[
                       {
-                        text: `Report a Bug`,
-                        link: `https://discord.xp-bot.net/`,
-                        icon: faPeopleCarryBox,
+                        text: `Inbox`,
+                        icon: faInbox,
+                        onClick: () => {
+                          layout.toggleInbox(true);
+                        },
                       },
+                      {
+                        text: `Changelogs`,
+                        link: `/changes`,
+                        icon: faInfoCircle,
+                      },
+                      ...(window.Notification.permission === `granted`
+                        ? []
+                        : [
+                            {
+                              text: `Stay Updated`,
+                              icon: faInfoCircle,
+                              onClick: () => {
+                                window.Notification.requestPermission();
+                              },
+                            },
+                          ]),
                     ]}
                   />
                   <ButtonCluster
@@ -155,16 +174,6 @@ const UserTab: NextPage<UserTabProps> = () => {
                         text: `Safety Guidelines`,
                         link: `/blog/contributing_to_user_safety_and_service_guidelines_1657056506533`,
                         icon: faHeartPulse,
-                      },
-                    ]}
-                  />
-                  <ButtonCluster
-                    title={`Updates`}
-                    buttons={[
-                      {
-                        text: `Changelogs`,
-                        link: `/changes`,
-                        icon: faInfoCircle,
                       },
                     ]}
                   />
