@@ -45,16 +45,7 @@ export const ChangelogUser: FC<{ user_id: string }> = ({ user_id }) => {
         <span className="absolute -right-1 -top-8 text-5xl opacity-[.03] blur-[1px] dark:blur-0">
           @
         </span>
-        <p>
-          {user ? (
-            <>
-              {user.username}
-              <span className="opacity-50">#{user.discriminator}</span>
-            </>
-          ) : (
-            user_id
-          )}
-        </p>
+        <p>{user ? <>{user.username}</> : user_id}</p>
       </span>
     </span>
   );

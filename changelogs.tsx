@@ -361,6 +361,46 @@ const changelogs: { [version: string]: ChangelogType } = {
       },
     ],
   },
+  "2.0.20": {
+    Notifications: [
+      {
+        type: "text",
+        content:
+          "You now have access to an all new Inbox! This is where you will receive notifications about new comments, replies, and more.",
+      },
+      {
+        type: "text",
+        content:
+          "You can now recieve notifications as popup toasts right in your browser!",
+      },
+      {
+        type: "image",
+        content: {
+          pc: "http://cdn.namespace.media/s/Tpm3wmcrYkFigSj/download/inbox-desktop.png",
+          mobile:
+            "http://cdn.namespace.media/s/aLkPXsc6aqR6NJq/download/inbox-mobile.png",
+          key: "",
+        },
+      },
+    ],
+    Blogs: [
+      {
+        type: "text",
+        content:
+          "You can now click links in blog comments, that have been shared by developers.",
+        submit_type: "suggestion",
+        submitter_id: "768469568779059250",
+        thread_id: "1150923374026051594",
+      },
+      {
+        type: "image",
+        content: {
+          pc: "http://cdn.namespace.media/s/oq5BQXd3wx3Atc2/download/hyperlink.png",
+          key: "",
+        },
+      },
+    ],
+  },
 };
 
 export default changelogs;

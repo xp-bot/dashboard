@@ -107,6 +107,7 @@ const MenuContent = () => {
             <>
               <div className="hidden lg:block">
                 <TabBar
+                  layoutId="server-tab-bar"
                   buttons={[
                     ...map(
                       filter(Object.entries(ServerRoutes), (r) =>

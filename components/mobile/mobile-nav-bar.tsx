@@ -1,4 +1,4 @@
-import { faNoteSticky } from '@fortawesome/free-regular-svg-icons';
+import { faNoteSticky } from "@fortawesome/free-regular-svg-icons";
 import {
   faCrown,
   faHome,
@@ -7,16 +7,16 @@ import {
   faUser,
   faWifiStrong,
   IconDefinition,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useUser } from 'context/user-context';
-import { filter, includes, isEqual, isUndefined, map } from 'lodash';
-import { IXPAPIUser } from 'models/backend/xp-models';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { FC } from 'react';
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useUser } from "context/user-context";
+import { filter, includes, isEqual, isUndefined, map } from "lodash";
+import { IXPAPIUser } from "models/backend/xp-models";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { FC } from "react";
 
-import { getRouteParts } from '../../utils/url-utils';
+import { getRouteParts } from "../../utils/url-utils";
 
 const NavigationItems: {
   text: string;
@@ -92,7 +92,7 @@ const MobileNavBar: FC<MobileNavBarProps> = () => {
     <div
       // eslint-disable-next-line tailwindcss/no-custom-classname
       // PB-[32px] / pb-8
-      style={{ boxShadow: '0 -2px 8px rgba(0,0,0,0.10)' }}
+      style={{ boxShadow: "0 -2px 8px rgba(0,0,0,0.10)" }}
       className={`fixed bottom-0 z-30 w-full border-t border-[#808080] border-opacity-[.25] pt-1 text-center pb-safe ios:bg-navBar-mobile-background/75 ios:backdrop-blur-lg android:bg-navBar-mobile-background ios:dark:bg-navBar-mobile-background-darkMode/90 android:dark:bg-navBar-mobile-background-darkMode md:backdrop-blur-[20px] lg:hidden`}
     >
       <div className="flex justify-evenly pb-2 ios:pb-0">
