@@ -9,13 +9,24 @@ import { apiRoutes } from "apis/api-helper";
 import { useCommentsSection } from "context/blog-comments-section";
 import { useUser } from "context/user-context";
 import { motion } from "framer-motion";
-import { isEqual, isUndefined, join, map, size, slice, split } from "lodash";
+import {
+  isEqual,
+  isUndefined,
+  join,
+  map,
+  replace,
+  size,
+  slice,
+  split,
+} from "lodash";
 import { IBlogPost, IBlogPostComment } from "models/backend/blog-models";
 import { IDiscordUserLookup } from "models/backend/discord-models";
 import { useRouter } from "next/router";
 import { FC, useEffect, useState } from "react";
 import { avatarToURL } from "utils/discord-utils";
 import isIdDeveloper from "utils/is-id-developer";
+import removeUrls from "utils/remove-urls";
+import urlToHtmlA from "utils/url-to-html-a";
 import { shareContent } from "utils/url-utils";
 
 import BlogCreateComment from "./blog-create-comment";
@@ -103,7 +114,15 @@ const BlogComment: FC<IBlogCommentProps> = ({
                 stripHtml(document, comment.content.body)
               )
             )} */}
-              <span>{`${comment.content.body}`}</span>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: isIdDeveloper(comment.content.creator)
+                    ? urlToHtmlA(replace(comment.content.body, /<[^>]*>/gm, ""))
+                    : removeUrls(
+                        replace(comment.content.body, /<[^>]*>/gm, "")
+                      ),
+                }}
+              />
               {
                 <span className="opacity-50">
                   - {author?.discordUser?.username}{" "}

@@ -71,7 +71,7 @@ const InboxPopout: FC<IInboxPopoutProps> = ({ inboxOpen, requestClose }) => {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 50, opacity: 0 }}
             transition={{ ease: "easeInOut", duration: 0.2 }}
-            className="fixed bottom-[calc(env(safe-area-inset-bottom)+65px)] right-10 z-20 flex h-fit w-96 flex-col overflow-hidden rounded-t-md border border-b-0 bg-panelBack shadow-xl dark:bg-panelBack-darkMode dark:shadow-none dark:shadow-panelBack-darkMode lg:-bottom-px"
+            className="fixed bottom-[calc(env(safe-area-inset-bottom)+65px)] right-10 z-20 flex h-fit w-96 flex-col overflow-hidden rounded-t-md border-b-0 bg-panelBack shadow-xl dark:border dark:bg-panelBack-darkMode dark:shadow-none dark:shadow-panelBack-darkMode lg:-bottom-px"
           >
             <div className="flex items-center justify-between gap-2 bg-xpBlue p-4 transition ease-in-out dark:bg-panelBack/10">
               <h2 className="m-0 flex flex-row gap-2 text-[17px] text-lightText">

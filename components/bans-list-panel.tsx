@@ -1,13 +1,13 @@
-import { apiRoutes } from 'apis/api-helper';
-import { IDiscordUserLookup } from 'models/backend/discord-models';
-import { IXPDBUserBan } from 'models/backend/xp-models';
-import { FC, useEffect, useState } from 'react';
-import { avatarToURL } from 'utils/discord-utils';
+import { apiRoutes } from "apis/api-helper";
+import { IDiscordUserLookup } from "models/backend/discord-models";
+import { IXPDBUserBan } from "models/backend/xp-models";
+import { FC, useEffect, useState } from "react";
+import { avatarToURL } from "utils/discord-utils";
 
-import BasicPanel from './basic-panel';
-import BlockButton, { BlockButtonVariant } from './block-button';
-import ButtonCluster from './button-cluster';
-import FallBackImage from './fallback-image';
+import BasicPanel from "./basic-panel";
+import BlockButton, { BlockButtonVariant } from "./block-button";
+import ButtonCluster from "./button-cluster";
+import FallBackImage from "./fallback-image";
 
 interface BansListPanelProps {
   ban: IXPDBUserBan;
@@ -34,12 +34,12 @@ const BansListPanel: FC<BansListPanelProps> = ({ ban, requestModify }) => {
           <p className="select-text">
             {user ? (
               <>
-                {user?.username}#{user?.discriminator} •{' '}
+                {user?.username} •{" "}
                 <i className="select-text opacity-50">{user?.id}</i>
               </>
             ) : (
               <>
-                Deleted Discord Account •{' '}
+                Deleted Discord Account •{" "}
                 <i className="select-text opacity-50">{ban.userID}</i>
               </>
             )}

@@ -37,6 +37,10 @@ a {
   }
 }
 
+.blog-link {
+  @apply text-xpBlue hover:opacity-100 opacity-75 hover:underline transition ease-in-out;
+}
+
 h1 {
   font-size: 1.55rem;
   font-family: "Montserrat", sans-serif;

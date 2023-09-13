@@ -97,15 +97,15 @@ const InboxItem: FC<IInboxItemProps> = ({ inboxItem }) => {
         }}
         className="flex flex-row items-center justify-between gap-2 p-2 pb-3 pr-[18px] hover:bg-input-border/10"
       >
-        <div className="flex max-w-[90%] grow flex-col gap-1 p-1 pb-0">
+        <div className="flex max-w-[90%] grow flex-col gap-1 p-1 pb-0 text-darkText dark:text-darkText-darkMode">
           <Subject />
           <p className="line-clamp-3 w-full italic">{inboxItem.body}</p>
         </div>
-        <div className="shrink-0">
+        <div className="shrink-0 text-darkText dark:text-darkText-darkMode">
           <FontAwesomeIcon icon={faAngleRight} />
         </div>
       </Link>
-      <div className="p-2 pt-0">
+      <div className="p-2 pt-0 text-darkText dark:text-darkText-darkMode">
         <div className="flex flex-row items-center justify-between border-t px-1 pt-2">
           <span className="text-xs italic">
             {date.format("DD. MMM. YYYY hh:mm A")}
