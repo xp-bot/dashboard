@@ -1,16 +1,22 @@
-import ButtonCluster from 'components/button-cluster';
-import Modal from 'components/modal';
-import { isUndefined, map } from 'lodash';
-import { IPopupPayload } from 'models/backend/socket-models';
-import { FC, useEffect, useState } from 'react';
+import ButtonCluster from "components/button-cluster";
+import Modal from "components/modal";
+import { ToastItemType } from "components/toast-item";
+import { isUndefined, map } from "lodash";
+import { IInboxItem } from "models/backend/inbox-interfaces";
+import { IPopupPayload } from "models/backend/socket-models";
+import { FC, useEffect, useState } from "react";
 
-import { useUser } from './user-context';
+import { useLayout } from "./layout-context";
+import { useToast } from "./toast-context";
+import { useUser } from "./user-context";
 
 interface ISocketMangerProps {}
 
 const SocketManager: FC<ISocketMangerProps> = () => {
   const [socketDisconnected, setSocketDisconnected] = useState<boolean>(true);
   const user = useUser();
+  const layout = useLayout();
+  const { toast } = useToast();
   const [devModal, setDevModal] = useState<IPopupPayload | undefined>();
 
   const handleUserRegister = () => {
@@ -42,7 +48,27 @@ const SocketManager: FC<ISocketMangerProps> = () => {
       }
     );
 
-    user.socketIO.currentSocket.on('disconnect', () => {
+    user.socketIO.currentSocket.on("new-inbox-item", (item: IInboxItem) => {
+      // TODO: Investigate why its not working
+      if (window.Notification.permission === "granted") {
+        // eslint-disable-next-line no-new
+        new window.Notification(`You have received a new message on XP!`, {
+          body: item.body,
+          tag: "new-inbox-item",
+        });
+      }
+      user.inbox.fetchInbox();
+      toast({
+        text: item.body || `You have received a new message!`,
+        type: ToastItemType.NEW_MESSAGE,
+        ttl: 5000,
+        onClick: () => {
+          layout.toggleInbox(true);
+        },
+      });
+    });
+
+    user.socketIO.currentSocket.on("disconnect", () => {
       setSocketDisconnected(true);
     });
   };

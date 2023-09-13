@@ -1,15 +1,13 @@
 // eslint-disable-next-line import/no-cycle
 import Header, { headerGradientTypes } from "components/header";
 import HeaderNavigationAnimator from "components/header-navigation-animator";
-import InboxItem from "components/inbox-item";
+// eslint-disable-next-line import/no-cycle
 import InboxPopout from "components/inbox-popout";
 import PageNavigationAnimator from "components/page-navigation-animator";
-import { isNumber, map, size, split } from "lodash";
+import { isNumber, isUndefined, size, split } from "lodash";
 import { useRouter } from "next/router";
 import { createContext, useContext, useState } from "react";
 import { getAverageImageColors } from "utils/image-utils";
-
-import { useUser } from "./user-context";
 
 interface ILayoutContextValues {
   changeHeader: (
@@ -20,12 +18,14 @@ interface ILayoutContextValues {
     customGradient?: typeof headerGradientTypes.premium,
     setImageColorsAsGradient?: boolean
   ) => void;
-  toggleInbox: () => void;
+  toggleInbox: (state?: boolean) => void;
+  inboxOpen: boolean;
 }
 
 export const LayoutContext = createContext<ILayoutContextValues>({
   changeHeader: () => {},
   toggleInbox: () => {},
+  inboxOpen: false,
 });
 
 interface ILayoutContextProviderProps {
@@ -43,8 +43,6 @@ export function LayoutContextProvider({
     useState<typeof headerGradientTypes.premium>();
 
   const router = useRouter();
-
-  const user = useUser();
 
   const [inboxOpen, setInboxOpen] = useState(false);
 
@@ -79,9 +77,10 @@ export function LayoutContextProvider({
     <LayoutContext.Provider
       value={{
         changeHeader,
-        toggleInbox: () => {
-          setInboxOpen(!inboxOpen);
+        toggleInbox: (state?: boolean) => {
+          setInboxOpen(isUndefined(state) ? !inboxOpen : state);
         },
+        inboxOpen,
       }}
     >
       <div className="flex h-fit min-h-full flex-col overflow-y-auto overflow-x-hidden">
@@ -115,11 +114,6 @@ export function LayoutContextProvider({
           setInboxOpen(false);
         }}
       />
-      <div className="fixed bottom-5 right-5 flex w-80 flex-col gap-5">
-        {map(user.inbox.inboxItems, (inboxItem) => (
-          <InboxItem inboxItem={inboxItem} />
-        ))}
-      </div>
     </LayoutContext.Provider>
   );
 }

@@ -94,8 +94,18 @@ export const apiRoutes = {
         method: `PATCH`,
       });
     },
+    markAllRead: () => {
+      return backendAxios<IInboxItem[]>(`/inbox/*/read`, {
+        method: `PATCH`,
+      });
+    },
     dismissItem: (inboxItemID: string) => {
       return backendAxios<IInboxItem[]>(`/inbox/${inboxItemID}`, {
+        method: `DELETE`,
+      });
+    },
+    dismissAllItems: () => {
+      return backendAxios<IInboxItem[]>(`/inbox/*`, {
         method: `DELETE`,
       });
     }

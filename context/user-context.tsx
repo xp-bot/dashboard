@@ -46,7 +46,10 @@ interface IUserContextValues {
   inbox: {
     inboxItems: IInboxItem[];
     markInboxItemRead: (inboxItem: IInboxItem) => void;
+    markAllInboxItemsRead: () => void;
     dismissInboxItem: (inboxItem: IInboxItem) => void;
+    dismissAllInboxItems: () => void;
+    fetchInbox: () => void;
   };
 
   guild: {
@@ -84,7 +87,10 @@ export const UserContext = createContext<IUserContextValues>({
   inbox: {
     inboxItems: [],
     markInboxItemRead: () => {},
+    markAllInboxItemsRead: () => {},
     dismissInboxItem: () => {},
+    dismissAllInboxItems: () => {},
+    fetchInbox: async () => {},
   },
 
   guild: {
@@ -232,10 +238,27 @@ export function UserContextProvider({
     } catch (error) {}
   };
 
+  const markAllInboxItemsRead = async () => {
+    try {
+      // eslint-disable-next-line no-underscore-dangle
+      const res = await apiRoutes.inbox.markAllRead();
+      if (res.success) fetchInbox();
+      // eslint-disable-next-line no-empty
+    } catch (error) {}
+  };
+
   const dismissInboxItem = async (inboxItem: IInboxItem) => {
     try {
       // eslint-disable-next-line no-underscore-dangle
       const res = await apiRoutes.inbox.dismissItem(inboxItem._id);
+      if (res.success) fetchInbox();
+      // eslint-disable-next-line no-empty
+    } catch (error) {}
+  };
+
+  const dismissAllInboxItems = async () => {
+    try {
+      const res = await apiRoutes.inbox.dismissAllItems();
       if (res.success) fetchInbox();
       // eslint-disable-next-line no-empty
     } catch (error) {}
@@ -286,7 +309,10 @@ export function UserContextProvider({
         inbox: {
           inboxItems,
           markInboxItemRead,
+          markAllInboxItemsRead,
           dismissInboxItem,
+          dismissAllInboxItems,
+          fetchInbox,
         },
       }}
     >

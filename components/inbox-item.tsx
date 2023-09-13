@@ -1,7 +1,10 @@
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { apiRoutes } from "apis/api-helper";
+// eslint-disable-next-line import/no-cycle
+import { useLayout } from "context/layout-context";
 import { useUser } from "context/user-context";
+import dayjs from "dayjs";
 import { slice, startsWith, toLower } from "lodash";
 import { IDiscordUserLookup } from "models/backend/discord-models";
 import { IInboxItem, InboxItemType } from "models/backend/inbox-interfaces";
@@ -20,6 +23,7 @@ const InboxItem: FC<IInboxItemProps> = ({ inboxItem }) => {
     IDiscordUserLookup | undefined
   >();
   const user = useUser();
+  const layout = useLayout();
   useEffect(() => {
     const fetchLookupUser = async () => {
       if (!inboxItem.from) return;
@@ -29,6 +33,8 @@ const InboxItem: FC<IInboxItemProps> = ({ inboxItem }) => {
     };
     fetchLookupUser();
   }, [inboxItem]);
+
+  const date = dayjs(inboxItem.createdAt);
 
   const Subject = () => {
     switch (inboxItem.type) {
@@ -58,30 +64,52 @@ const InboxItem: FC<IInboxItemProps> = ({ inboxItem }) => {
           </div>
         );
       default:
-        return <p>{inboxItem.subject}</p>;
+        return (
+          <p
+            className={`text-sm opacity-75 ${
+              startsWith(
+                lookupUser?.username,
+                toLower(slice(lookupUser?.username, 0, 1)[0])
+              )
+                ? "-mt-0.5"
+                : ""
+            } `}
+          >
+            {inboxItem.subject}
+          </p>
+        );
     }
   };
 
   return (
     <div
-      className={`flex w-full flex-col justify-between rounded-md rounded-l-none border border-l-2 border-l-xpBlue bg-input transition ease-in-out dark:rounded-l-md dark:border-l dark:border-l-input-border dark:bg-input-darkMode ${
+      className={`flex w-full flex-col justify-between rounded-md rounded-l-none border border-l-2 border-l-xpBlue bg-input shadow-panelBack transition ease-in-out dark:rounded-l-md dark:border-l dark:border-l-input-border dark:bg-input-darkMode ${
         inboxItem.read ? "opacity-50 hover:opacity-100" : ""
       }`}
     >
       <Link
         href={inboxItem.link || ""}
-        className="flex flex-row items-center justify-between p-2 pb-3 pr-[18px] hover:bg-input-border/10"
+        onClick={() => {
+          user.inbox.markInboxItemRead(inboxItem);
+          if (layout.inboxOpen) layout.toggleInbox();
+
+          window.Notification.requestPermission();
+        }}
+        className="flex flex-row items-center justify-between gap-2 p-2 pb-3 pr-[18px] hover:bg-input-border/10"
       >
-        <div className="flex flex-col gap-1">
+        <div className="flex max-w-[90%] grow flex-col gap-1 p-1 pb-0">
           <Subject />
-          <p className="line-clamp-2 italic">{inboxItem.body}</p>
+          <p className="line-clamp-3 w-full italic">{inboxItem.body}</p>
         </div>
-        <div>
+        <div className="shrink-0">
           <FontAwesomeIcon icon={faAngleRight} />
         </div>
       </Link>
       <div className="p-2 pt-0">
-        <div className="flex flex-row justify-end border-t px-2 pt-2">
+        <div className="flex flex-row items-center justify-between border-t px-1 pt-2">
+          <span className="text-xs italic">
+            {date.format("DD. MMM. YYYY hh:mm A")}
+          </span>
           {inboxItem.read ? (
             <button
               onClick={() => {

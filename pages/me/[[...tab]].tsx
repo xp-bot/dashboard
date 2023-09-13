@@ -1,5 +1,6 @@
 import {
   faHeartPulse,
+  faInbox,
   faInfoCircle,
   faPowerOff,
   faUserSecret,
@@ -12,6 +13,7 @@ import PageNavigationAnimator from "components/page-navigation-animator";
 import PageTitle from "components/page-title";
 import Select from "components/select";
 import { useLayout } from "context/layout-context";
+import { useToast } from "context/toast-context";
 import { useUser } from "context/user-context";
 import { UserDetailsContextProvider } from "context/user-details-context";
 import { useAccessRestriction } from "hooks/use-access-restriction";
@@ -48,6 +50,8 @@ const UserTab: NextPage<UserTabProps> = () => {
   const user = useUser();
   const theme = useTheme();
   useAccessRestriction(true, false);
+
+  const { toast } = useToast();
 
   const tabName = router.query.tab ? router.query.tab[0] : null;
   const tab = tabName
@@ -134,6 +138,34 @@ const UserTab: NextPage<UserTabProps> = () => {
                     )
                   )}
                   <ButtonCluster
+                    title={`Updates`}
+                    buttons={[
+                      {
+                        text: `Inbox`,
+                        icon: faInbox,
+                        onClick: () => {
+                          layout.toggleInbox(true);
+                        },
+                      },
+                      {
+                        text: `Changelogs`,
+                        link: `/changes`,
+                        icon: faInfoCircle,
+                      },
+                      ...(window.Notification.permission === `granted`
+                        ? []
+                        : [
+                            {
+                              text: `Stay Updated`,
+                              icon: faInfoCircle,
+                              onClick: () => {
+                                window.Notification.requestPermission();
+                              },
+                            },
+                          ]),
+                    ]}
+                  />
+                  <ButtonCluster
                     title={`Legal`}
                     buttons={[
                       {
@@ -145,16 +177,6 @@ const UserTab: NextPage<UserTabProps> = () => {
                         text: `Safety Guidelines`,
                         link: `/blog/contributing_to_user_safety_and_service_guidelines_1657056506533`,
                         icon: faHeartPulse,
-                      },
-                    ]}
-                  />
-                  <ButtonCluster
-                    title={`Updates`}
-                    buttons={[
-                      {
-                        text: `Changelogs`,
-                        link: `/changes`,
-                        icon: faInfoCircle,
                       },
                     ]}
                   />

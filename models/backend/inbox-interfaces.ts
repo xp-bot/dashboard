@@ -1,12 +1,13 @@
 export interface IInboxItem extends IInboxItemContent {
     userID: string;
-    created_at: Date;
+    createdAt: Date;
     _id: string;
 }
 
 export enum InboxItemType {
     BlogPostComment = "blog-post-comment",
     BlogPostReply = "blog-post-reply",
+    System = "system",
 }
 
 export interface IInboxItemContent {

@@ -81,6 +81,9 @@ const DesktopNavBar: FC<DesktopNavBarProps> = () => {
   const useBigHeader =
     isEqual(router.asPath, `/`) || isEqual(router.asPath, `/premium`);
 
+  const { inboxItems } = user.inbox;
+  const unreadInboxItems = filter(inboxItems, (item) => !item.read);
+
   return (
     <div className="relative z-10 -mb-2 hidden h-fit w-full justify-center lg:flex">
       <motion.div
@@ -117,7 +120,7 @@ const DesktopNavBar: FC<DesktopNavBarProps> = () => {
           )
         )}
 
-        {user.isLoggedIn && size(user.inbox.inboxItems) > 0 && (
+        {user.isLoggedIn && size(inboxItems) > 0 && (
           <div className="flex items-center" key={`Sign Infalse`}>
             <div className="h-6 w-[1px] bg-white opacity-25" />
             <TabButton
@@ -126,7 +129,11 @@ const DesktopNavBar: FC<DesktopNavBarProps> = () => {
               className="p-[12px]"
               button={{
                 icon: faInbox,
-                text: `Inbox (${size(user.inbox.inboxItems)})`,
+                text: `Inbox${
+                  size(unreadInboxItems) > 0
+                    ? ` (${size(unreadInboxItems)})`
+                    : ``
+                }`,
                 onClick: () => {
                   layout.toggleInbox();
                 },

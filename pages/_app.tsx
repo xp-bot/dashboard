@@ -3,15 +3,16 @@ import "@styles/globals.scss";
 import "@styles/xp-loading.scss";
 import "../styles/markdown.scss";
 
-import { Inter } from "next/font/google";
 import FallBackImage from "components/fallback-image";
 import Modal from "components/modal";
 import Tooltip from "components/tooltip";
 import { LayoutContextProvider } from "context/layout-context";
 import SocketManager from "context/socket-manager";
+import { ToastContextProvider } from "context/toast-context";
 import { useLocalStorage } from "hooks/use-local-storage";
 import { entries, forEach, isEmpty, isNil, keys, last, map } from "lodash";
 import type { AppProps } from "next/app";
+import { Inter } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { useEffect, useState } from "react";
 import semver from "semver";
@@ -163,11 +164,13 @@ function MyApp({ Component, pageProps }: AppProps) {
             } ${inter.variable}`}
           >
             <LayoutContextProvider>
-              <SocketManager />
-              <WavePage>
-                <Component {...pageProps} />
-                <ChangelogModal />
-              </WavePage>
+              <ToastContextProvider>
+                <SocketManager />
+                <WavePage>
+                  <Component {...pageProps} />
+                  <ChangelogModal />
+                </WavePage>
+              </ToastContextProvider>
             </LayoutContextProvider>
             <MobileNavBar />
           </div>
