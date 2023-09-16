@@ -9,7 +9,9 @@ import LeaderboardPodiumPanel from "components/leaderboard-podium-panel";
 import Modal from "components/modal";
 import PageTitle from "components/page-title";
 import PanelInput from "components/panel-input";
+import { ToastItemType } from "components/toast-item";
 import { useLayout } from "context/layout-context";
+import { useToast } from "context/toast-context";
 import { useUser } from "context/user-context";
 import { ceil, isNil, map, size, slice } from "lodash";
 import { IXPLeaderboard, IXPLeaderboardUser } from "models/backend/xp-models";
@@ -34,6 +36,7 @@ const LeaderboardPage: NextPage<ServerTabProps> = ({ serverid, lbContent }) => {
   const router = useRouter();
   const layout = useLayout();
   const user = useUser();
+  const { toast } = useToast();
   const [modifyUser, setModifyUserState] = useState<
     IXPLeaderboardUser | undefined
   >();
@@ -60,8 +63,15 @@ const LeaderboardPage: NextPage<ServerTabProps> = ({ serverid, lbContent }) => {
       modifyUser.id,
       data.xp
     );
+
+    toast({
+      text: res.success
+        ? `Successfully modified ${modifyUser.username}'s xp.`
+        : `Failed to modify ${modifyUser.username}'s xp.`,
+      type: res.success ? ToastItemType.SUCCESS : ToastItemType.ERROR,
+    });
+
     if (!res.success) return;
-    // TODO: Add toast
     router.reload();
   };
 

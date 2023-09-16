@@ -1,18 +1,20 @@
 // eslint-disable-next-line import/no-cycle
 
-import { faRemove, faSave } from '@fortawesome/free-solid-svg-icons';
-import { apiRoutes } from 'apis/api-helper';
-import AnimatedDivList from 'components/animated-div-list';
-import BansListPanel from 'components/bans-list-panel';
-import ButtonCluster, { ButtonFeature } from 'components/button-cluster';
-import Modal from 'components/modal';
-import ModulePanel from 'components/module-panel';
-import MultilineInput from 'components/multiline-input';
-import PageTitle from 'components/page-title';
-import PanelInput from 'components/panel-input';
-import { isEmpty, isEqual, isUndefined, map } from 'lodash';
-import { IXPDBUserBan } from 'models/backend/xp-models';
-import { FC, useEffect, useState } from 'react';
+import { faRemove, faSave } from "@fortawesome/free-solid-svg-icons";
+import { apiRoutes } from "apis/api-helper";
+import AnimatedDivList from "components/animated-div-list";
+import BansListPanel from "components/bans-list-panel";
+import ButtonCluster, { ButtonFeature } from "components/button-cluster";
+import Modal from "components/modal";
+import ModulePanel from "components/module-panel";
+import MultilineInput from "components/multiline-input";
+import PageTitle from "components/page-title";
+import PanelInput from "components/panel-input";
+import { ToastItemType } from "components/toast-item";
+import { useToast } from "context/toast-context";
+import { isEmpty, isEqual, isUndefined, map } from "lodash";
+import { IXPDBUserBan } from "models/backend/xp-models";
+import { FC, useEffect, useState } from "react";
 
 interface UserTabBansProps {
   tabPath: string;
@@ -22,6 +24,7 @@ const UserTagBans: FC<UserTabBansProps> = () => {
   const [banModal, setBanModal] = useState<Partial<IXPDBUserBan> | undefined>();
   const [setupID, setSetupID] = useState<string | undefined>();
   const [bans, setBans] = useState<IXPDBUserBan[]>([]);
+  const { toast } = useToast();
   const recieveBans = async () => {
     setBanModal(undefined);
     setSetupID(undefined);
@@ -46,16 +49,22 @@ const UserTagBans: FC<UserTabBansProps> = () => {
       types: banModal?.content?.types || { rankingcard: false },
       notes: banModal?.content?.notes,
     });
-    if (!res.success) return;
-    // TODO: Error Toast
+    if (!res.success) {
+      toast({ text: "Failed to save ban.", type: ToastItemType.ERROR });
+      return;
+    }
+    toast({ text: "Successfully saved ban.", type: ToastItemType.SUCCESS });
     recieveBans();
   };
 
   const deleteBanModal = async () => {
     if (!banModal?.userID) return;
     const res = await apiRoutes.bans.deleteUsersBans(banModal?.userID);
-    if (!res.success) return;
-    // TODO: Error Toast
+    if (!res.success) {
+      toast({ text: "Failed to reset ban.", type: ToastItemType.ERROR });
+      return;
+    }
+    toast({ text: "Successfully reset ban.", type: ToastItemType.SUCCESS });
     recieveBans();
   };
 

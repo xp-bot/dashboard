@@ -5,7 +5,9 @@ import BlockTextArea from "components/block-text-area";
 import BlogMarkdown from "components/blog-markdown";
 import HeaderEditBlogPost from "components/header-content/header-edit-blog-post";
 import PageTitle from "components/page-title";
+import { ToastItemType } from "components/toast-item";
 import { useLayout } from "context/layout-context";
+import { useToast } from "context/toast-context";
 import { useUser } from "context/user-context";
 import { isNil, size, startsWith } from "lodash";
 import { BlogPostStatus, IBlogPost } from "models/backend/blog-models";
@@ -31,6 +33,7 @@ const BlogEditor: NextPage<UserTabProps> = ({ blogPost }) => {
   const layout = useLayout();
   const user = useUser();
   const router = useRouter();
+  const { toast } = useToast();
 
   const {
     register,
@@ -74,11 +77,20 @@ const BlogEditor: NextPage<UserTabProps> = ({ blogPost }) => {
     if (res.success) {
       const route =
         status === BlogPostStatus.DRAFT ? "/blog" : `/blog/${res.body.postID}`;
+      toast({
+        type: ToastItemType.SUCCESS,
+        subject: `Blog Post ${isNil(blogPost) ? "Posted" : "Updated"}`,
+        text: `Successfully ${
+          isNil(blogPost) ? "posted" : "updated"
+        } blogpost ${res.body.postID}.`,
+      });
       router.push(route);
     } else {
       console.log(res.message);
-
-      // TODO: TOAST
+      toast({
+        type: ToastItemType.ERROR,
+        text: "Something went wrong. Please try again later.",
+      });
     }
   };
 
@@ -106,8 +118,7 @@ const BlogEditor: NextPage<UserTabProps> = ({ blogPost }) => {
           subtitle={`You may use MD or even HTML to write the blog post.`}
         />,
         `edit_blogPost`,
-        customThumbnail,
-        customThumbnail ? 0 : undefined
+        customThumbnail
       );
   }, [customThumbnail]);
 

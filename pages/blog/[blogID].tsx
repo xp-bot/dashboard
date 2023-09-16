@@ -11,10 +11,12 @@ import ButtonCluster, { ButtonFeature } from "components/button-cluster";
 import HeadSet from "components/head-set";
 import HeaderBlogPost from "components/header-content/header-blog-post";
 import Modal from "components/modal";
+import { ToastItemType } from "components/toast-item";
 import { BlogCommentsSection } from "context/blog-comments-section";
 import { useLayout } from "context/layout-context";
+import { useToast } from "context/toast-context";
 import { useUser } from "context/user-context";
-import { filter, find, isEqual, isNil, isUndefined, size } from "lodash";
+import { filter, find, isEqual, isUndefined, size } from "lodash";
 import {
   BlogPostStatus,
   IBlogPost,
@@ -37,6 +39,7 @@ interface BlogPostProps extends IPage {
 const BlogPost: NextPage<BlogPostProps> = ({ blogPost, comments }) => {
   const layout = useLayout();
   const router = useRouter();
+  const { toast } = useToast();
 
   const [deletePost, setDeletePost] = useState(false);
   const user = useUser();
@@ -50,8 +53,7 @@ const BlogPost: NextPage<BlogPostProps> = ({ blogPost, comments }) => {
     layout.changeHeader(
       <HeaderBlogPost blogPost={blogPost} />,
       `blog_post_${blogPost.postID}`,
-      blogPost.content.thumbnail,
-      !isNil(blogPost.content.thumbnail) ? 0 : undefined
+      blogPost.content.thumbnail
     );
     if (selectedComment)
       apiRoutes.discord
@@ -64,7 +66,12 @@ const BlogPost: NextPage<BlogPostProps> = ({ blogPost, comments }) => {
     if (res.success) router.push("/blog");
     else console.log(res.message);
 
-    // TODO: Toast
+    toast({
+      text: res.success
+        ? `Successfully deleted post.`
+        : `Failed to delete post.`,
+      type: res.success ? ToastItemType.SUCCESS : ToastItemType.ERROR,
+    });
   };
 
   return (
