@@ -151,31 +151,31 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <ThemeProvider attribute="class">
-        <UserContextProvider>
-          {/* {isEqual(router.asPath, `/`) ? (
+        <ToastContextProvider>
+          <UserContextProvider>
+            {/* {isEqual(router.asPath, `/`) ? (
             <Component {...pageProps} />
           ) : ( */}
-          <div
-            className={`h-[100vh] ${
-              ""
-              // isEqual(router.asPath, `/`) || isEqual(router.asPath, `/premium`)
-              //   ? `pb-20 lg:pb-0`
-              //   : `pb-20`
-            } ${inter.variable}`}
-          >
-            <LayoutContextProvider>
-              <ToastContextProvider>
+            <div
+              className={`h-[100vh] ${
+                ""
+                // isEqual(router.asPath, `/`) || isEqual(router.asPath, `/premium`)
+                //   ? `pb-20 lg:pb-0`
+                //   : `pb-20`
+              } ${inter.variable}`}
+            >
+              <LayoutContextProvider>
                 <SocketManager />
                 <WavePage>
                   <Component {...pageProps} />
                   <ChangelogModal />
                 </WavePage>
-              </ToastContextProvider>
-            </LayoutContextProvider>
-            <MobileNavBar />
-          </div>
-          {/* )} */}
-        </UserContextProvider>
+              </LayoutContextProvider>
+              <MobileNavBar />
+            </div>
+            {/* )} */}
+          </UserContextProvider>
+        </ToastContextProvider>
       </ThemeProvider>
     </>
   );

@@ -60,4 +60,11 @@ export const UserRoutes: {
     icon: faHammer,
     enabled: (user) => user?.developer || false,
   },
+  messages: {
+    clusterTitleWhenFirst: `Debugging`,
+    name: "Test Messaging",
+    element: dynamic(() => import(`../user-tabs/user-test-messaging`)),
+    icon: faHammer,
+    enabled: (user) => user?.developer || false,
+  },
 };

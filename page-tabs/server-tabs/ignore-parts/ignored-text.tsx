@@ -1,11 +1,11 @@
-import { faAdd, faRemove } from '@fortawesome/free-solid-svg-icons';
-import AnimatedDivList from 'components/animated-div-list';
-import ButtonCluster, { ButtonFeature } from 'components/button-cluster';
-import IgnorePanel from 'components/ignore-panel';
-import Modal from 'components/modal';
-import Select from 'components/select';
-import { useServerDetails } from 'context/guild-details-context';
-import { motion } from 'framer-motion';
+import { faAdd, faRemove } from "@fortawesome/free-solid-svg-icons";
+import AnimatedDivList from "components/animated-div-list";
+import ButtonCluster, { ButtonFeature } from "components/button-cluster";
+import IgnorePanel from "components/ignore-panel";
+import Modal from "components/modal";
+import Select from "components/select";
+import { useServerDetails } from "context/guild-details-context";
+import { motion } from "framer-motion";
 import {
   cloneDeep,
   filter,
@@ -14,13 +14,12 @@ import {
   isUndefined,
   map,
   size,
-  slice,
-} from 'lodash';
-import { IDiscordChannel } from 'models/backend/discord-models';
-import { useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { MotionListProps } from 'utils/animation-utils';
-import { DiscordChannelType } from 'utils/discord-utils';
+} from "lodash";
+import { IDiscordChannel } from "models/backend/discord-models";
+import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { MotionListProps } from "utils/animation-utils";
+import { DiscordChannelType } from "utils/discord-utils";
 
 interface AddIgnoreInputs {
   ignoredTextChannelID: string;
@@ -113,7 +112,7 @@ const IgnoredTextChannels = () => {
                   ),
                   key: `IgnoredText-Motion-${ignoredChannel}`,
                 };
-              return { element: <></>, key: '' };
+              return { element: <></>, key: "" };
             })}
           </AnimatedDivList>
         </div>
@@ -153,11 +152,8 @@ const IgnoredTextChannels = () => {
                   required: true,
                 })}
                 options={(
-                  slice(
-                    filter(guild.currentDiscordChannels, (channel) =>
-                      isEqual(channel.type, DiscordChannelType.text)
-                    ),
-                    1
+                  filter(guild.currentDiscordChannels, (channel) =>
+                    isEqual(channel.type, DiscordChannelType.text)
                   ) || []
                 ).map((channel) => ({
                   id: channel.id,
@@ -206,7 +202,7 @@ const IgnoredTextChannels = () => {
       >
         <div className="flex w-full flex-col gap-5">
           <div>
-            Are you sure you want users to gain xp in{' '}
+            Are you sure you want users to gain xp in{" "}
             <b># {deleteIgnoreModal?.name}</b> again?
           </div>
           <ButtonCluster

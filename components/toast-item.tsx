@@ -7,6 +7,7 @@ import { FC, useEffect, useState } from "react";
 
 export interface IToastItem {
   text: string;
+  subject?: string;
   link?: string;
   onClick?: () => void;
   type: ToastItemType;
@@ -65,18 +66,27 @@ const ToastItem: FC<IInboxItemProps> = ({ item }) => {
                 : ""
             } `}
           >
-            {subjectText(item.type)}
+            {item.subject || subjectText(item.type)}
           </p>
         )}
         <p className="line-clamp-2 w-full text-darkText dark:text-darkText-darkMode">
           {item.text}
         </p>
       </div>
-      <div className="text-darkText dark:text-darkText-darkMode">
-        <FontAwesomeIcon icon={faAngleRight} />
-      </div>
+      {(item.link || item.onClick) && (
+        <div className="text-darkText dark:text-darkText-darkMode">
+          <FontAwesomeIcon icon={faAngleRight} />
+        </div>
+      )}
     </>
   );
+
+  const borderColors = {
+    [ToastItemType.NEW_MESSAGE]: "border-l-xpBlue",
+    [ToastItemType.ERROR]: "border-l-red-500",
+    [ToastItemType.SUCCESS]: "border-l-green-500",
+    [ToastItemType.WARNING]: "border-l-yellow-500",
+  };
 
   return (
     <AnimatePresence>
@@ -87,7 +97,9 @@ const ToastItem: FC<IInboxItemProps> = ({ item }) => {
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 50 }}
-          className={`pointer-events-auto flex w-full flex-col justify-between rounded-sm rounded-l-none border border-l-4 border-l-xpBlue bg-input shadow-lg dark:bg-input-darkMode dark:shadow-none dark:shadow-panelBack-darkMode`}
+          className={`pointer-events-auto flex w-full flex-col justify-between rounded-sm rounded-l-none border border-l-4 ${
+            borderColors[item.type]
+          } bg-input shadow-lg dark:bg-input-darkMode dark:shadow-none dark:shadow-panelBack-darkMode`}
         >
           {item.link ? (
             <Link
@@ -100,7 +112,9 @@ const ToastItem: FC<IInboxItemProps> = ({ item }) => {
           ) : (
             <button
               onClick={item.onClick}
-              className="pointer-events-auto flex flex-row items-center justify-between gap-2 p-3 pr-[18px] text-start hover:bg-input-border/10"
+              className={`pointer-events-auto flex flex-row items-center justify-between gap-2 p-3 pr-[18px] text-start hover:bg-input-border/10 ${
+                item.onClick ? "" : "cursor-default"
+              }`}
             >
               <Content />
             </button>
