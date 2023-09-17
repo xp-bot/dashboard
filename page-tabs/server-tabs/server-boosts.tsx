@@ -1,13 +1,13 @@
 // eslint-disable-next-line import/no-cycle
-import { faAdd, faRemove } from '@fortawesome/free-solid-svg-icons';
-import AnimatedDivList from 'components/animated-div-list';
-import BoostPanel from 'components/boost-panel';
-import ButtonCluster, { ButtonFeature } from 'components/button-cluster';
-import Modal from 'components/modal';
-import PageTitle from 'components/page-title';
-import PanelInput from 'components/panel-input';
-import Select from 'components/select';
-import { useServerDetails } from 'context/guild-details-context';
+import { faAdd, faRemove } from "@fortawesome/free-solid-svg-icons";
+import AnimatedDivList from "components/animated-div-list";
+import BoostPanel from "components/boost-panel";
+import ButtonCluster, { ButtonFeature } from "components/button-cluster";
+import Modal from "components/modal";
+import PageTitle from "components/page-title";
+import PanelInput from "components/panel-input";
+import Select from "components/select";
+import { useServerDetails } from "context/guild-details-context";
 import {
   cloneDeep,
   filter,
@@ -22,26 +22,26 @@ import {
   slice,
   sortBy,
   upperFirst,
-} from 'lodash';
-import { IDiscordChannel, IDiscordRole } from 'models/backend/discord-models';
-import { FC, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { DiscordChannelType } from 'utils/discord-utils';
+} from "lodash";
+import { IDiscordChannel, IDiscordRole } from "models/backend/discord-models";
+import { FC, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { DiscordChannelType } from "utils/discord-utils";
 
 interface AddInputs {
   percentage: number;
   entity: string;
 }
 
-const typeToPrefix = (type?: 'Role' | 'TextChannel' | 'VoiceChannel') => {
+const typeToPrefix = (type?: "Role" | "TextChannel" | "VoiceChannel") => {
   switch (type) {
-    case 'TextChannel':
+    case "TextChannel":
       return `# `;
 
     case `Role`:
       return `@ `;
     default:
-      return '';
+      return "";
   }
 };
 
@@ -59,16 +59,16 @@ const ServerTabBoosts: FC<ServerTabBoostsProps> = () => {
   const guild = useServerDetails();
 
   const getTypeSpecificDiscordEntires = (
-    type: 'Role' | 'TextChannel' | 'VoiceChannel'
+    type: "Role" | "TextChannel" | "VoiceChannel"
   ): IDiscordRole[] | IDiscordChannel[] => {
     switch (type) {
-      case 'Role':
+      case "Role":
         return slice(guild.currentDiscordRoles, 1);
-      case 'TextChannel':
+      case "TextChannel":
         return filter(guild.currentDiscordChannels, (channel) =>
           isEqual(channel.type, DiscordChannelType.text)
         ) as IDiscordChannel[];
-      case 'VoiceChannel':
+      case "VoiceChannel":
         return filter(guild.currentDiscordChannels, (channel) =>
           isEqual(channel.type, DiscordChannelType.voice)
         ) as IDiscordChannel[];
@@ -121,11 +121,9 @@ const ServerTabBoosts: FC<ServerTabBoostsProps> = () => {
             : addBoostModal?.type
         } Boost - ${data.entity}`,
         oldValue:
-          `${
-            find(isRole ? g.boosts.roles : g.boosts.channels, (entity) =>
-              isEqual(entity.id, data.entity)
-            )?.percentage
-          }` || `Not Set`,
+          `${find(isRole ? g.boosts.roles : g.boosts.channels, (entity) =>
+            isEqual(entity.id, data.entity)
+          )?.percentage}` || `Not Set`,
         newValue: `${data.percentage}`,
       },
       g
@@ -227,7 +225,7 @@ const ServerTabBoosts: FC<ServerTabBoostsProps> = () => {
                         >
                           <BoostPanel
                             availableEntities={getTypeSpecificDiscordEntires(
-                              'Role'
+                              "Role"
                             )}
                             requestChangeDetails={(
                               newEntity,
@@ -244,7 +242,7 @@ const ServerTabBoosts: FC<ServerTabBoostsProps> = () => {
                                 editBoostPercentage({
                                   entityID: role.id,
                                   newBoostPercentage: newPercentage,
-                                  type: 'roles',
+                                  type: "roles",
                                 });
                             }}
                             prefix="@"
@@ -261,7 +259,7 @@ const ServerTabBoosts: FC<ServerTabBoostsProps> = () => {
                         </div>
                       ),
                     };
-                  return { element: <></>, key: '' };
+                  return { element: <></>, key: "" };
                 }
               )}
             </AnimatedDivList>
@@ -315,7 +313,7 @@ const ServerTabBoosts: FC<ServerTabBoostsProps> = () => {
                           >
                             <BoostPanel
                               availableEntities={getTypeSpecificDiscordEntires(
-                                'TextChannel'
+                                "TextChannel"
                               )}
                               requestChangeDetails={(
                                 newEntity,
@@ -331,7 +329,7 @@ const ServerTabBoosts: FC<ServerTabBoostsProps> = () => {
                                   editBoostPercentage({
                                     entityID: channel.id,
                                     newBoostPercentage: newPercentage,
-                                    type: 'channels',
+                                    type: "channels",
                                   });
                               }}
                               prefix="#"
@@ -348,7 +346,7 @@ const ServerTabBoosts: FC<ServerTabBoostsProps> = () => {
                           </div>
                         ),
                       };
-                    return { element: <></>, key: '' };
+                    return { element: <></>, key: "" };
                   }
                 )}
               </AnimatedDivList>
@@ -357,7 +355,7 @@ const ServerTabBoosts: FC<ServerTabBoostsProps> = () => {
               <ButtonCluster
                 buttons={[
                   {
-                    text: `Add Boosted Channel`,
+                    text: `Add Boosted TextChannel`,
                     icon: faAdd,
                     onClick: () => {
                       setAddBoostModal({ type: `TextChannel` });
@@ -401,7 +399,7 @@ const ServerTabBoosts: FC<ServerTabBoostsProps> = () => {
                           >
                             <BoostPanel
                               availableEntities={getTypeSpecificDiscordEntires(
-                                'VoiceChannel'
+                                "VoiceChannel"
                               )}
                               requestChangeDetails={(
                                 newEntity,
@@ -417,7 +415,7 @@ const ServerTabBoosts: FC<ServerTabBoostsProps> = () => {
                                   editBoostPercentage({
                                     entityID: channel.id,
                                     newBoostPercentage: newPercentage,
-                                    type: 'channels',
+                                    type: "channels",
                                   });
                               }}
                               prefix=""
@@ -434,7 +432,7 @@ const ServerTabBoosts: FC<ServerTabBoostsProps> = () => {
                           </div>
                         ),
                       };
-                    return { element: <></>, key: '' };
+                    return { element: <></>, key: "" };
                   }
                 )}
               </AnimatedDivList>
@@ -443,7 +441,7 @@ const ServerTabBoosts: FC<ServerTabBoostsProps> = () => {
               <ButtonCluster
                 buttons={[
                   {
-                    text: `Add Boosted Channel`,
+                    text: `Add Boosted VoiceChannel`,
                     icon: faAdd,
                     onClick: () => {
                       setAddBoostModal({ type: `VoiceChannel` });
@@ -500,7 +498,7 @@ const ServerTabBoosts: FC<ServerTabBoostsProps> = () => {
               <PanelInput
                 disabled={addDisabled}
                 registerForm={register(`percentage`, {
-                  required: 'This Input is required!',
+                  required: "This Input is required!",
                   min: {
                     message: `You can't boost with less than -100%!`,
                     value: -100,
@@ -509,7 +507,7 @@ const ServerTabBoosts: FC<ServerTabBoostsProps> = () => {
                 label="Percentage"
                 inputProps={{ min: -100 }}
                 value={12}
-                type={'number'}
+                type={"number"}
                 formError={errors.percentage}
               />
             </div>
@@ -536,11 +534,11 @@ const ServerTabBoosts: FC<ServerTabBoostsProps> = () => {
             </div>
           </div>
           <span className="-mt-5 text-center opacity-75">
-            <b>100xp</b> »{' '}
+            <b>100xp</b> »{" "}
             <b>
-              {floor(100 + 100 * (watch('percentage') / 100)) < 0
+              {floor(100 + 100 * (watch("percentage") / 100)) < 0
                 ? 0
-                : floor(100 + 100 * (watch('percentage') / 100))}
+                : floor(100 + 100 * (watch("percentage") / 100))}
               xp
             </b>
           </span>
@@ -549,7 +547,7 @@ const ServerTabBoosts: FC<ServerTabBoostsProps> = () => {
             {addDisabled ? (
               <div className="flex flex-col items-center text-center">
                 <h2>
-                  You've reached the maximum of 100 Boosted{' '}
+                  You've reached the maximum of 100 Boosted{" "}
                   {addBoostModal?.type}s!
                 </h2>
                 <span>Delete some in order to create a new one.</span>
@@ -581,7 +579,7 @@ const ServerTabBoosts: FC<ServerTabBoostsProps> = () => {
       >
         <div className="flex w-full flex-col gap-5">
           <div>
-            Are you sure you want to remove the boost from{' '}
+            Are you sure you want to remove the boost from{" "}
             <b>{deleteBoostModal?.name}</b>?
           </div>
           <ButtonCluster
