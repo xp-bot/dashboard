@@ -39,14 +39,16 @@ const ShardPanel: FC<{
 }> = ({ shard }) => (
   <div
     className={`flex h-full w-full grow items-center justify-center whitespace-nowrap rounded-md border border-input-border p-2 px-3 text-center shadow-md ${
-      shard.gateway_connected
+      shard.gateway_connected &&
+      Date.now() - new Date(shard.updated_at).getTime() < 30000
         ? statusToClass.Stable
         : Date.now() - new Date(shard.updated_at).getTime() < 60000
         ? statusToClass.Unstable
         : statusToClass.Offline
     }`}
   >
-    {shard.gateway_connected
+    {shard.gateway_connected &&
+    Date.now() - new Date(shard.updated_at).getTime() < 60000
       ? `Shard ${shard.shard_id} - ${shard.server_count} Servers`
       : `Shard ${shard.shard_id} - Offline`}
   </div>
@@ -183,12 +185,9 @@ const Status: NextPage<HomeProps> = ({
         <div>
           <BasicPanel>
             <div className="grid grid-cols-1 flex-wrap gap-3 md:grid-cols-3 lg:grid-cols-4">
-              {map(
-                sortBy(ilumShards, (shard) => shard.shard_id),
-                (shard) => (
-                  <ShardPanel shard={shard} />
-                )
-              )}
+              {map(sortBy(ilumShards, "shard_id"), (shard) => (
+                <ShardPanel shard={shard} />
+              ))}
             </div>
           </BasicPanel>
         </div>
@@ -211,9 +210,7 @@ export async function getStaticProps() {
       ]);
     return {
       props: {
-        incidents: incidents.success
-          ? sortBy(incidents.body, (incident) => incident.createdAt)
-          : [],
+        incidents: incidents.success ? sortBy(incidents.body, "createdAt") : [],
         apiChart,
         dashboardChart,
         websiteChart,
