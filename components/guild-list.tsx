@@ -4,9 +4,9 @@ import { map, size } from "lodash";
 import Link from "next/link";
 import { FC, MouseEventHandler, useState } from "react";
 
+import FallBackImage from "./fallback-image";
 import { IDiscordGuildsRequest } from "../models/backend/discord-models";
 import { guildIconToURL } from "../utils/discord-utils";
-import FallBackImage from "./fallback-image";
 
 interface IMobileGuildListItem {
   guild: IDiscordGuildsRequest;
@@ -41,7 +41,7 @@ const GuildList: FC<GuildListProps> = ({ buttons, title }) => {
             >
               <button
                 onClick={onClick}
-                className={`relative flex w-full flex-row items-center py-[11px] text-left active:bg-button-state-pressed active:dark:bg-button-state-pressed-darkMode`}
+                className="relative flex w-full flex-row items-center py-[11px] text-left active:bg-button-state-pressed active:dark:bg-button-state-pressed-darkMode"
               >
                 <div className="mx-4 hidden h-[60px] w-[60px] shrink-0 tiny:flex">
                   <FallBackImage
@@ -61,7 +61,7 @@ const GuildList: FC<GuildListProps> = ({ buttons, title }) => {
                 <div className="min-w-[30px] shrink-0"></div>
 
                 <FontAwesomeIcon
-                  className={`absolute right-4 text-button-arrow`}
+                  className="absolute right-4 text-button-arrow"
                   icon={faAngleRight}
                 />
               </button>
@@ -94,11 +94,11 @@ const GuildList: FC<GuildListProps> = ({ buttons, title }) => {
             >
               <button
                 onClick={onClick}
-                className={`relative z-10 my-6 flex w-full flex-row items-center rounded-lg border bg-panelBack py-[11px] text-left transition ease-in-out active:bg-button-state-pressed group-focus-within:translate-x-2 group-hover:translate-x-1 group-active:translate-x-2 dark:bg-panelBack-darkMode active:dark:bg-button-state-pressed-darkMode`}
+                className="relative z-10 my-6 flex w-full flex-row items-center rounded-lg border bg-panelBack py-[11px] text-left transition ease-in-out active:bg-button-state-pressed group-focus-within:translate-x-2 group-hover:translate-x-1 group-active:translate-x-2 dark:bg-panelBack-darkMode active:dark:bg-button-state-pressed-darkMode"
               >
                 <div className="absolute -left-1 top-0 mx-4 flex aspect-square h-[100%] shrink-0 scale-150 overflow-hidden rounded-md bg-gray-700 drop-shadow-md transition-all ease-in-out">
                   <FallBackImage
-                    className={`h-full w-full object-cover`}
+                    className="h-full w-full object-cover"
                     src={guildIconToURL(guild, 256)}
                   />
                 </div>
@@ -114,7 +114,7 @@ const GuildList: FC<GuildListProps> = ({ buttons, title }) => {
                 <div className="min-w-[30px] shrink-0"></div>
 
                 <FontAwesomeIcon
-                  className={`absolute right-4 text-button-arrow`}
+                  className="absolute right-4 text-button-arrow"
                   icon={faAngleRight}
                 />
               </button>
@@ -135,7 +135,7 @@ const GuildList: FC<GuildListProps> = ({ buttons, title }) => {
                   <div className="min-w-[30px] shrink-0"></div>
 
                   <FontAwesomeIcon
-                    className={`absolute right-4 text-button-arrow`}
+                    className="absolute right-4 text-button-arrow"
                     icon={faAngleRight}
                   />
                 </button>

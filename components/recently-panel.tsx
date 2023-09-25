@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { FC } from "react";
 
+import FallBackImage from "./fallback-image";
 import { IDiscordPartialGuild } from "../models/backend/discord-models";
 import { guildIconToURL } from "../utils/discord-utils";
-import FallBackImage from "./fallback-image";
 
 interface RecentlyPanelProps {
   guild: IDiscordPartialGuild;
@@ -17,7 +17,7 @@ const RecentlyPanel: FC<RecentlyPanelProps> = ({ guild }) => {
     >
       <div className="mt-4 flex aspect-square w-20 shrink-0 overflow-hidden rounded-md bg-gray-700 drop-shadow-md focus-within:scale-100 sm:mt-2 sm:w-24">
         <FallBackImage
-          className={`h-full w-full object-cover`}
+          className="h-full w-full object-cover"
           src={guildIconToURL(guild, 256)}
         />
       </div>

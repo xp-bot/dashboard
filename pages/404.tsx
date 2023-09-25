@@ -7,7 +7,7 @@ import ButtonCluster from '../components/button-cluster';
 import HeadSet from '../components/head-set';
 import { IPage } from '../models/page';
 
-interface NotFoundPageProps extends IPage {}
+type NotFoundPageProps = IPage
 const NotFoundPage: NextPage<NotFoundPageProps> = () => {
   const layout = useLayout();
   useEffect(() => {

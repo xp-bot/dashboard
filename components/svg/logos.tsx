@@ -30,13 +30,9 @@ export const XPLogo = () => (
 
 export const XPLoading = () => (
   <div className="flex w-fit flex-col items-center justify-center gap-[10px]">
-    {/* eslint-disable-next-line tailwindcss/no-custom-classname */}
     <div className="xp-loading flex h-[95px] w-[95px] flex-row  items-end gap-[10px]">
-      {/* eslint-disable-next-line tailwindcss/no-custom-classname */}
       <div className="xp-loading-small" />
-      {/* eslint-disable-next-line tailwindcss/no-custom-classname */}
       <div className="xp-loading-medium " />
-      {/* eslint-disable-next-line tailwindcss/no-custom-classname */}
       <div className="xp-loading-big " />
     </div>
   </div>

@@ -52,12 +52,12 @@ const ValuePanel: FC<ValuePanelProps> = (props) => {
         )}
       </div>
       <i>
-        <h4 className={`text-darkText dark:text-darkText-darkMode`}>
+        <h4 className="text-darkText dark:text-darkText-darkMode">
           {props.valueDescription}
         </h4>
       </i>
       <PanelInput
-        type={`number`}
+        type="number"
         placeholder={
           !isNil(props.defaultValue) ? `${props.defaultValue}` : undefined
         }

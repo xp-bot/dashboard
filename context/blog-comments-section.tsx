@@ -7,7 +7,16 @@ import BlogCreateComment from "components/blog-create-comment";
 import ButtonCluster, { ButtonFeature } from "components/button-cluster";
 import Modal from "components/modal";
 import { AnimatePresence, motion } from "framer-motion";
-import { isEqual, isUndefined, join, map, orderBy, size, slice } from "lodash";
+import {
+  isEqual,
+  isUndefined,
+  join,
+  map,
+  noop,
+  orderBy,
+  size,
+  slice,
+} from "lodash";
 import {
   IBlogPost,
   IBlogPostComment,
@@ -25,8 +34,8 @@ interface IBlogCommentsSectionValues {
 
 export const BlogCommentsSectionContext =
   createContext<IBlogCommentsSectionValues>({
-    deleteComment: () => {},
-    postComment: () => {},
+    deleteComment: noop,
+    postComment: noop,
   });
 
 interface IBlogCommentsContextProviderProps {

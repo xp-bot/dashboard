@@ -23,7 +23,7 @@ const AnimatedDivList: FC<IAnimatedDivList> = ({
         map(list, (element, idx) => {
           return (
             <motion.div
-              layout={"position"}
+              layout="position"
               {...MotionListProps}
               key={element.key}
               className="flex w-full flex-col items-center gap-5"
@@ -37,8 +37,8 @@ const AnimatedDivList: FC<IAnimatedDivList> = ({
         })
       ) : (
         <motion.div
-          key={`motion-div-list-empty`}
-          layout={"position"}
+          key="motion-div-list-empty"
+          layout="position"
           animate={{ opacity: 1, scale: 1 }}
           transition={{ type: "spring" }}
           className="w-full"

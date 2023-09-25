@@ -22,9 +22,7 @@ const LevelrolePanel: FC<LevelrolePanelProps> = (props) => {
     <div className="flex w-full flex-col gap-3 md:flex-row md:gap-5">
       <div className="flex grow flex-row gap-5">
         {props.level >= 0 && (
-          <div
-            className={`relative h-full whitespace-nowrap rounded-md border-transparent bg-panelBack text-darkText shadow-md focus-within:outline-none dark:bg-panelBack-darkMode dark:text-darkText-darkMode md:w-fit`}
-          >
+          <div className="relative h-full whitespace-nowrap rounded-md border-transparent bg-panelBack text-darkText shadow-md focus-within:outline-none dark:bg-panelBack-darkMode dark:text-darkText-darkMode md:w-fit">
             <span className="pointer-events-none absolute left-0 top-0 flex h-full items-center pl-4 opacity-75">
               Lvl.
             </span>
@@ -68,10 +66,7 @@ const LevelrolePanel: FC<LevelrolePanelProps> = (props) => {
                   props.requestChangeDetails(v);
               }}
               options={map(
-                sortBy(
-                  slice(props.availableDiscordRoles, 1),
-                  (role) => role.name
-                ),
+                sortBy(slice(props.availableDiscordRoles, 1), "name"),
                 (role) => ({
                   id: role.id,
                   title: `@ ${role.name}`,
@@ -85,7 +80,7 @@ const LevelrolePanel: FC<LevelrolePanelProps> = (props) => {
                   ? `2px solid ${toColor(props.role.color)}`
                   : ``,
               }}
-              className={`relative h-fit w-full rounded-md border-transparent bg-panelBack px-4 py-2 text-darkText shadow-md focus-within:outline-none dark:bg-panelBack-darkMode dark:text-darkText-darkMode md:grow`}
+              className="relative h-fit w-full rounded-md border-transparent bg-panelBack px-4 py-2 text-darkText shadow-md focus-within:outline-none dark:bg-panelBack-darkMode dark:text-darkText-darkMode md:grow"
             >
               @ {props.role?.name}
             </div>

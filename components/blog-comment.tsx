@@ -78,7 +78,7 @@ const BlogComment: FC<IBlogCommentProps> = ({
       <motion.div
         initial={selected ? { background: "rgb(103, 103, 234)" } : undefined}
         id={comment.commentID}
-        className={`flex flex-col`}
+        className="flex flex-col"
       >
         <div
           className={`group relative flex w-full flex-col items-center md:flex-row md:items-start ${
@@ -86,9 +86,7 @@ const BlogComment: FC<IBlogCommentProps> = ({
           } ${selected ? `border-y border-y-xpBlue p-5` : `p-[8px]`}`}
         >
           {!childComment && (
-            <div
-              className={`aspect-square w-20 shrink-0 grow-0 overflow-hidden rounded-full shadow-rankingAvater dark:shadow-none`}
-            >
+            <div className="aspect-square w-20 shrink-0 grow-0 overflow-hidden rounded-full shadow-rankingAvater dark:shadow-none">
               <FallBackImage
                 className=" h-full w-full "
                 src={avatarToURL(author?.discordUser, 512)}
@@ -106,9 +104,7 @@ const BlogComment: FC<IBlogCommentProps> = ({
                 {size(comment.content.title) > 30 && `…`}
               </h1>
             )}
-            <span
-              className={`flex w-full select-text flex-col justify-center whitespace-pre-wrap break-words opacity-75 transition ease-in-out md:group-hover:opacity-100`}
-            >
+            <span className="flex w-full select-text flex-col justify-center whitespace-pre-wrap break-words opacity-75 transition ease-in-out md:group-hover:opacity-100">
               {/* {parse(
               fixDiscordMarkdownFormat(
                 stripHtml(document, comment.content.body)
@@ -123,14 +119,12 @@ const BlogComment: FC<IBlogCommentProps> = ({
                       ),
                 }}
               />
-              {
-                <span className="opacity-50">
-                  - {author?.discordUser?.username}{" "}
-                  <span className="text-xs">
-                    {author?.developer && "• XP Developer"}
-                  </span>
+              <span className="opacity-50">
+                - {author?.discordUser?.username}{" "}
+                <span className="text-xs">
+                  {author?.developer && "• XP Developer"}
                 </span>
-              }
+              </span>
             </span>
           </div>
           {!comment.deleted && (
@@ -189,6 +183,7 @@ const BlogComment: FC<IBlogCommentProps> = ({
           >
             {map(childComments, (child) => (
               <div
+                key={child.commentID}
                 className={`w-full  ${
                   isIdDeveloper(child.content.creator)
                     ? "-ml-1 border-l-4 border-xpBlue"

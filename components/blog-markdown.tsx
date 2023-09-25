@@ -1,12 +1,12 @@
-import Markdown from 'markdown-to-jsx';
-import { useTheme } from 'next-themes';
-import { FC } from 'react';
-import rehypeRaw from 'rehype-raw';
-import remarkGfm from 'remark-gfm';
-import slug from 'remark-slug';
-import { isDark } from 'utils/theme-utils';
+import Markdown from "markdown-to-jsx";
+import { useTheme } from "next-themes";
+import { FC } from "react";
+import rehypeRaw from "rehype-raw";
+import remarkGfm from "remark-gfm";
+import slug from "remark-slug";
+import { isDark } from "utils/theme-utils";
 
-import FallBackImage from './fallback-image';
+import FallBackImage from "./fallback-image";
 
 interface IBlogMarkdownProps {
   body: string;
@@ -25,7 +25,6 @@ const BlogMarkdown: FC<IBlogMarkdownProps> = ({ body, html }) => {
             // h2: { component: BlogH2 },
           },
         }}
-        // eslint-disable-next-line tailwindcss/no-custom-classname
         className={`markdown-body w-full overflow-hidden break-words ${
           isDark(theme.theme, theme.systemTheme) ? `dark` : `light`
         }`}

@@ -1,6 +1,8 @@
+/* eslint-disable lodash/prefer-constant */
+/* eslint-disable @typescript-eslint/ban-types */
 import { XPLoading } from "components/svg/logos";
 import { AnimatePresence, motion } from "framer-motion";
-import { isEqual, size } from "lodash";
+import { isEqual, noop, size } from "lodash";
 import { IInboxItem } from "models/backend/inbox-interfaces";
 import { ISocketIO } from "models/backend/socket-models";
 import { useRouter } from "next/router";
@@ -36,7 +38,8 @@ interface IUserContextValues {
   ) => Promise<boolean>;
 
   socketIO: {
-    currentSocket?: ISocketIO<{}>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    currentSocket?: ISocketIO<any>;
   };
 
   loading: {
@@ -86,16 +89,16 @@ export const UserContext = createContext<IUserContextValues>({
 
   inbox: {
     inboxItems: [],
-    markInboxItemRead: () => {},
-    markAllInboxItemsRead: () => {},
-    dismissInboxItem: () => {},
-    dismissAllInboxItems: () => {},
-    fetchInbox: async () => {},
+    markInboxItemRead: noop,
+    markAllInboxItemsRead: noop,
+    dismissInboxItem: noop,
+    dismissAllInboxItems: noop,
+    fetchInbox: noop,
   },
 
   guild: {
-    fetchXPGuild: async () => ({ message: ``, success: false }) as IApiFailure,
-    updateXPGuild: async () => ({ message: ``, success: false }) as IApiFailure,
+    fetchXPGuild: async () => ({ message: ``, success: false } as IApiFailure),
+    updateXPGuild: async () => ({ message: ``, success: false } as IApiFailure),
   },
 
   debug: {
@@ -317,7 +320,7 @@ export function UserContextProvider({
       }}
     >
       <div
-        key={`motion-transition-main-page`}
+        key="motion-transition-main-page"
         className={`${
           isEqual(loginStatus, LoginStatus.checking) ? `fixed left-0 top-0` : ``
         }`}
@@ -327,8 +330,8 @@ export function UserContextProvider({
       <AnimatePresence>
         {isEqual(loginStatus, LoginStatus.checking) && (
           <motion.div
-            key={`motion-transition-main-page-loading`}
-            animate={"base"}
+            key="motion-transition-main-page-loading"
+            animate="base"
             exit="exit"
             initial="initial"
             variants={{
@@ -336,7 +339,7 @@ export function UserContextProvider({
               exit: { opacity: 0 },
               base: { opacity: 1, transition: { delay: 0.25 } },
             }}
-            className={`fixed left-0 top-0 z-50 flex h-screen w-screen items-center justify-center overflow-hidden bg-wavePage dark:bg-wavePage-darkMode`}
+            className="fixed left-0 top-0 z-50 flex h-screen w-screen items-center justify-center overflow-hidden bg-wavePage dark:bg-wavePage-darkMode"
           >
             <motion.div
               variants={{

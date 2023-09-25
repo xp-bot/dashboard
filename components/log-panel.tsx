@@ -49,7 +49,7 @@ const LogPanel: FC<ILogPanelProps> = ({ log }) => {
       );
     case "levelup":
       return (
-        <BasicPanel borderColor="#6767EA" md title={`Level-up Announcement.`}>
+        <BasicPanel borderColor="#6767EA" md title="Level-up Announcement.">
           <BasicPanel variant={BasicPanelVariant.inPanel}>
             {parse(
               fixDiscordMarkdownFormat(

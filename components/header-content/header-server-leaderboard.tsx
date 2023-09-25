@@ -2,8 +2,8 @@ import { isUndefined } from 'lodash';
 import { IXPServersPremium } from 'models/backend/xp-models';
 import { FC } from 'react';
 
-import { guildIconToURL } from '../../utils/discord-utils';
 import FallBackImage from '../fallback-image';
+import { guildIconToURL } from '../../utils/discord-utils';
 
 interface HeaderServerLeaderboardProps {
   guild: {

@@ -88,15 +88,15 @@ const LeaderboardPage: NextPage<ServerTabProps> = ({ serverid, lbContent }) => {
   useEffect(() => {
     layout.changeHeader(<h1>We are getting ready...</h1>, `server_loading`);
     const getLBPage = async () => {
-      const background =
-        await apiRoutes.xp.guild.settings.background.get(serverid);
-      const loggedInLB = await apiRoutes.xp.leaderboard.getPage(
-        `${router.query.serverid}`,
-        1
+      const background = await apiRoutes.xp.guild.settings.background.get(
+        serverid
       );
-      if (loggedInLB.success)
+      const isUserAuthorized = await apiRoutes.semi.guild.isUserAuthorized(
+        `${router.query.serverid}`
+      );
+      if (isUserAuthorized.success)
         setIsAdmin(
-          loggedInLB.body.isUserAdmin || user.currentUser?.developer || false
+          isUserAuthorized.body || user.currentUser?.developer || false
         );
 
       layout.changeHeader(
@@ -246,7 +246,7 @@ const LeaderboardPage: NextPage<ServerTabProps> = ({ serverid, lbContent }) => {
                     label="XP"
                     inputProps={{ max: 2147483647, min: 0 }}
                     value={modifyUser.xp}
-                    type={"number"}
+                    type="number"
                     formError={errors.xp}
                   />
                 </div>

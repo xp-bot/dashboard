@@ -11,6 +11,7 @@ import { useLayout } from "context/layout-context";
 import { useUser } from "context/user-context";
 import { AnimatePresence, motion } from "framer-motion";
 import {
+  constant,
   filter,
   includes,
   isEqual,
@@ -174,7 +175,7 @@ const MenuContent = () => {
                                       guild,
                                       user.currentUser
                                     ),
-                                    isActive: () => false,
+                                    isActive: constant(false),
                                     link: link
                                       ? replace(
                                           link,

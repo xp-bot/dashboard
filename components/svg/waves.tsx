@@ -41,7 +41,7 @@ export const BigIndexWave = () => (
     height={130}
   >
     <path
-      fillOpacity={'1'}
+      fillOpacity="1"
       className="fill-wavePage dark:fill-wavePage-darkMode"
       d="M 0 0.38 L 106.667 7.435 C 213.335 15.024 426.667 28.335 640.001 28.735 C 853.334 28.335 1066.667 15.023 1280.001 21.68 C 1493.335 28.337 1706.668 57.624 1813.335 71.334 L 1920 85.581 L 1920 172.567 L 0 172.567 Z"
     />

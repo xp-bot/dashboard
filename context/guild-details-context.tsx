@@ -11,6 +11,7 @@ import {
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
+import { useUser } from "./user-context";
 import { apiRoutes } from "../apis/api-helper";
 import {
   IServerSettingsBackground,
@@ -19,7 +20,6 @@ import {
   IXPGuild,
   IXPServersPremium,
 } from "../models/backend/xp-models";
-import { useUser } from "./user-context";
 
 export interface IGuildDetailsContextValues {
   guildID: string;
@@ -43,7 +43,9 @@ export interface IGuildDetailsContextValues {
 export const GuildDetailsContext =
   React.createContext<IGuildDetailsContextValues>({
     guildID: "",
+    // eslint-disable-next-line lodash/prefer-constant
     updateGuild: async () => false,
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     saveGuild: async () => {},
     unsavedChanges: false,
     savingInProgress: false,
@@ -201,10 +203,10 @@ export function GuildDetailsContextProvider({
               ? { y: isLg ? "-2rem" : "-8rem", opacity: 1 }
               : { y: "4rem", opacity: 0 }
           }
-          className={`pointer-events-none fixed bottom-0 left-0 z-30 flex h-20 w-full justify-center`}
+          className="pointer-events-none fixed bottom-0 left-0 z-30 flex h-20 w-full justify-center"
         >
-          <div className={`container mx-auto box-border px-10`}>
-            <div className={`relative h-full w-full`}>
+          <div className="container mx-auto box-border px-10">
+            <div className="relative h-full w-full">
               <div
                 onClick={() => {
                   saveGuild();

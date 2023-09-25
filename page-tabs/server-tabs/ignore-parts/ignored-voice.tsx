@@ -131,7 +131,7 @@ const IgnoredVoiceChannels = () => {
 
       {/* Add Modal */}
       <Modal
-        title={`Ignore VoiceChannel`}
+        title="Ignore VoiceChannel"
         isOpen={addIgnoreModal}
         requestClose={() => {
           setAddIgnoreModal(false);
@@ -149,6 +149,8 @@ const IgnoredVoiceChannels = () => {
                 registerForm={register(`ignoredVoiceChannelID`, {
                   required: true,
                 })}
+                // lodash gets confused with typing here. therefore we use the legacy map function.
+                // eslint-disable-next-line lodash/prefer-lodash-method
                 options={(
                   filter(
                     guild.currentDiscordChannels,
@@ -160,8 +162,8 @@ const IgnoredVoiceChannels = () => {
                   id: channel.id,
                   title: channel.name || `Unknown`,
                 }))}
-                label={`VoiceChannel`}
-                value={"0"}
+                label="VoiceChannel"
+                value="0"
                 isInPanel={true}
               />
             </div>

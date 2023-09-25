@@ -123,7 +123,6 @@ const TabButton: FC<TabButtonProps> = ({
               transition={{ type: "spring", bounce: 0.2 }}
               layoutId={`selectedDot-${layoutId || "tab-bar"}`}
               initial={false}
-              // eslint-disable-next-line tailwindcss/no-custom-classname
               className={`selectedDot ${
                 theme === TabButtonTheme.Title
                   ? `${

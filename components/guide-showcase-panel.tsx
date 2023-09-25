@@ -14,7 +14,7 @@ const GuideShowcasePanel: FC<GuideShowcasePanelProps> = ({ image }) => (
       <FallBackImage
         className="left-0 top-0 h-full w-full object-cover"
         src={image}
-        alt={'jeje'}
+        alt="jeje"
       />
     </div>
     <div className="p-3">

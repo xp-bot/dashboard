@@ -1,10 +1,10 @@
-import { isEqual, isUndefined, map, slice, sortBy, startsWith } from 'lodash';
-import { IDiscordChannel, IDiscordRole } from 'models/backend/discord-models';
-import { FC, useState } from 'react';
-import { toColor } from 'utils/discord-utils';
+import { get, has, isEqual, map, slice, sortBy, startsWith } from "lodash";
+import { IDiscordChannel, IDiscordRole } from "models/backend/discord-models";
+import { FC, useState } from "react";
+import { toColor } from "utils/discord-utils";
 
-import BlockButton from './block-button';
-import Select from './select';
+import BlockButton from "./block-button";
+import Select from "./select";
 
 /**
  * @var onChange Only works if registerForm is undefined
@@ -25,9 +25,7 @@ const BoostPanel: FC<BoostPanelProps> = (props) => {
   return (
     <div className="flex w-full flex-col gap-3 md:flex-row md:gap-5">
       <div className="flex grow flex-row gap-5">
-        <div
-          className={`relative h-full whitespace-nowrap rounded-md border-transparent bg-panelBack px-4 py-2 text-darkText shadow-md focus-within:outline-none dark:bg-panelBack-darkMode dark:text-darkText-darkMode md:w-fit`}
-        >
+        <div className="relative h-full whitespace-nowrap rounded-md border-transparent bg-panelBack px-4 py-2 text-darkText shadow-md focus-within:outline-none dark:bg-panelBack-darkMode dark:text-darkText-darkMode md:w-fit">
           <span className="pointer-events-none absolute right-0 top-0 flex h-full items-center pr-4 opacity-75">
             %
           </span>
@@ -59,8 +57,8 @@ const BoostPanel: FC<BoostPanelProps> = (props) => {
           {props.availableEntities && props.requestChangeDetails ? (
             <Select
               style={{
-                borderBottom: !isUndefined((props.entity as any)?.color)
-                  ? `2px solid ${toColor((props.entity as any).color)}`
+                borderBottom: !has(props.entity, "color")
+                  ? `2px solid ${toColor(get(props.entity, "color", 0))}`
                   : ``,
               }}
               className="!h-full"
@@ -71,10 +69,7 @@ const BoostPanel: FC<BoostPanelProps> = (props) => {
                   props.requestChangeDetails(v);
               }}
               options={map(
-                sortBy(
-                  slice(props.availableEntities, 1),
-                  (entity) => entity.name
-                ),
+                sortBy(slice(props.availableEntities, 1), "name"),
                 (role) => ({
                   id: role.id,
                   title: `${props.prefix} ${role.name}`,
@@ -84,11 +79,11 @@ const BoostPanel: FC<BoostPanelProps> = (props) => {
           ) : (
             <div
               style={{
-                borderBottom: !isUndefined((props.entity as any)?.color)
-                  ? `2px solid ${toColor((props.entity as any).color)}`
+                borderBottom: !has(props.entity, "color")
+                  ? `2px solid ${toColor(get(props.entity, "color", 0))}`
                   : ``,
               }}
-              className={`relative h-fit w-full rounded-md border-transparent bg-panelBack px-4 py-2 text-darkText shadow-md focus-within:outline-none dark:bg-panelBack-darkMode dark:text-darkText-darkMode md:grow`}
+              className="relative h-fit w-full rounded-md border-transparent bg-panelBack px-4 py-2 text-darkText shadow-md focus-within:outline-none dark:bg-panelBack-darkMode dark:text-darkText-darkMode md:grow"
             >
               {props.prefix} {props.entity.name}
             </div>

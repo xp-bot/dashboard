@@ -17,6 +17,7 @@ import { useUser } from "context/user-context";
 import { UserDetailsContextProvider } from "context/user-details-context";
 import { useAccessRestriction } from "hooks/use-access-restriction";
 import {
+  constant,
   filter,
   includes,
   isEqual,
@@ -125,7 +126,7 @@ const UserTab: NextPage<UserTabProps> = () => {
                         buttons={map(buttons, ([tabPath, { name, icon }]) => {
                           return {
                             text: name,
-                            isActive: () => false,
+                            isActive: constant(false),
                             link: `/me/${tabPath}`,
                             shallowLink: true,
                             icon,
@@ -135,7 +136,7 @@ const UserTab: NextPage<UserTabProps> = () => {
                     )
                   )}
                   <ButtonCluster
-                    title={`Updates`}
+                    title="Updates"
                     buttons={[
                       {
                         text: `Inbox`,
@@ -163,7 +164,7 @@ const UserTab: NextPage<UserTabProps> = () => {
                     ]}
                   />
                   <ButtonCluster
-                    title={`Legal`}
+                    title="Legal"
                     buttons={[
                       {
                         text: `Privacy Policy`,
@@ -178,7 +179,7 @@ const UserTab: NextPage<UserTabProps> = () => {
                     ]}
                   />
                   <div className="w-full">
-                    <PageTitle title={"Appearance"} disableArrow />
+                    <PageTitle title="Appearance" disableArrow />
                     <Select
                       onChange={(v) => theme.setTheme(v)}
                       options={[

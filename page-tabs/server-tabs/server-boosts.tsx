@@ -17,6 +17,7 @@ import {
   isNil,
   isUndefined,
   map,
+  noop,
   partition,
   size,
   slice,
@@ -121,9 +122,11 @@ const ServerTabBoosts: FC<ServerTabBoostsProps> = () => {
             : addBoostModal?.type
         } Boost - ${data.entity}`,
         oldValue:
-          `${find(isRole ? g.boosts.roles : g.boosts.channels, (entity) =>
-            isEqual(entity.id, data.entity)
-          )?.percentage}` || `Not Set`,
+          `${
+            find(isRole ? g.boosts.roles : g.boosts.channels, (entity) =>
+              isEqual(entity.id, data.entity)
+            )?.percentage
+          }` || `Not Set`,
         newValue: `${data.percentage}`,
       },
       g
@@ -205,10 +208,7 @@ const ServerTabBoosts: FC<ServerTabBoostsProps> = () => {
           <div className="flex w-full flex-wrap gap-5">
             <AnimatedDivList emptyMessage="You did not boost any Roles yet.">
               {map(
-                sortBy(
-                  guild.currentXPGuild?.boosts.roles,
-                  (role) => role.percentage
-                ),
+                sortBy(guild.currentXPGuild?.boosts.roles, "percentage"),
                 (boostedRole, idx) => {
                   const role = find(
                     guild.currentDiscordRoles,
@@ -291,10 +291,7 @@ const ServerTabBoosts: FC<ServerTabBoostsProps> = () => {
             <div className="flex w-full flex-wrap gap-5">
               <AnimatedDivList emptyMessage="You did not boost any TextChannels yet.">
                 {map(
-                  sortBy(
-                    guild.currentXPGuild?.boosts.channels,
-                    (channel) => channel.percentage
-                  ),
+                  sortBy(guild.currentXPGuild?.boosts.channels, "percentage"),
                   (boostedChannel, idx) => {
                     const channel = find(
                       filter(guild.currentDiscordChannels, (c) =>
@@ -377,10 +374,7 @@ const ServerTabBoosts: FC<ServerTabBoostsProps> = () => {
             <div className="flex w-full flex-wrap gap-5">
               <AnimatedDivList emptyMessage="You did not boost any TextChannels yet.">
                 {map(
-                  sortBy(
-                    guild.currentXPGuild?.boosts.channels,
-                    (channel) => channel.percentage
-                  ),
+                  sortBy(guild.currentXPGuild?.boosts.channels, "percentage"),
                   (boostedChannel, idx) => {
                     const channel = find(
                       filter(guild.currentDiscordChannels, (c) =>
@@ -474,7 +468,7 @@ const ServerTabBoosts: FC<ServerTabBoostsProps> = () => {
                   disabled: true,
                   text: `Add Boosted Category`,
                   icon: faAdd,
-                  onClick: () => {},
+                  onClick: noop,
                 },
               ]}
             />
@@ -507,7 +501,7 @@ const ServerTabBoosts: FC<ServerTabBoostsProps> = () => {
                 label="Percentage"
                 inputProps={{ min: -100 }}
                 value={12}
-                type={"number"}
+                type="number"
                 formError={errors.percentage}
               />
             </div>
@@ -518,7 +512,9 @@ const ServerTabBoosts: FC<ServerTabBoostsProps> = () => {
                 registerForm={register(`entity`, { required: true })}
                 options={
                   addBoostModal
-                    ? getTypeSpecificDiscordEntires(addBoostModal?.type).map(
+                    ? // lodash typing gets confused here. therefore we use the legacy map function.
+                      // eslint-disable-next-line lodash/prefer-lodash-method
+                      getTypeSpecificDiscordEntires(addBoostModal?.type).map(
                         (entry) => ({
                           id: entry.id,
                           title:

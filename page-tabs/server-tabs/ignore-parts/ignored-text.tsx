@@ -133,7 +133,7 @@ const IgnoredTextChannels = () => {
 
       {/* Add Modal */}
       <Modal
-        title={`Ignore TextChannel`}
+        title="Ignore TextChannel"
         isOpen={addIgnoreModal}
         requestClose={() => {
           setAddIgnoreModal(false);
@@ -151,6 +151,8 @@ const IgnoredTextChannels = () => {
                 registerForm={register(`ignoredTextChannelID`, {
                   required: true,
                 })}
+                // lodash gets confused with typing here. therefore we use the legacy map function.
+                // eslint-disable-next-line lodash/prefer-lodash-method
                 options={(
                   filter(guild.currentDiscordChannels, (channel) =>
                     isEqual(channel.type, DiscordChannelType.text)
@@ -159,7 +161,7 @@ const IgnoredTextChannels = () => {
                   id: channel.id,
                   title: channel.name || `Unknown`,
                 }))}
-                label={`TextChannel`}
+                label="TextChannel"
                 isInPanel={true}
               />
             </div>

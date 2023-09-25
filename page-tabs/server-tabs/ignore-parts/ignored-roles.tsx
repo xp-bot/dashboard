@@ -1,10 +1,10 @@
-import { faAdd, faRemove } from '@fortawesome/free-solid-svg-icons';
-import AnimatedDivList from 'components/animated-div-list';
-import ButtonCluster, { ButtonFeature } from 'components/button-cluster';
-import IgnorePanel from 'components/ignore-panel';
-import Modal from 'components/modal';
-import Select from 'components/select';
-import { useServerDetails } from 'context/guild-details-context';
+import { faAdd, faRemove } from "@fortawesome/free-solid-svg-icons";
+import AnimatedDivList from "components/animated-div-list";
+import ButtonCluster, { ButtonFeature } from "components/button-cluster";
+import IgnorePanel from "components/ignore-panel";
+import Modal from "components/modal";
+import Select from "components/select";
+import { useServerDetails } from "context/guild-details-context";
 import {
   cloneDeep,
   filter,
@@ -14,10 +14,10 @@ import {
   map,
   size,
   slice,
-} from 'lodash';
-import { IDiscordRole } from 'models/backend/discord-models';
-import { useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+} from "lodash";
+import { IDiscordRole } from "models/backend/discord-models";
+import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 interface AddIgnoreInputs {
   ignoredRoleID: string;
@@ -101,7 +101,7 @@ const IgnoredRoles = () => {
                     </div>
                   ),
                 };
-              return { element: <></>, key: '' };
+              return { element: <></>, key: "" };
             })}
           </AnimatedDivList>
         </div>
@@ -122,7 +122,7 @@ const IgnoredRoles = () => {
 
       {/* Add Modal */}
       <Modal
-        title={`Ignore Role`}
+        title="Ignore Role"
         isOpen={addIgnoreModal}
         requestClose={() => {
           setAddIgnoreModal(false);
@@ -138,13 +138,14 @@ const IgnoredRoles = () => {
                 disabled={addDisabled}
                 formError={errors.ignoredRoleID}
                 registerForm={register(`ignoredRoleID`, { required: true })}
-                options={(slice(guild.currentDiscordRoles, 1) || []).map(
+                options={map(
+                  slice(guild.currentDiscordRoles, 1) || [],
                   (role) => ({
                     id: role.id,
                     title: role.name,
                   })
                 )}
-                label={`Role`}
+                label="Role"
                 isInPanel={true}
               />
             </div>

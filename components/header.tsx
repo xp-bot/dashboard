@@ -40,7 +40,7 @@ const Header: FC<HeaderProps> = ({
           height: useBigHeader ? (breakpoints.isLg ? `100vh` : 275) : 275,
         }}
         transition={{ duration: 0.5 }}
-        className={`relative w-full`}
+        className="relative w-full"
       >
         <DesktopNavBar
           customGradient={customGradient}
@@ -65,7 +65,6 @@ const Header: FC<HeaderProps> = ({
                       background: `linear-gradient(30deg, ${customGradient.bottomLeft} 0%, ${customGradient.topRight} 100%)`,
                     }
               }
-              // eslint-disable-next-line tailwindcss/no-custom-classname
               className="headerGradient absolute left-0 top-0 z-[-1] h-full w-full"
             />
           </AnimatePresence>
@@ -74,7 +73,6 @@ const Header: FC<HeaderProps> = ({
             className="absolute bottom-0 left-0 z-[-2] h-full w-full transition-all ease-in-out"
           >
             <FallBackImage
-              // eslint-disable-next-line tailwindcss/no-custom-classname
               className={`headerImage ${
                 isNumber(customBlur) && !isUndefined(customImage)
                   ? `${customBlur === 0 ? `scale-100` : `scale-110`}`

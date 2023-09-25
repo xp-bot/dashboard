@@ -101,13 +101,13 @@ const ServerTabLogs: FC<ServerTabLogsProps> = () => {
             </BasicPanel> */}
             <motion.div
               layout="position"
-              key={'khjgjgh'}
+              key="khjgjgh"
               transition={{ type: 'spring' }}
               className="flex flex-col"
             >
               <div className="grid w-full grid-cols-1 gap-5 md:grid-cols-[250px_1px_1fr]">
                 <div className="flex w-full flex-wrap">
-                  <div className={`flex w-full flex-col gap-5`}>
+                  <div className="flex w-full flex-col gap-5">
                     <CheckboxContentPanel
                       title="Show All"
                       defaultChecked={showAll}
@@ -159,7 +159,7 @@ const ServerTabLogs: FC<ServerTabLogsProps> = () => {
                 </div>
                 <div className="w-full bg-white/25" />
                 <motion.div
-                  layout={'position'}
+                  layout="position"
                   className="relative flex h-full w-full flex-col flex-wrap gap-5"
                 >
                   <div className="flex flex-row gap-5">
@@ -184,7 +184,7 @@ const ServerTabLogs: FC<ServerTabLogsProps> = () => {
                   <AnimatePresence mode="popLayout">
                     {map(filteredLogs, (log) => (
                       <motion.div
-                        layout={'position'}
+                        layout="position"
                         initial="initial"
                         exit="exit"
                         animate="base"

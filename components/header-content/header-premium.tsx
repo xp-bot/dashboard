@@ -17,7 +17,7 @@ const HeaderPremium: FC<HeaderPremiumProps> = () => {
           </span>
         </div>
         <div className="hidden w-fit flex-row gap-5 lg:flex">
-          <Link href={`https://patreon.xp-bot.net/`}>
+          <Link href="https://patreon.xp-bot.net/">
             <BlockButton>Get XP Premium</BlockButton>
           </Link>
         </div>

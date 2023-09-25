@@ -32,10 +32,10 @@ export default function Document() {
         <meta name="msapplication-TileColor" content="#5B62ED" />
         <meta name="theme-color" content="#5B62ED" />
 
-        <meta property="og:title" content={`Reimagine your Community | XP`} />
+        <meta property="og:title" content="Reimagine your Community | XP" />
         <meta
           property="twitter:title"
-          content={`Reimagine your Community | XP`}
+          content="Reimagine your Community | XP"
         />
 
         <meta data-n-head="ssr" data-hid="author" name="author" content="XP" />

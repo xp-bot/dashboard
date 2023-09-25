@@ -133,7 +133,7 @@ const IgnoredCategories = () => {
 
       {/* Add Modal */}
       <Modal
-        title={`Ignore Category`}
+        title="Ignore Category"
         isOpen={addIgnoreModal}
         requestClose={() => {
           setAddIgnoreModal(false);
@@ -151,6 +151,8 @@ const IgnoredCategories = () => {
                 registerForm={register(`ignoredCategoryID`, {
                   required: true,
                 })}
+                // lodash gets confused with typing here. therefore we use the legacy map function.
+                // eslint-disable-next-line lodash/prefer-lodash-method
                 options={(
                   filter(guild.currentDiscordChannels, (channel) =>
                     isEqual(channel.type, DiscordChannelType.category)
@@ -159,7 +161,7 @@ const IgnoredCategories = () => {
                   id: channel.id,
                   title: channel.name || `Unknown`,
                 }))}
-                label={`Category`}
+                label="Category"
                 isInPanel={true}
               />
             </div>

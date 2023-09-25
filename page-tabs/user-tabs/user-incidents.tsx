@@ -141,6 +141,7 @@ const UserTabIncidents: FC<UserTabIncidentsProps> = () => {
             {map(incidents, (incident) => {
               return (
                 <div
+                  key={`incident-${incident.incidentID}`}
                   onClick={() => {
                     setEditIncident(incident);
                     setEditIncidentModalOpened(true);
@@ -234,7 +235,7 @@ const UserTabIncidents: FC<UserTabIncidentsProps> = () => {
             />
             <hr className="mx-auto my-3 w-4/5" />
             <MultilineInput
-              value={``}
+              value=""
               disabled={isEqual(watch(`status`), `Resolved`)}
               placeholder="Give the user an idea of what we're going to do."
               registerForm={register(`updateMessage`, {

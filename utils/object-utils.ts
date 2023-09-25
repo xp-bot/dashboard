@@ -1,10 +1,14 @@
+// TODO: This file is a disgrace.. rewrite it if you're feeling brave. I'll personally gift you a beer if you do. Also XP premium.. and a hug.
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { clone, compact, forEach, size } from 'lodash';
 import { ServerRoutes } from 'page-tabs/server-tabs/server-routes';
 import { UserRoutes } from 'page-tabs/user-tabs/user-routes';
 
-const test = Object.entries(UserRoutes);
+const server = Object.entries(ServerRoutes);
+const users = Object.entries(UserRoutes);
 
-const splitArrayByMarginLeft = (array: typeof test): any[] => {
+const splitArrayByMarginLeft = (array: typeof users): any[] => {
   const splitArray: (typeof array)[] = [];
   let editArray: typeof array = [];
 
@@ -26,15 +30,12 @@ const splitArrayByMarginLeft = (array: typeof test): any[] => {
   return compact([...splitArray, editArray]);
 };
 
-const server = Object.entries(ServerRoutes);
 
 export const splitServerArrayByMarginLeft = (
   array: typeof server
 ): (typeof server)[] => {
   return splitArrayByMarginLeft(array as any);
 };
-
-const users = Object.entries(UserRoutes);
 
 export const splitUserArrayByMarginLeft = (
   array: typeof users

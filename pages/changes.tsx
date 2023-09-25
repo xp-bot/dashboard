@@ -6,7 +6,7 @@ import HeaderChangelogs from "components/header-content/header-changelogs";
 import PageTitle from "components/page-title";
 import Tooltip from "components/tooltip";
 import { useLayout } from "context/layout-context";
-import { entries, map, reverse } from "lodash";
+import { map, reverse, toPairs } from "lodash";
 import { IDiscordUserLookup } from "models/backend/discord-models";
 import { IPage } from "models/page";
 import type { NextPage } from "next";
@@ -15,7 +15,7 @@ import { avatarToURL } from "utils/discord-utils";
 
 import changelog from "../changelogs";
 
-interface HomeProps extends IPage {}
+type HomeProps = IPage;
 
 export const ChangelogUser: FC<{ user_id: string }> = ({ user_id }) => {
   const [user, setUser] = useState<IDiscordUserLookup | undefined>();
@@ -69,9 +69,9 @@ const Blog: NextPage<HomeProps> = () => {
         <div>
           <div className="flex flex-col gap-4 lg:flex-row lg:flex-wrap">
             {map(
-              reverse(entries(changelog)),
+              reverse(toPairs(changelog)),
               ([version, versionChangelog], idx) => {
-                const changeClusters = entries(versionChangelog);
+                const changeClusters = toPairs(versionChangelog);
                 return (
                   <>
                     <div className="flex w-full flex-col">
@@ -122,7 +122,7 @@ const Blog: NextPage<HomeProps> = () => {
                                                 <Tooltip
                                                   alignLeft
                                                   showContentOnMobile
-                                                  text={`Thank you for submitting this idea!`}
+                                                  text="Thank you for submitting this idea!"
                                                 >
                                                   <ChangelogUser
                                                     user_id={

@@ -4,7 +4,7 @@ import HeaderNavigationAnimator from "components/header-navigation-animator";
 // eslint-disable-next-line import/no-cycle
 import InboxPopout from "components/inbox-popout";
 import PageNavigationAnimator from "components/page-navigation-animator";
-import { isNumber, isUndefined, size, split } from "lodash";
+import { isNumber, isUndefined, noop, size, split } from "lodash";
 import { useRouter } from "next/router";
 import { createContext, useContext, useState } from "react";
 import { getAverageImageColors } from "utils/image-utils";
@@ -23,8 +23,8 @@ interface ILayoutContextValues {
 }
 
 export const LayoutContext = createContext<ILayoutContextValues>({
-  changeHeader: () => {},
-  toggleInbox: () => {},
+  changeHeader: noop,
+  toggleInbox: noop,
   inboxOpen: false,
 });
 
