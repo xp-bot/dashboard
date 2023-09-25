@@ -40,6 +40,7 @@ module.exports = {
     "lodash/import-scope": ["error", "member"],
     "lodash/matches-prop-shorthand": "off",
     "lodash/matches-shorthand": "off",
+    "lodash/chain-style": [2, "explicit"],
     "max-depth": ["error", 3],
     "no-unused-vars": "off",
     "no-console": "warn",

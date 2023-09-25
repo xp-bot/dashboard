@@ -1,4 +1,5 @@
-import { chain, isNaN, join, replace } from 'lodash';
+// eslint-disable-next-line lodash/import-scope
+import _, { isNaN, join, replace } from 'lodash';
 
 export const getAnnounceMessage = (
   message: string,
@@ -8,7 +9,7 @@ export const getAnnounceMessage = (
   oldlevel?: string,
   climbed?: string
 ) => {
-  return chain(message)
+  return _.chain(message)
     .replace(/({TAG})+/g, tag || `Clyde#0000`)
     .replace(/({MNT})+/g, mention || `@Clyde`)
     .replace(/({LVL})+/g, level || `262`)
