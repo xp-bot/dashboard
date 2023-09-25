@@ -1,6 +1,6 @@
 import RecentlyPanel from "components/recently-panel";
 import useBreakpoints from "hooks/use-breakpoints";
-import { chain, map, slice } from "lodash";
+import { filter, map, slice, sortBy } from "lodash";
 import Link from "next/link";
 import { FC } from "react";
 
@@ -14,11 +14,13 @@ const HeaderHome: FC<HeaderHomeProps> = () => {
   const user = useUser();
   const breakpoints = useBreakpoints();
 
-  const quickSelect = chain(user.discordGuilds)
-    .filter((guild) => guild.xpInvited || false)
-    .sortBy((g) => !g.premium.premium)
-    .map((guild) => ({ guild }))
-    .value();
+  const quickSelect = map(
+    sortBy(
+      filter(user.discordGuilds, (guild) => guild.xpInvited || false),
+      (g) => !g.premium.premium
+    ),
+    (guild) => ({ guild })
+  );
 
   return (
     <>
