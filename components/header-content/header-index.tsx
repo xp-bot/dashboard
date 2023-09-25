@@ -18,7 +18,7 @@ const HeaderIndex: FC<HeaderHomeProps> = () => {
           </span>
         </div>
         <div className="hidden w-fit flex-row gap-5 lg:flex">
-          <Link href={`https://get.xp-bot.net/`}>
+          <Link href="https://get.xp-bot.net/">
             <BlockButton>Welcome to XP</BlockButton>
           </Link>
         </div>

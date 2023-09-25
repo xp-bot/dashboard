@@ -10,7 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useUser } from "context/user-context";
-import { filter, includes, isEqual, isUndefined, map } from "lodash";
+import { constant, filter, includes, isEqual, isUndefined, map } from "lodash";
 import { IXPAPIUser } from "models/backend/xp-models";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -75,7 +75,7 @@ const NavigationItems: {
   },
   {
     text: `Sign In`,
-    isActive: () => false,
+    isActive: constant(false),
     link: `${process.env.BACKEND_DOMAIN}/discord/login`,
     isVisible: (user) => isUndefined(user),
     icon: faSignIn,
@@ -90,10 +90,9 @@ const MobileNavBar: FC<MobileNavBarProps> = () => {
   const user = useUser();
   return (
     <div
-      // eslint-disable-next-line tailwindcss/no-custom-classname
       // PB-[32px] / pb-8
       style={{ boxShadow: "0 -2px 8px rgba(0,0,0,0.10)" }}
-      className={`fixed bottom-0 z-30 w-full border-t border-[#808080] border-opacity-[.25] pt-1 text-center pb-safe ios:bg-navBar-mobile-background/75 ios:backdrop-blur-lg android:bg-navBar-mobile-background ios:dark:bg-navBar-mobile-background-darkMode/90 android:dark:bg-navBar-mobile-background-darkMode md:backdrop-blur-[20px] lg:hidden`}
+      className="fixed bottom-0 z-30 w-full border-t border-[#808080] border-opacity-[.25] pt-1 text-center pb-safe ios:bg-navBar-mobile-background/75 ios:backdrop-blur-lg android:bg-navBar-mobile-background ios:dark:bg-navBar-mobile-background-darkMode/90 android:dark:bg-navBar-mobile-background-darkMode md:backdrop-blur-[20px] lg:hidden"
     >
       <div className="flex justify-evenly pb-2 ios:pb-0">
         {map(

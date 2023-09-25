@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { AxiosRequestConfig } from "axios";
 import axiosApp, { axiosIlumApp } from "axios-config";
 import {
@@ -34,10 +35,6 @@ import {
   IXPUserPremium,
   IXPUserPremiumServers,
 } from "../models/backend/xp-models";
-
-export const apiGet = () => {
-  return false;
-};
 
 const backendFetch = async <Body>(route: string, options?: RequestInit) => {
   const res = await fetch(process.env.BACKEND_DOMAIN + route, options);
@@ -247,6 +244,10 @@ export const apiRoutes = {
         backendAxios<IXPAPIGuild>(`/semi/guild/${guildID}`, {
           method: `GET`,
         }),
+      isUserAuthorized: (guildID: string) =>
+        backendAxios<boolean>(`/semi/guild/${guildID}/authorized`, {
+          method: `GET`,
+        }),
     },
   },
   discord: {
@@ -321,7 +322,7 @@ export const apiRoutes = {
         ),
     },
     guild: {
-      getLogs: (guildID: string, page: number = 1, query?: string) =>
+      getLogs: (guildID: string, page = 1, query?: string) =>
         backendAxios<IXPDBLog>(`/xp/guild/${guildID}/logs`, {
           method: `GET`,
           params: { query, page },

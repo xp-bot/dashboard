@@ -16,7 +16,7 @@ import { BlogCommentsSection } from "context/blog-comments-section";
 import { useLayout } from "context/layout-context";
 import { useToast } from "context/toast-context";
 import { useUser } from "context/user-context";
-import { filter, find, isEqual, isUndefined, size } from "lodash";
+import { find, isEqual, isUndefined, reject, size } from "lodash";
 import {
   BlogPostStatus,
   IBlogPost,
@@ -64,7 +64,6 @@ const BlogPost: NextPage<BlogPostProps> = ({ blogPost, comments }) => {
   const handleDeletePost = async () => {
     const res = await apiRoutes.blog.deletePost(blogPost.postID);
     if (res.success) router.push("/blog");
-    else console.log(res.message);
 
     toast({
       text: res.success
@@ -149,7 +148,7 @@ const BlogPost: NextPage<BlogPostProps> = ({ blogPost, comments }) => {
       <hr className="mb-10 mt-3" />
       <BlogCommentsSection
         selectedComment={selectedComment}
-        comments={filter(comments, (c) => !c.parentComment)}
+        comments={reject(comments, "parentComment")}
         blogPost={blogPost}
       />
 

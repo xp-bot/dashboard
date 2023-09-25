@@ -86,7 +86,6 @@ const BlogEditor: NextPage<UserTabProps> = ({ blogPost }) => {
       });
       router.push(route);
     } else {
-      console.log(res.message);
       toast({
         type: ToastItemType.ERROR,
         text: "Something went wrong. Please try again later.",
@@ -115,7 +114,7 @@ const BlogEditor: NextPage<UserTabProps> = ({ blogPost }) => {
               ? `Create a new Blog Post`
               : `Edit ${blogPost.content.title}`
           }
-          subtitle={`You may use MD or even HTML to write the blog post.`}
+          subtitle="You may use MD or even HTML to write the blog post."
         />,
         `edit_blogPost`,
         customThumbnail

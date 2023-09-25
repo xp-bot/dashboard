@@ -17,7 +17,7 @@ const ServerTabModules: FC<ServerTabModulesProps> = () => {
           <PageTitle
             motionTextKey="MotionServerTab-Modules"
             tooltipText="Modules allow for the activation and deactivation of features within XP."
-            title={`Modules`}
+            title="Modules"
           />
           <div className="flex flex-col items-center gap-8">
             {map(toPairs(XPModules), ([categoryName, category], idx) => {

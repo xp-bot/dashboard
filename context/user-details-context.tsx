@@ -2,13 +2,13 @@ import { faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { motion } from "framer-motion";
 import { useMediaQuery } from "hooks/use-media-query";
-import { isUndefined } from "lodash";
+import { constant, isUndefined } from "lodash";
 import React, { useRef, useState } from "react";
 import { captureRankingBackground } from "utils/image-utils";
 
+import { useUser } from "./user-context";
 import { apiRoutes } from "../apis/api-helper";
 import { IXPBackground, IXPUser } from "../models/backend/xp-models";
-import { useUser } from "./user-context";
 
 interface IUserDetailsContextValues {
   currentXPUser?: IXPUser;
@@ -26,13 +26,15 @@ interface IUserDetailsContextValues {
 
 export const UserDetailsContext =
   React.createContext<IUserDetailsContextValues>({
+    // eslint-disable-next-line lodash/prefer-constant
     updateUser: async () => false,
     unsavedChanges: false,
     savingInProgress: false,
+    // eslint-disable-next-line lodash/prefer-constant
     fetchRankingBackground: async () => false,
     tempRankingCard: {
       uploadingTempRankingCardImage: false,
-      initTempRankingCardImageUpload: () => false,
+      initTempRankingCardImageUpload: constant(false),
     },
   });
 
@@ -141,7 +143,7 @@ export function UserDetailsContextProvider({
           id="upload-button"
           ref={tempRankingCardImageUploadButton}
           style={{ display: "none" }}
-          accept={`.png,.jpg`}
+          accept=".png,.jpg"
           onChange={(e) => {
             if (e.target.files && e.target.files[0]) {
               const img = e.target.files[0];
@@ -160,10 +162,10 @@ export function UserDetailsContextProvider({
               ? { y: isLg ? "-2rem" : "-5rem", opacity: 1 }
               : { y: "4rem", opacity: 0 }
           }
-          className={`pointer-events-none fixed bottom-0 left-0 z-30 flex h-20 w-full justify-center`}
+          className="pointer-events-none fixed bottom-0 left-0 z-30 flex h-20 w-full justify-center"
         >
-          <div className={`container mx-auto box-border px-10`}>
-            <div className={`relative h-full w-full`}>
+          <div className="container mx-auto box-border px-10">
+            <div className="relative h-full w-full">
               <button
                 onClick={() => {
                   saveUser();

@@ -1,34 +1,42 @@
 // eslint-disable-next-line import/no-cycle
 import {
+  faBoxesPacking,
+  faDownload,
   faInfoCircle,
   faPaintBrush,
   faSave,
   faToggleOff,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import ButtonCluster, { ButtonFeature } from 'components/button-cluster';
-import DropdownPanel from 'components/dropdown-panel';
-import FallBackImage from 'components/fallback-image';
-import Modal from 'components/modal';
-import PageTitle from 'components/page-title';
-import PanelInput from 'components/panel-input';
-import Tooltip from 'components/tooltip';
-import { useServerDetails } from 'context/guild-details-context';
-import { FinalColor } from 'extract-colors/lib/types/Color';
-import { motion } from 'framer-motion';
+  faUpload,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ButtonCluster, { ButtonFeature } from "components/button-cluster";
+import DropdownPanel from "components/dropdown-panel";
+import ExportChecklistItem, {
+  ExportChecklistItemTypes,
+} from "components/export-checklist-item";
+import FallBackImage from "components/fallback-image";
+import Modal from "components/modal";
+import PageTitle from "components/page-title";
+import PanelInput from "components/panel-input";
+import Tooltip from "components/tooltip";
+import { useServerDetails } from "context/guild-details-context";
+import { FinalColor } from "extract-colors/lib/types/Color";
+import { motion } from "framer-motion";
 import {
   clone,
   filter,
   isEmpty,
   isEqual,
   isUndefined,
+  map,
+  noop,
   size,
   startsWith,
-} from 'lodash';
-import { FC, useEffect, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { DiscordChannelType } from 'utils/discord-utils';
-import { getAverageImageColors } from 'utils/image-utils';
+} from "lodash";
+import { FC, useEffect, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { DiscordChannelType } from "utils/discord-utils";
+import { getAverageImageColors } from "utils/image-utils";
 
 interface ServerTabSettingsProps {}
 
@@ -39,6 +47,7 @@ interface IBackgroundInputs {
 const ServerTabSettings: FC<ServerTabSettingsProps> = () => {
   const guild = useServerDetails();
   const [editBG, setEditBG] = useState(false);
+  const [exportModalOpen, setExportModalOpen] = useState(false);
   const {
     register,
     handleSubmit,
@@ -126,7 +135,7 @@ const ServerTabSettings: FC<ServerTabSettingsProps> = () => {
     if (!g) return;
     g.leaderboard_message.enabled = true;
     g.leaderboard_message.channelID = channelID;
-    g.leaderboard_message.messageID = '';
+    g.leaderboard_message.messageID = "";
     guild.updateGuild(
       {
         name: `Dynamic Leaderboard`,
@@ -167,7 +176,7 @@ const ServerTabSettings: FC<ServerTabSettingsProps> = () => {
               <ButtonCluster
                 buttons={[
                   {
-                    text: 'Change Server Background',
+                    text: "Change Server Background",
                     icon: faPaintBrush,
                     onClick: () => {
                       if (guild.currentServerPremium?.premium) setEditBG(true);
@@ -177,7 +186,6 @@ const ServerTabSettings: FC<ServerTabSettingsProps> = () => {
               />
             </div>
           </div>
-          <hr className="mx-auto -mb-1 mt-4 w-4/5" />
           <div>
             <PageTitle
               disableArrow
@@ -197,32 +205,139 @@ const ServerTabSettings: FC<ServerTabSettingsProps> = () => {
               options={[
                 {
                   id: `0`,
-                  title: 'Disabled',
+                  title: "Disabled",
                   selected: !guild.currentXPGuild?.leaderboard_message.enabled,
                 },
-                ...(guild.currentServerPremium?.premium
-                  ? filter(
-                      guild.currentDiscordChannels,
-                      (channel) =>
-                        isEqual(channel.type, DiscordChannelType.news) ||
-                        isEqual(channel.type, DiscordChannelType.text)
-                    ) || []
-                  : []
-                ).map((channel) => ({
-                  id: channel.id,
-                  title: `#${channel.name || `Unknown`}`,
-                  selected:
-                    guild.currentXPGuild?.leaderboard_message.enabled &&
-                    isEqual(
-                      guild.currentXPGuild?.leaderboard_message.channelID,
-                      channel.id
-                    ),
-                })),
+                ...map(
+                  filter(
+                    guild.currentDiscordChannels,
+                    (channel) =>
+                      isEqual(channel.type, DiscordChannelType.news) ||
+                      isEqual(channel.type, DiscordChannelType.text)
+                  ) || [],
+                  (channel) => ({
+                    id: channel.id,
+                    title: `#${channel.name || "Unknown"}`,
+                    selected:
+                      guild.currentXPGuild?.leaderboard_message.enabled &&
+                      isEqual(
+                        guild.currentXPGuild?.leaderboard_message.channelID,
+                        channel.id
+                      ),
+                  })
+                ),
               ]}
             />
           </div>
+          <div>
+            <PageTitle
+              disableArrow
+              tooltipText="Export and Import your Server Data. You can also export server's data, and import it to another server."
+              title={`Export Server Settings ${
+                guild.currentServerPremium?.premium ? `🔓` : `🔒`
+              }`}
+            />
+            <div>
+              <ButtonCluster
+                buttons={[
+                  {
+                    text: "Export Server Settings",
+                    icon: faDownload,
+                    onClick: () => {
+                      setExportModalOpen(true);
+                    },
+                  },
+                  { text: "Import Server Settings", icon: faUpload },
+                  {
+                    disabled: true,
+                    text: "Transfer Settings from another Server",
+                    icon: faBoxesPacking,
+                  },
+                ]}
+              />
+            </div>
+          </div>
         </div>
       </div>
+      <Modal
+        isOpen={exportModalOpen}
+        title="Export Server Settings"
+        requestClose={() => {
+          setExportModalOpen(false);
+        }}
+        customKey="export-server-settings"
+      >
+        <div className="flex flex-col gap-5">
+          <p className="text-lg">
+            This is where you can export your server settings.
+            <br />
+            You will recieve a JSON file that you can keep as a backup, or
+            import to another server.
+          </p>
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+            <div className="flex flex-col gap-2">
+              <p className="text-lg italic opacity-75">
+                What will be exported?
+              </p>
+              <div className="flex flex-col gap-2">
+                <ExportChecklistItem
+                  text="Modules"
+                  type={ExportChecklistItemTypes.CHECK}
+                />
+                <ExportChecklistItem
+                  text="Values"
+                  type={ExportChecklistItemTypes.CHECK}
+                />
+                <ExportChecklistItem
+                  text="Loggers"
+                  type={ExportChecklistItemTypes.CHECK}
+                />
+                <ExportChecklistItem
+                  text="Level Roles"
+                  type={ExportChecklistItemTypes.CHECK}
+                />
+                <ExportChecklistItem
+                  text="Ignores"
+                  type={ExportChecklistItemTypes.CHECK}
+                />
+                <ExportChecklistItem
+                  text="Boosts"
+                  type={ExportChecklistItemTypes.CHECK}
+                />
+                <ExportChecklistItem
+                  text="Announcement Settings"
+                  type={ExportChecklistItemTypes.CHECK}
+                />
+              </div>
+            </div>
+            <div className="flex flex-col gap-2">
+              <p className="text-lg italic opacity-75">
+                What will not be exported?
+              </p>
+              <div className="flex flex-col gap-2">
+                <ExportChecklistItem
+                  text="Leaderboards"
+                  type={ExportChecklistItemTypes.CROSS}
+                />
+                <ExportChecklistItem
+                  text="Dashboard Background"
+                  type={ExportChecklistItemTypes.CROSS}
+                />
+                <ExportChecklistItem
+                  text="Discord Leaderboard"
+                  type={ExportChecklistItemTypes.CROSS}
+                />
+              </div>
+            </div>
+          </div>
+          <ButtonCluster
+            isInPanel
+            buttons={[
+              { text: "Export Settings", icon: faDownload, onClick: noop },
+            ]}
+          />
+        </div>
+      </Modal>
       <Modal
         requestClose={() => {
           setEditBG(false);
@@ -237,7 +352,7 @@ const ServerTabSettings: FC<ServerTabSettingsProps> = () => {
         >
           <PanelInput
             registerForm={register(`url`, {
-              required: 'An URL is required.',
+              required: "An URL is required.",
               validate: (value) =>
                 !startsWith(value, `https://`)
                   ? `The URL needs to start with "https://"!`
@@ -253,15 +368,15 @@ const ServerTabSettings: FC<ServerTabSettingsProps> = () => {
             disabled={isUndefined(previewBackground)}
             formError={errors.blur}
             inputProps={{ max: 40, maxLength: 3, min: 0 }}
-            type={`number`}
+            type="number"
             registerForm={register(`blur`, {
               valueAsNumber: true,
               max: {
-                message: 'You cannot blur the image more than 40px.',
+                message: "You cannot blur the image more than 40px.",
                 value: 40,
               },
               min: {
-                message: 'The provided number must be at least 0px.',
+                message: "The provided number must be at least 0px.",
                 value: 0,
               },
             })}
@@ -274,13 +389,13 @@ const ServerTabSettings: FC<ServerTabSettingsProps> = () => {
               <div className="aspect-[16/9] max-w-3xl overflow-hidden rounded-md border ">
                 <div className="relative h-full w-full overflow-hidden rounded-md">
                   <motion.div
-                    animate={watch('blur') ? { scale: 1.1 } : { scale: 1 }}
+                    animate={watch("blur") ? { scale: 1.1 } : { scale: 1 }}
                     style={
-                      watch('blur')
-                        ? { filter: `blur(${watch('blur')}px)` }
+                      watch("blur")
+                        ? { filter: `blur(${watch("blur")}px)` }
                         : undefined
                     }
-                    className={`relative h-full w-full`}
+                    className="relative h-full w-full"
                   >
                     <div
                       style={
@@ -297,7 +412,7 @@ const ServerTabSettings: FC<ServerTabSettingsProps> = () => {
                       className="absolute left-0 top-0 h-full w-full opacity-75"
                     />
                     <FallBackImage
-                      className={`h-full w-full object-cover`}
+                      className="h-full w-full object-cover"
                       src={previewBackground}
                     />
                   </motion.div>

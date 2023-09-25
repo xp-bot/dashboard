@@ -92,7 +92,7 @@ const ToastItem: FC<IInboxItemProps> = ({ item }) => {
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          layout={"position"}
+          layout="position"
           key={`toast-item-${item.id}`}
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}

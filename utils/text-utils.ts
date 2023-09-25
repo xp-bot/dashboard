@@ -1,4 +1,4 @@
-import { isNaN, join } from 'lodash';
+import { chain, isNaN, join, replace } from 'lodash';
 
 export const getAnnounceMessage = (
   message: string,
@@ -8,12 +8,12 @@ export const getAnnounceMessage = (
   oldlevel?: string,
   climbed?: string
 ) => {
-  return message
+  return chain(message)
     .replace(/({TAG})+/g, tag || `Clyde#0000`)
     .replace(/({MNT})+/g, mention || `@Clyde`)
     .replace(/({LVL})+/g, level || `262`)
     .replace(/({OLDLVL})+/g, oldlevel || `260`)
-    .replace(/({CMB})+/g, climbed || `2`);
+    .replace(/({CMB})+/g, climbed || `2`).value();
 };
 
 export const fixDiscordMarkdownFormat = (message: string) => {
@@ -53,25 +53,22 @@ export const calculateLevel = (xp: number) => {
 };
 
 export const formatNumber = (number: number) => {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, `.`);
+  return replace(number.toString(), /\B(?=(\d{3})+(?!\d))/g, `.`);
 };
 
+import { floor } from 'lodash';
+
 export function getTimeByMillis(millis: number) {
-  const response: any = {};
-  response.milliseconds = (millis % 1000) / 100;
-  response.seconds = Math.floor((millis / 1000) % 60);
-  response.minutes = Math.floor((millis / (1000 * 60)) % 60);
-  response.hours = response.minutes / 60;
-  response.days = Math.floor(response.hours / 60);
-  response.hours = Math.floor((millis / (1000 * 60 * 60)) % 24);
-  return response as {
-    milliseconds: number;
-    seconds: number;
-    minutes: number;
-    hours: number;
-    days: number;
+  const response = {
+    milliseconds: floor((millis % 1000) / 100),
+    seconds: floor((millis / 1000) % 60),
+    minutes: floor((millis / (1000 * 60)) % 60),
+    hours: floor((millis / (1000 * 60 * 60)) % 24),
+    days: floor(millis / (1000 * 60 * 60 * 24)),
   };
+  return response;
 }
+
 
 export const formatVoiceTime = (duration: number) => {
   const d = getTimeByMillis(duration);

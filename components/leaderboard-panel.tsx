@@ -51,7 +51,7 @@ const LeaderboardPanel: FC<LeaderboardPanelProps> = ({
       className="flex h-[40px] w-full shrink-0 flex-row gap-3 font-semibold md:cursor-default md:gap-5"
     >
       <div
-        className={`relative flex aspect-square h-full w-[40px] shrink-0 grow-0 overflow-hidden rounded-md bg-panelBack p-1 text-darkText shadow-md dark:bg-panelBack-darkMode dark:text-darkText-darkMode`}
+        className="relative flex aspect-square h-full w-[40px] shrink-0 grow-0 overflow-hidden rounded-md bg-panelBack p-1 text-darkText shadow-md dark:bg-panelBack-darkMode dark:text-darkText-darkMode"
       >
         <FallBackImage
           customFallback="https://cdn.namespace.media/s/ofpajSeo5zoymxL/download/LOGO_3_x250.png"
@@ -60,7 +60,7 @@ const LeaderboardPanel: FC<LeaderboardPanelProps> = ({
         />
       </div>
       <div
-        className={`relative flex h-full shrink-0 items-center overflow-hidden whitespace-nowrap rounded-md bg-panelBack p-4 text-darkText shadow-md dark:bg-panelBack-darkMode dark:text-darkText-darkMode`}
+        className="relative flex h-full shrink-0 items-center overflow-hidden whitespace-nowrap rounded-md bg-panelBack p-4 text-darkText shadow-md dark:bg-panelBack-darkMode dark:text-darkText-darkMode"
       >
         #{rank}
       </div>
@@ -82,17 +82,17 @@ const LeaderboardPanel: FC<LeaderboardPanelProps> = ({
       </Link>
 
       <div
-        className={`relative hidden h-full shrink-0 items-center overflow-hidden whitespace-nowrap rounded-md bg-panelBack p-4 text-darkText shadow-md dark:bg-panelBack-darkMode dark:text-darkText-darkMode md:flex`}
+        className="relative hidden h-full shrink-0 items-center overflow-hidden whitespace-nowrap rounded-md bg-panelBack p-4 text-darkText shadow-md dark:bg-panelBack-darkMode dark:text-darkText-darkMode md:flex"
       >
         Lvl. {formatNumber(calculateLevel(user.xp))}
       </div>
       <div
-        className={`relative hidden h-full shrink-0 items-center overflow-hidden whitespace-nowrap rounded-md bg-panelBack p-4 text-darkText shadow-md dark:bg-panelBack-darkMode dark:text-darkText-darkMode md:flex`}
+        className="relative hidden h-full shrink-0 items-center overflow-hidden whitespace-nowrap rounded-md bg-panelBack p-4 text-darkText shadow-md dark:bg-panelBack-darkMode dark:text-darkText-darkMode md:flex"
       >
         {formatNumber(user.xp)} xp
       </div>
       <div
-        className={`relative flex h-full shrink-0 items-center overflow-hidden whitespace-nowrap rounded-md bg-panelBack p-4 text-darkText shadow-md dark:bg-panelBack-darkMode dark:text-darkText-darkMode`}
+        className="relative flex h-full shrink-0 items-center overflow-hidden whitespace-nowrap rounded-md bg-panelBack p-4 text-darkText shadow-md dark:bg-panelBack-darkMode dark:text-darkText-darkMode"
       >
         {getArrowPos(user.id, user.arrowPos, rank)}
       </div>

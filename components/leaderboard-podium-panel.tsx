@@ -96,7 +96,7 @@ const LeaderboardPodiumPanel: FC<LeaderboardPodiumPanelProps> = ({
       )}
       <div className="relative flex w-full flex-row flex-wrap justify-center gap-5 p-6">
         <div
-          className={`absolute left-0 top-0 hidden h-full w-full scale-110 opacity-25 blur-xl dark:md:flex`}
+          className="absolute left-0 top-0 hidden h-full w-full scale-110 opacity-25 blur-xl dark:md:flex"
         >
           {fetchedUser && (
             <FallBackImage
@@ -125,10 +125,10 @@ const LeaderboardPodiumPanel: FC<LeaderboardPodiumPanelProps> = ({
 
         <div className="z-10 flex w-full shrink-0 flex-col items-center justify-center gap-3 truncate">
           <div
-            className={`flex flex-row flex-wrap items-center justify-center gap-5`}
+            className="flex flex-row flex-wrap items-center justify-center gap-5"
           >
             <div
-              className={`aspect-square w-[50px] shrink-0 overflow-hidden rounded-full shadow-md md:mt-[-60px] md:hidden md:w-[120px]`}
+              className="aspect-square w-[50px] shrink-0 overflow-hidden rounded-full shadow-md md:mt-[-60px] md:hidden md:w-[120px]"
             >
               <FallBackImage
                 src={avatarToURL(fetchedUser, 256)}

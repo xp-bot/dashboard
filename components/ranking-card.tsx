@@ -65,7 +65,7 @@ const RankingCard: FC<RankingCardProps> = () => {
         <></>
       )}
       <div
-        className={`relative flex w-fit max-w-full overflow-hidden rounded-md bg-panelBack p-4 shadow-md dark:bg-panelBack-darkMode`}
+        className="relative flex w-fit max-w-full overflow-hidden rounded-md bg-panelBack p-4 shadow-md dark:bg-panelBack-darkMode"
       >
         <div className="flex w-full flex-col gap-3">
           <h2 className="m-0 inline-block text-[17px]">Preview</h2>

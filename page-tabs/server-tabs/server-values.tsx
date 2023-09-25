@@ -25,7 +25,7 @@ const ServerTabValues: FC<ServerTabValuesProps> = () => {
       {!isUndefined(guild.currentXPGuild) && (
         <div>
           <PageTitle
-            title={`Values`}
+            title="Values"
             tooltipText="Values allow you to regulate the rate at which users progress within XP."
           />
           <div className="flex flex-col items-center gap-8">

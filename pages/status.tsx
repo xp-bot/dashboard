@@ -186,7 +186,7 @@ const Status: NextPage<HomeProps> = ({
           <BasicPanel>
             <div className="grid grid-cols-1 flex-wrap gap-3 md:grid-cols-3 lg:grid-cols-4">
               {map(sortBy(ilumShards, "shard_id"), (shard) => (
-                <ShardPanel shard={shard} />
+                <ShardPanel key={`shard-${shard.shard_id}`} shard={shard} />
               ))}
             </div>
           </BasicPanel>

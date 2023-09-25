@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IDiscordGuildsRequest, IDiscordUser } from './discord-models';
 
 export interface IXPGuild {
   values: { [name: string]: number };
   modules: { [name: string]: boolean };
   logs: { [name: string]: string | null };
-  firsts: any;
   ignored: {
     roles: string[];
     channels: string[];
@@ -24,7 +24,6 @@ export interface IXPGuild {
     id: string;
     level: number;
   }>;
-  formats: any;
   announce: {
     current: boolean;
     channelID: string | null;
@@ -102,7 +101,7 @@ export interface IXPUserPremium extends IXPUserPremiumServers {
 }
 
 export interface IXPDBUserPremium {
-  userID: String;
+  userID: string;
   content: IXPUserPremium;
 }
 

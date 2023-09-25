@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-cycle
 import ToastItem, { IToastItem } from "components/toast-item";
 import { AnimatePresence, motion } from "framer-motion";
-import { random, slice } from "lodash";
+import { noop, random, slice } from "lodash";
 import { createContext, ReactNode, useContext, useState } from "react";
 
 interface IToastContextValues {
@@ -9,7 +9,7 @@ interface IToastContextValues {
 }
 
 export const ToastContext = createContext<IToastContextValues>({
-  toast: () => {},
+  toast: noop,
 });
 
 interface IToastContextProviderProps {
@@ -48,7 +48,7 @@ export function ToastContextProvider({
     >
       {children}
       <motion.div
-        key={"toast-container"}
+        key="toast-container"
         className="pointer-events-none fixed bottom-[calc(env(safe-area-inset-bottom)+80px)] right-0 z-10 flex w-full flex-col gap-5 px-5 md:right-5 md:w-80 md:px-0 lg:bottom-5"
       >
         <AnimatePresence mode="popLayout">{toastItems}</AnimatePresence>

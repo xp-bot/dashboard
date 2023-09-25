@@ -62,7 +62,7 @@ const Blog: NextPage<HomeProps> = ({ blogPosts: posts }) => {
         <div>
           <PageTitle title="Recent Blogposts" disableArrow />
           <div
-            className={`grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3`}
+            className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
           >
             {map(
               orderBy(

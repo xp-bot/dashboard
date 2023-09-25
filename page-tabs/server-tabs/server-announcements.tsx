@@ -1,12 +1,12 @@
 // eslint-disable-next-line import/no-cycle
-import BasicPanel from 'components/basic-panel';
-import BlockButton, { BlockButtonVariant } from 'components/block-button';
-import CheckboxContentPanel from 'components/checkbox-content-panel';
-import DropdownPanel from 'components/dropdown-panel';
-import MultilineInput from 'components/multiline-input';
-import PageTitle from 'components/page-title';
-import { useServerDetails } from 'context/guild-details-context';
-import parse from 'html-react-parser';
+import BasicPanel from "components/basic-panel";
+import BlockButton, { BlockButtonVariant } from "components/block-button";
+import CheckboxContentPanel from "components/checkbox-content-panel";
+import DropdownPanel from "components/dropdown-panel";
+import MultilineInput from "components/multiline-input";
+import PageTitle from "components/page-title";
+import { useServerDetails } from "context/guild-details-context";
+import parse from "html-react-parser";
 import {
   cloneDeep,
   filter,
@@ -15,17 +15,18 @@ import {
   isUndefined,
   join,
   map,
+  noop,
   size,
   slice,
   split,
-} from 'lodash';
-import { FC, useRef, useState } from 'react';
-import { DiscordChannelType } from 'utils/discord-utils';
+} from "lodash";
+import { FC, useRef, useState } from "react";
+import { DiscordChannelType } from "utils/discord-utils";
 import {
   fixDiscordMarkdownFormat,
   getAnnounceMessage,
   stripHtml,
-} from 'utils/text-utils';
+} from "utils/text-utils";
 
 interface ServerTabAnnouncementsProps {}
 
@@ -58,7 +59,7 @@ const ServerTabAnnouncements: FC<ServerTabAnnouncementsProps> = () => {
     )} ${variable} ${join(slice(splitChars, cursorPos), ``)}`;
     editAnnouncementMessage(newMessage);
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    messageInput.current ? (messageInput.current.value = newMessage) : () => {};
+    messageInput.current ? (messageInput.current.value = newMessage) : noop;
   };
 
   return (
@@ -68,7 +69,7 @@ const ServerTabAnnouncements: FC<ServerTabAnnouncementsProps> = () => {
           <div className="flex flex-col items-center gap-5">
             <div className="w-full">
               <PageTitle
-                title={`Announcements`}
+                title="Announcements"
                 tooltipText="Announcements will pe posted once a user reaches a new level."
               />
               <div className="flex flex-col items-center gap-5">
@@ -123,7 +124,7 @@ const ServerTabAnnouncements: FC<ServerTabAnnouncementsProps> = () => {
                       dropdownName="Announcement Channel"
                       tooltipText={
                         !guild.currentXPGuild.announce.current
-                          ? 'Select the channel the announcement will be posted in.'
+                          ? "Select the channel the announcement will be posted in."
                           : undefined
                       }
                       value={guild.currentXPGuild.logs.levelup || undefined}
@@ -147,7 +148,7 @@ const ServerTabAnnouncements: FC<ServerTabAnnouncementsProps> = () => {
                         );
                       }}
                       options={[
-                        { title: `Channel Not Set`, id: '0' },
+                        { title: `Channel Not Set`, id: "0" },
                         ...map(
                           filter(
                             guild.currentDiscordChannels,
@@ -170,7 +171,7 @@ const ServerTabAnnouncements: FC<ServerTabAnnouncementsProps> = () => {
             </div>
             <hr className="-mb-1 mt-5 w-[80%]" />
             <div className="w-full">
-              <PageTitle disableArrow title={`Announcement Message Designer`} />
+              <PageTitle disableArrow title="Announcement Message Designer" />
               <div className="flex flex-col items-center gap-5">
                 <BasicPanel
                   title="Message Preview"
@@ -216,7 +217,7 @@ const ServerTabAnnouncements: FC<ServerTabAnnouncementsProps> = () => {
                         } transition ease-in-out`}
                       >
                         {250 - size(guild.currentXPGuild.announce.message)}
-                      </span>{' '}
+                      </span>{" "}
                       / 250
                     </i>
                     <MultilineInput
@@ -241,7 +242,7 @@ const ServerTabAnnouncements: FC<ServerTabAnnouncementsProps> = () => {
                   >
                     <BlockButton
                       onClick={() => {
-                        addVariable('{TAG}');
+                        addVariable("{TAG}");
                       }}
                       variant={BlockButtonVariant.inPanel}
                     >
@@ -249,7 +250,7 @@ const ServerTabAnnouncements: FC<ServerTabAnnouncementsProps> = () => {
                     </BlockButton>
                     <BlockButton
                       onClick={() => {
-                        addVariable('{MNT}');
+                        addVariable("{MNT}");
                       }}
                       variant={BlockButtonVariant.inPanel}
                     >
@@ -257,7 +258,7 @@ const ServerTabAnnouncements: FC<ServerTabAnnouncementsProps> = () => {
                     </BlockButton>
                     <BlockButton
                       onClick={() => {
-                        addVariable('{OLDLVL}');
+                        addVariable("{OLDLVL}");
                       }}
                       variant={BlockButtonVariant.inPanel}
                     >
@@ -265,7 +266,7 @@ const ServerTabAnnouncements: FC<ServerTabAnnouncementsProps> = () => {
                     </BlockButton>
                     <BlockButton
                       onClick={() => {
-                        addVariable('{LVL}');
+                        addVariable("{LVL}");
                       }}
                       variant={BlockButtonVariant.inPanel}
                     >
@@ -273,7 +274,7 @@ const ServerTabAnnouncements: FC<ServerTabAnnouncementsProps> = () => {
                     </BlockButton>
                     <BlockButton
                       onClick={() => {
-                        addVariable('{CMB}');
+                        addVariable("{CMB}");
                       }}
                       variant={BlockButtonVariant.inPanel}
                     >

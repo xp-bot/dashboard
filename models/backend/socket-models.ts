@@ -1,7 +1,7 @@
 import { Socket } from 'socket.io-client';
 
 // eslint-disable-next-line unused-imports/no-unused-vars
-export interface ISocketIO<T> extends Socket {}
+export type ISocketIO<T> = Socket
 
 export interface IPopupPayload {
   title: string;

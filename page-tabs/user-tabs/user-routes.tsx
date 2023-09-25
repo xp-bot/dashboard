@@ -6,7 +6,7 @@ import {
   faPlusCircle,
   IconDefinition,
 } from "@fortawesome/free-solid-svg-icons";
-import { isUndefined } from "lodash";
+import { constant, isUndefined } from "lodash";
 import { IXPAPIUser } from "models/backend/xp-models";
 import dynamic from "next/dynamic";
 import { ComponentType } from "react";
@@ -15,6 +15,7 @@ export const UserRoutes: {
   [key: string]: {
     clusterTitleWhenFirst: string;
     name: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     element: ComponentType<any>;
     icon?: IconDefinition;
     enabled: (user?: IXPAPIUser) => boolean;
@@ -26,14 +27,14 @@ export const UserRoutes: {
     name: "Settings",
     element: dynamic(() => import(`../user-tabs/user-settings`)),
     icon: faGear,
-    enabled: () => false,
+    enabled: constant(false),
   },
   rankingcard: {
     clusterTitleWhenFirst: `User Dashboard`,
     name: "Ranking Card",
     element: dynamic(() => import(`../user-tabs/user-ranking-card`)),
     icon: faIdCard,
-    enabled: () => true,
+    enabled: constant(true),
   },
   premium: {
     clusterTitleWhenFirst: `User Dashboard`,

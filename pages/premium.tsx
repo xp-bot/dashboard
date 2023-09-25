@@ -1,23 +1,23 @@
-import { faCrown } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import BlockButton, { BlockButtonVariant } from 'components/block-button';
-import FallBackImage from 'components/fallback-image';
-import { headerGradientTypes } from 'components/header';
-import HeaderPremium from 'components/header-content/header-premium';
-import IndexEmpBG from 'components/index-emp-bg';
-import IndexHighlight from 'components/index-panel';
-import Modal from 'components/modal';
-import { ThinArrowDown } from 'components/svg/arrows';
-import { useLayout } from 'context/layout-context';
-import useBreakpoints from 'hooks/use-breakpoints';
-import { isUndefined, map } from 'lodash';
+import { faCrown } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import BlockButton, { BlockButtonVariant } from "components/block-button";
+import FallBackImage from "components/fallback-image";
+import { headerGradientTypes } from "components/header";
+import HeaderPremium from "components/header-content/header-premium";
+import IndexEmpBG from "components/index-emp-bg";
+import IndexHighlight from "components/index-panel";
+import Modal from "components/modal";
+import { ThinArrowDown } from "components/svg/arrows";
+import { useLayout } from "context/layout-context";
+import useBreakpoints from "hooks/use-breakpoints";
+import { isUndefined, map } from "lodash";
 // import { useFlags } from 'flags/client';
-import type { NextPage } from 'next';
-import Link from 'next/link';
-import { ReactNode, useEffect, useState } from 'react';
+import type { NextPage } from "next";
+import Link from "next/link";
+import { ReactNode, useEffect, useState } from "react";
 
-import HeadSet from '../components/head-set';
-import { IPage } from '../models/page';
+import HeadSet from "../components/head-set";
+import { IPage } from "../models/page";
 
 const highlights: {
   title: string;
@@ -26,12 +26,12 @@ const highlights: {
   imageRight?: boolean;
 }[] = [
   {
-    title: 'User Premium',
+    title: "User Premium",
     description: (
       <div className="flex flex-col gap-5">
         Starting at 2.99 €
         <div className="mx-auto flex w-fit flex-row gap-2">
-          <Link href={`https://patreon.xp-bot.net/`}>
+          <Link href="https://patreon.xp-bot.net/">
             <BlockButton>Get Premium</BlockButton>
           </Link>
         </div>
@@ -39,31 +39,31 @@ const highlights: {
     ),
   },
   {
-    title: 'Premium Badge',
+    title: "Premium Badge",
     description: (
       <>
         You will recieve the <FontAwesomeIcon icon={faCrown} /> badge. It will
         be visible on your Ranking Card for every user to see.
       </>
     ),
-    image: 'https://qwq.sh/12lk3g',
+    image: "https://qwq.sh/12lk3g",
     imageRight: true,
   },
   {
-    title: 'Stay Vote Free',
+    title: "Stay Vote Free",
     description:
       "Say goodbye to voting every 12 hours. When you're a premium user you won't have to anymore.",
-    image: 'https://qwq.sh/1veoki',
+    image: "https://qwq.sh/1veoki",
   },
   {
-    title: 'Increased Creativity',
+    title: "Increased Creativity",
     description:
       "As a premium user, you may customize your Ranking Card even more! You'll have access to Canvas Backgrounds and Blurring!",
-    image: 'https://qwq.sh/aymj7o',
+    image: "https://qwq.sh/aymj7o",
     imageRight: true,
   },
   {
-    title: 'Server Premium',
+    title: "Server Premium",
     description: (
       <div className="flex flex-col gap-5">
         <div className="flex flex-col gap-0">
@@ -74,7 +74,7 @@ const highlights: {
           </span>
         </div>
         <div className="mx-auto flex w-fit flex-row gap-2">
-          <Link href={`https://patreon.xp-bot.net/`}>
+          <Link href="https://patreon.xp-bot.net/">
             <BlockButton>Get Server Premium</BlockButton>
           </Link>
         </div>
@@ -82,26 +82,26 @@ const highlights: {
     ),
   },
   {
-    title: 'Discord Leaderboard',
+    title: "Discord Leaderboard",
     description:
       "Display your community's leaderboard right in discord. No need to leave the app!",
-    image: 'https://qwq.sh/ixhm54',
+    image: "https://qwq.sh/ixhm54",
   },
   {
-    title: 'Server Backgrounds',
+    title: "Server Backgrounds",
     description:
       'Adjust your community\'s public appearance by setting a "Community Background"!',
-    image: 'https://qwq.sh/affjo7',
+    image: "https://qwq.sh/affjo7",
     imageRight: true,
   },
   {
-    title: 'Customize XP even more',
+    title: "Customize XP even more",
     description:
-      'There are many optional but very cool Modules, Values and Features in general available for premium servers.',
-    image: 'https://qwq.sh/affjo7',
+      "There are many optional but very cool Modules, Values and Features in general available for premium servers.",
+    image: "https://qwq.sh/affjo7",
   },
   {
-    title: 'Vote Free Bundles',
+    title: "Vote Free Bundles",
     description: (
       <div className="flex flex-col gap-5">
         <div className="flex flex-col gap-0">
@@ -110,7 +110,7 @@ const highlights: {
           </span>
         </div>
         <div className="mx-auto flex w-fit flex-row gap-2">
-          <Link href={`https://patreon.xp-bot.net/`}>
+          <Link href="https://patreon.xp-bot.net/">
             <BlockButton>Get Server Premium</BlockButton>
           </Link>
         </div>
@@ -118,7 +118,7 @@ const highlights: {
     ),
   },
   {
-    title: 'Intrigued?',
+    title: "Intrigued?",
     description: (
       <>
         <span>
@@ -132,7 +132,7 @@ const highlights: {
           will always be free for you to enjoy, forever and ever! 🤭
         </span>
         <div className="flex w-full flex-row justify-center gap-5 pt-5">
-          <Link href={`https://patreon.xp-bot.net/`}>
+          <Link href="https://patreon.xp-bot.net/">
             <BlockButton variant={BlockButtonVariant.inPanel}>
               Check out Patreon
             </BlockButton>
@@ -143,7 +143,7 @@ const highlights: {
   },
 ];
 
-interface PremiumProps extends IPage {}
+type PremiumProps = IPage;
 
 const Premium: NextPage<PremiumProps> = () => {
   const layout = useLayout();
@@ -168,13 +168,12 @@ const Premium: NextPage<PremiumProps> = () => {
         <div
           onClick={() => {
             document
-              .getElementById('index_scroll_target')
-              ?.scrollIntoView({ behavior: 'smooth' });
+              .getElementById("index_scroll_target")
+              ?.scrollIntoView({ behavior: "smooth" });
           }}
-          // eslint-disable-next-line tailwindcss/no-custom-classname
           className="FeatureArrow"
         >
-          <p>{`learn more`}</p>
+          <p>learn more</p>
           <ThinArrowDown />
         </div>
       )}
@@ -198,11 +197,9 @@ const Premium: NextPage<PremiumProps> = () => {
         <div className="flex w-full flex-col items-center justify-center gap-1 text-xs text-darkText opacity-75 dark:text-darkText-darkMode">
           <span>Copyright © 2019 - 2022 XP</span>
           <span className="flex flex-row gap-2">
-            <Link href={`/legal/privacy`}>Privacy Policy</Link>
+            <Link href="/legal/privacy">Privacy Policy</Link>
             <span>•</span>
-            <Link
-              href={`/blog/contributing_to_user_safety_and_service_guidelines_1657056506533`}
-            >
+            <Link href="/blog/contributing_to_user_safety_and_service_guidelines_1657056506533">
               Safety Guidelines
             </Link>
           </span>

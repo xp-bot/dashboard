@@ -55,7 +55,7 @@ const ModulePanel: FC<ModulePanelProps> = (props) => {
       disabled={!enabled}
     >
       <i>
-        <h4 className={`text-darkText dark:text-darkText-darkMode`}>
+        <h4 className="text-darkText dark:text-darkText-darkMode">
           {props.moduleDescription}
         </h4>
       </i>

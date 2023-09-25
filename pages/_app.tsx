@@ -1,8 +1,3 @@
-import "@styles/checkmark.scss";
-import "@styles/globals.scss";
-import "@styles/xp-loading.scss";
-import "../styles/markdown.scss";
-
 import FallBackImage from "components/fallback-image";
 import Modal from "components/modal";
 import Tooltip from "components/tooltip";
@@ -10,18 +5,23 @@ import { LayoutContextProvider } from "context/layout-context";
 import SocketManager from "context/socket-manager";
 import { ToastContextProvider } from "context/toast-context";
 import { useLocalStorage } from "hooks/use-local-storage";
-import { entries, forEach, isEmpty, isNil, keys, last, map } from "lodash";
+import { forEach, isEmpty, isNil, keys, last, map, toPairs } from "lodash";
 import type { AppProps } from "next/app";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { useEffect, useState } from "react";
 import semver from "semver";
 
+import "@styles/checkmark.scss";
+import "@styles/globals.scss";
+import "@styles/xp-loading.scss";
+import "../styles/markdown.scss";
+
+import { ChangelogUser } from "./changes";
 import changelog, { ChangelogType } from "../changelogs";
 import MobileNavBar from "../components/mobile/mobile-nav-bar";
 import WavePage from "../components/wave-page";
 import { UserContextProvider } from "../context/user-context";
-import { ChangelogUser } from "./changes";
 
 const inter = Inter({
   variable: "--inter-font",
@@ -52,10 +52,10 @@ const ChangelogModal = () => {
     ) {
       const visibleChanges: ChangelogType = {};
 
-      forEach(entries(changelog), ([version, changes]) => {
-        semver.ltr(localVersion, version) &&
+      forEach(toPairs(changelog), ([version, changes]) => {
+        if (semver.ltr(localVersion, version))
           forEach(
-            entries(changes),
+            toPairs(changes),
             // eslint-disable-next-line no-return-assign
             ([name, change]) => {
               visibleChanges[name] = [
@@ -86,7 +86,7 @@ const ChangelogModal = () => {
       } v${envVersion}`}
     >
       <div className="flex flex-col gap-5">
-        {map(entries(versionChanges), ([title, changePart]) => {
+        {map(toPairs(versionChanges), ([title, changePart]) => {
           return (
             <div
               className="flex flex-col gap-5"
@@ -124,7 +124,7 @@ const ChangelogModal = () => {
                               <Tooltip
                                 alignLeft
                                 showContentOnMobile
-                                text={`Thank you for submitting this idea!`}
+                                text="Thank you for submitting this idea!"
                               >
                                 <ChangelogUser user_id={change.submitter_id} />
                               </Tooltip>

@@ -5,7 +5,7 @@ import { IPage } from 'models/page';
 import type { NextPage } from 'next';
 import { useEffect } from 'react';
 
-interface NotFoundPageProps extends IPage {}
+type NotFoundPageProps = IPage
 const NotFoundPage: NextPage<NotFoundPageProps> = () => {
   const layout = useLayout();
   useEffect(() => {

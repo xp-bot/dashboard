@@ -82,7 +82,7 @@ const BasicPanel: FC<BasicPanelProps> = (props) => {
           )}
           {props.description && (
             <i>
-              <h4 className={`text-darkText dark:text-darkText-darkMode`}>
+              <h4 className="text-darkText dark:text-darkText-darkMode">
                 {props.md
                   ? parse(fixDiscordMarkdownFormat(props.description))
                   : props.description}{' '}

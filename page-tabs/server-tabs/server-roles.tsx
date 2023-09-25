@@ -121,7 +121,7 @@ const ServerTabRoles: FC<ServerTabRolesProps> = () => {
   };
 
   const allLevelroles = partition(
-    sortBy(guild.currentXPGuild?.levelroles, (role) => role.level),
+    sortBy(guild.currentXPGuild?.levelroles, "level"),
     (r) => r.level >= 0
   );
 
@@ -276,10 +276,7 @@ const ServerTabRoles: FC<ServerTabRolesProps> = () => {
                 formError={addRoleErrors.role}
                 registerForm={addRoleRegister(`role`, { required: true })}
                 options={map(
-                  sortBy(
-                    slice(guild.currentDiscordRoles, 1),
-                    (role) => role.name
-                  ),
+                  sortBy(slice(guild.currentDiscordRoles, 1), "name"),
                   (role) => ({
                     id: role.id,
                     title: `@ ${role.name}`,
@@ -334,10 +331,7 @@ const ServerTabRoles: FC<ServerTabRolesProps> = () => {
                 formError={addAutoroleErrors.role}
                 registerForm={addAutoroleRegister(`role`, { required: true })}
                 options={map(
-                  sortBy(
-                    slice(guild.currentDiscordRoles, 1),
-                    (role) => role.name
-                  ),
+                  sortBy(slice(guild.currentDiscordRoles, 1), "name"),
                   (role) => ({
                     id: role.id,
                     title: `@ ${role.name}`,

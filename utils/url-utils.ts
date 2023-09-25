@@ -1,9 +1,9 @@
-import { filter, forEach, isArray, isEmpty, isString } from 'lodash';
+import { filter, forEach, isArray, isEmpty, isString, split } from 'lodash';
 import { NextRouter } from 'next/router';
 import { ParsedUrlQuery } from 'querystring';
 
 export const getRouteParts = (route: NextRouter) =>
-  filter(route.route.split(`/`), (item) => !isEmpty(item));
+  filter(split(route.route, `/`), (item) => !isEmpty(item));
 
 export const getQueryParamAsArray = (
   id: string,
@@ -47,8 +47,6 @@ export const shareContent = (data: ShareData) => {
   try {
     navigator
       .share(data)
-      .then(() => {})
-      .catch(() => {});
     // eslint-disable-next-line no-empty
-  } catch (error) {}
+  } catch (error) { }
 };

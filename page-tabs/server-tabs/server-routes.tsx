@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-cycle
-import { faBarChart } from '@fortawesome/free-regular-svg-icons';
+import { faBarChart } from "@fortawesome/free-regular-svg-icons";
 import {
   faFastForward,
   faGear,
@@ -10,17 +10,19 @@ import {
   faStop,
   faToggleOn,
   IconDefinition,
-} from '@fortawesome/free-solid-svg-icons';
-import { IGuildDetailsContextValues } from 'context/guild-details-context';
-import dynamic from 'next/dynamic';
-import { ComponentType } from 'react';
+} from "@fortawesome/free-solid-svg-icons";
+import { IGuildDetailsContextValues } from "context/guild-details-context";
+import { constant } from "lodash";
+import dynamic from "next/dynamic";
+import { ComponentType } from "react";
 
-import { IXPAPIGuild, IXPAPIUser } from '../../models/backend/xp-models';
+import { IXPAPIGuild, IXPAPIUser } from "../../models/backend/xp-models";
 
 export const ServerRoutes: {
   [key: string]: {
     clusterTitleWhenFirst: string;
     name: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     element?: ComponentType<any>;
     icon?: IconDefinition;
     visible: (
@@ -43,7 +45,7 @@ export const ServerRoutes: {
   //   element: dynamic(() => import(`../server-tabs/server-logs`)),
   //   icon: faNewspaper,
   //   // enabled: (admin, guild) => !!guild?.currentXPLogs,
-  //   enabled: () => true,
+  //   enabled: constant(true),
   //   visible: (admin, guild, user) =>
   //     !!guild?.serverPremium.premium || user?.developer || false,
   // },
@@ -51,79 +53,79 @@ export const ServerRoutes: {
   //   name: 'Access Panel',
   //   element: dynamic(() => import(`../server-tabs/server-modules`)),
   //   icon: faGear,
-  //   enabled: () => false,
+  //   enabled: constant(false),
   // },
   settings: {
     clusterTitleWhenFirst: `Settings`,
-    name: 'Settings',
+    name: "Settings",
     element: dynamic(() => import(`../server-tabs/server-settings`)),
     icon: faGear,
-    enabled: () => true,
-    visible: () => true,
+    enabled: constant(true),
+    visible: constant(true),
   },
   modules: {
     clusterTitleWhenFirst: `Server Dashboard`,
-    name: 'Modules',
+    name: "Modules",
     element: dynamic(() => import(`../server-tabs/server-modules`)),
     icon: faToggleOn,
-    enabled: () => true,
-    visible: () => true,
+    enabled: constant(true),
+    visible: constant(true),
     marginLeft: true,
   },
   values: {
     clusterTitleWhenFirst: `Server Dashboard`,
-    name: 'Values',
+    name: "Values",
     element: dynamic(() => import(`../server-tabs/server-values`)),
     icon: faBarChart,
-    enabled: () => true,
-    visible: () => true,
+    enabled: constant(true),
+    visible: constant(true),
   },
   loggers: {
     clusterTitleWhenFirst: `Server Dashboard`,
-    name: 'Loggers',
+    name: "Loggers",
     element: dynamic(() => import(`../server-tabs/server-loggers`)),
     icon: faInfoCircle,
-    enabled: () => true,
-    visible: () => true,
+    enabled: constant(true),
+    visible: constant(true),
   },
   roles: {
     clusterTitleWhenFirst: `Server Dashboard`,
-    name: 'Roles',
+    name: "Roles",
     element: dynamic(() => import(`../server-tabs/server-roles`)),
     icon: faPeopleGroup,
-    enabled: () => true,
-    visible: () => true,
+    enabled: constant(true),
+    visible: constant(true),
   },
   boosts: {
     clusterTitleWhenFirst: `Server Dashboard`,
-    name: 'Boosts',
+    name: "Boosts",
     element: dynamic(() => import(`../server-tabs/server-boosts`)),
     icon: faFastForward,
-    enabled: () => true,
-    visible: () => true,
+    enabled: constant(true),
+    visible: constant(true),
   },
   ignores: {
     clusterTitleWhenFirst: `Server Dashboard`,
-    name: 'Ignores',
+    name: "Ignores",
     element: dynamic(() => import(`../server-tabs/server-ignores`)),
     icon: faStop,
-    enabled: () => true,
-    visible: () => true,
+    enabled: constant(true),
+    visible: constant(true),
   },
   announcements: {
     clusterTitleWhenFirst: `Server Dashboard`,
-    name: 'Announcements',
+    name: "Announcements",
     element: dynamic(() => import(`../server-tabs/server-announcements`)),
     icon: faPeopleLine,
-    enabled: () => true,
-    visible: () => true,
+    enabled: constant(true),
+    visible: constant(true),
   },
   leaderboard: {
     clusterTitleWhenFirst: `External`,
-    name: 'Leaderboard',
+    name: "Leaderboard",
     icon: faList12,
-    enabled: () => true,
-    visible: () => true,
+    enabled: constant(true),
+    visible: constant(true),
     marginLeft: true,
     link: `/lb/[serverid]`,
   },

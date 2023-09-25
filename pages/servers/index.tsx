@@ -1,18 +1,18 @@
-import HeaderServerList from 'components/header-content/header-server-list';
-import PageTitle from 'components/page-title';
-import { XPLoading } from 'components/svg/logos';
-import { useLayout } from 'context/layout-context';
-import { useAccessRestriction } from 'hooks/use-access-restriction';
-import { filter, map, orderBy, size } from 'lodash';
-import type { NextPage } from 'next';
-import { useEffect } from 'react';
+import HeaderServerList from "components/header-content/header-server-list";
+import PageTitle from "components/page-title";
+import { XPLoading } from "components/svg/logos";
+import { useLayout } from "context/layout-context";
+import { useAccessRestriction } from "hooks/use-access-restriction";
+import { filter, map, orderBy, reject, size } from "lodash";
+import type { NextPage } from "next";
+import { useEffect } from "react";
 
-import GuildList from '../../components/guild-list';
-import HeadSet from '../../components/head-set';
-import { useUser } from '../../context/user-context';
-import { IPage } from '../../models/page';
+import GuildList from "../../components/guild-list";
+import HeadSet from "../../components/head-set";
+import { useUser } from "../../context/user-context";
+import { IPage } from "../../models/page";
 
-interface UserProps extends IPage {}
+type UserProps = IPage;
 
 const User: NextPage<UserProps> = () => {
   const layout = useLayout();
@@ -38,13 +38,11 @@ const User: NextPage<UserProps> = () => {
             <GuildList
               title="Premium Servers"
               buttons={
-                size(
-                  filter(user.discordGuilds, (guild) => guild.premium.premium)
-                ) > 0
+                size(filter(user.discordGuilds, "premium.premium")) > 0
                   ? map(
                       filter(
-                        orderBy(user.discordGuilds, ['xpInvited'], 'desc'),
-                        (guild) => guild.premium.premium
+                        orderBy(user.discordGuilds, ["xpInvited"], "desc"),
+                        "premium.premium"
                       ),
                       (guild) => {
                         return {
@@ -59,13 +57,11 @@ const User: NextPage<UserProps> = () => {
             <GuildList
               title="Regular Servers"
               buttons={
-                size(
-                  filter(user.discordGuilds, (guild) => !guild.premium.premium)
-                )
+                size(reject(user.discordGuilds, "premium.premium"))
                   ? map(
-                      filter(
-                        orderBy(user.discordGuilds, ['xpInvited'], 'desc'),
-                        (guild) => !guild.premium.premium
+                      reject(
+                        orderBy(user.discordGuilds, ["xpInvited"], "desc"),
+                        "premium.premium"
                       ),
                       (guild) => {
                         return {

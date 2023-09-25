@@ -37,12 +37,12 @@ const BlogPostShowcaseGridPanel: FC<BlogPostShowcasePanelProps> = ({
               ? `origin-center scale-110 blur-sm grayscale`
               : ``
           } h-full w-full bg-input-darkMode object-cover`}
-          customFallback={`http://cdn.namespace.media/s/i8kyeDYXHDAY3rR/download/SPLASH_3_EMPTY.png`}
+          customFallback="http://cdn.namespace.media/s/i8kyeDYXHDAY3rR/download/SPLASH_3_EMPTY.png"
           src={
             blogPost.content.thumbnail ||
             `http://cdn.namespace.media/s/i8kyeDYXHDAY3rR/download/SPLASH_3_EMPTY.png`
           }
-          alt={"jeje"}
+          alt="jeje"
         />
       </div>
       <div className="z-10 h-fit w-full  bg-panelBack p-3 text-center text-darkText transition ease-in-out dark:bg-panelBack-darkMode dark:text-darkText-darkMode md:text-start">

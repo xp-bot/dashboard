@@ -4,17 +4,25 @@ import { faInbox, faPeoplePulling } from "@fortawesome/free-solid-svg-icons";
 import { headerGradientTypes } from "components/header";
 import { useLayout } from "context/layout-context";
 import { motion } from "framer-motion";
-import { filter, isEqual, isUndefined, map, size } from "lodash";
+import {
+  constant,
+  filter,
+  isEqual,
+  isUndefined,
+  map,
+  reject,
+  size,
+} from "lodash";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { FC } from "react";
 import { getRouteParts } from "utils/url-utils";
 
-import { useUser } from "../../context/user-context";
-import { avatarToURL } from "../../utils/discord-utils";
+import TabButton, { ITabButton, TabButtonTheme } from "./tab-button";
 import FallBackImage from "../fallback-image";
 import { XPLogo } from "../svg/logos";
-import TabButton, { ITabButton, TabButtonTheme } from "./tab-button";
+import { useUser } from "../../context/user-context";
+import { avatarToURL } from "../../utils/discord-utils";
 
 const NavigationItems: ITabButton[] = [
   {
@@ -38,7 +46,7 @@ const NavigationItems: ITabButton[] = [
   },
   {
     text: `Invite`,
-    isActive: () => false,
+    isActive: constant(false),
     link: `https://get.xp-bot.net/`,
   },
   {
@@ -54,7 +62,7 @@ const NavigationItems: ITabButton[] = [
   },
   {
     text: `Support`,
-    isActive: () => false,
+    isActive: constant(false),
     link: `https://discord.xp-bot.net/`,
     icon: faPeoplePulling,
   },
@@ -82,7 +90,7 @@ const DesktopNavBar: FC<DesktopNavBarProps> = () => {
     isEqual(router.asPath, `/`) || isEqual(router.asPath, `/premium`);
 
   const { inboxItems } = user.inbox;
-  const unreadInboxItems = filter(inboxItems, (item) => !item.read);
+  const unreadInboxItems = reject(inboxItems, "read");
 
   return (
     <div className="relative z-10 -mb-2 hidden h-fit w-full justify-center lg:flex">
@@ -93,7 +101,7 @@ const DesktopNavBar: FC<DesktopNavBarProps> = () => {
           backdropFilter: "blur(0px)",
           justifyContent: useBigHeader ? `center` : `end`,
         }}
-        className={`container top-[27px] flex w-full flex-row items-center rounded-md border-opacity-[.25] font-normal`}
+        className="container top-[27px] flex w-full flex-row items-center rounded-md border-opacity-[.25] font-normal"
       >
         {map(
           filter(
@@ -121,7 +129,7 @@ const DesktopNavBar: FC<DesktopNavBarProps> = () => {
         )}
 
         {user.isLoggedIn && size(inboxItems) > 0 && (
-          <div className="flex items-center" key={`Sign Infalse`}>
+          <div className="flex items-center" key="Sign Infalse">
             <div className="h-6 w-[1px] bg-white opacity-25" />
             <TabButton
               layoutId="desktop-nav-bar"
@@ -153,14 +161,14 @@ const DesktopNavBar: FC<DesktopNavBarProps> = () => {
             <div className="ml-3 drop-shadow-md transition ease-in-out hover:scale-95 active:scale-90">
               <FallBackImage
                 src={avatarToURL(user.currentUser?.discordUser)}
-                className={"aspect-square w-[37px] rounded-full object-cover"}
+                className="aspect-square w-[37px] rounded-full object-cover"
               />
             </div>
           </Link>
         ) : (
           <>
             <div className="h-6 w-[1px] bg-white opacity-25" />
-            <div className="flex items-center" key={`Sign Infalse`}>
+            <div className="flex items-center" key="Sign Infalse">
               <TabButton
                 layoutId="desktop-nav-bar"
                 theme={TabButtonTheme.Title}
