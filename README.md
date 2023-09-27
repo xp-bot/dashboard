@@ -16,9 +16,9 @@ For testing, you only need to set up this codebase. By default, all requests wil
 3. [Create a Pull Request](https://github.com/xp-bot/dashboard/compare). Make sure to use a descriptive title and detailed description.
 > Please avoid submitting large pull requests with multiple changes as they will be categorically rejected. Always create one pull request per change.
 
-## How to Set Up a Repository
+## How to Set Up the Repository
 
-To set up a repository, follow these steps:
+To set up the repository, follow these steps:
 
 1. Install Node.js and NPM:  
 Make sure you have Node.js 16+ and NPM 8+ installed on your machine. You can download and install them from the official Node.js website.
