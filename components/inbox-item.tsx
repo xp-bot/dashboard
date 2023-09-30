@@ -63,6 +63,31 @@ const InboxItem: FC<IInboxItemProps> = ({ inboxItem }) => {
             </p>
           </div>
         );
+      case InboxItemType.BlogPostComment:
+        return (
+          <div className="flex flex-row items-center gap-2">
+            {lookupUser && (
+              <span className="h-4 w-4 shrink-0 overflow-hidden rounded-full">
+                <FallBackImage
+                  className="h-full w-full object-cover"
+                  src={avatarToURL(lookupUser)}
+                />
+              </span>
+            )}
+            <p
+              className={`text-sm opacity-75 ${
+                startsWith(
+                  lookupUser?.username,
+                  toLower(slice(lookupUser?.username, 0, 1)[0])
+                )
+                  ? "-mt-0.5"
+                  : ""
+              } `}
+            >
+              {lookupUser?.username} commented:
+            </p>
+          </div>
+        );
       default:
         return (
           <p
