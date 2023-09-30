@@ -55,13 +55,13 @@ const highlights: {
       "XP is the perfect tool to get your users to spend more time on your Community.",
     image: "https://qwq.sh/b5ymys",
   },
-  {
-    title: "Keep it confined",
-    description:
-      "Are you planning on running an event confined to a couple of channels or have a channel you'd like to ignore? No problem, just ignore it!",
-    image: "https://qwq.sh/fyyaqs",
-    imageRight: true,
-  },
+  // {
+  //   title: "Keep it confined",
+  //   description:
+  //     "Are you planning on running an event confined to a couple of channels or have a channel you'd like to ignore? No problem, just ignore it!",
+  //   image: "https://qwq.sh/fyyaqs",
+  //   imageRight: true,
+  // },
   {
     title: "Designed to be free. Forever.",
     description:

@@ -229,7 +229,7 @@ const ServerTabSettings: FC<ServerTabSettingsProps> = () => {
               ]}
             />
           </div>
-          <div>
+          {/* <div>
             <PageTitle
               disableArrow
               tooltipText="Export and Import your Server Data. You can also export server's data, and import it to another server."
@@ -256,7 +256,7 @@ const ServerTabSettings: FC<ServerTabSettingsProps> = () => {
                 ]}
               />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       <Modal
