@@ -22,7 +22,14 @@ import {
   IBlogPostComment,
   IBlogPostCommentContent,
 } from "models/backend/blog-models";
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import {
+  createContext,
+  Fragment,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 interface IBlogCommentsSectionValues {
   deleteComment: (comment: IBlogPostComment) => void;
@@ -110,7 +117,7 @@ export function BlogCommentsSection({
           {map(
             orderBy(comments, (comment) => comment.updatedAt, "desc"),
             (comment, idx) => (
-              <>
+              <Fragment key={comment.commentID}>
                 <motion.div
                   key={`comment_parent_${comment.commentID}`}
                   initial="hidden"
@@ -141,7 +148,7 @@ export function BlogCommentsSection({
                 {size(comments) > 0 && !isEqual(idx, size(comments) - 1) && (
                   <hr />
                 )}
-              </>
+              </Fragment>
             )
           )}
         </AnimatePresence>

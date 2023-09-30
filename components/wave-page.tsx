@@ -9,7 +9,7 @@ interface WavePageProps {
 const WavePage: FC<WavePageProps> = ({ children }) => {
   const router = useRouter();
   return (
-    <div className="z-30 h-full">
+    <div className="z-30 pb-20 lg:pb-0 h-full">
       <div className="h-full w-full pb-10 pt-7">
         <div
           className={`${
