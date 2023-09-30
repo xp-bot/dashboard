@@ -229,7 +229,7 @@ const ServerTabSettings: FC<ServerTabSettingsProps> = () => {
               ]}
             />
           </div>
-          {/* <div>
+          <div>
             <PageTitle
               disableArrow
               tooltipText="Export and Import your Server Data. You can also export server's data, and import it to another server."
@@ -256,7 +256,7 @@ const ServerTabSettings: FC<ServerTabSettingsProps> = () => {
                 ]}
               />
             </div>
-          </div> */}
+          </div>
         </div>
       </div>
       <Modal
@@ -274,59 +274,63 @@ const ServerTabSettings: FC<ServerTabSettingsProps> = () => {
             You will recieve a JSON file that you can keep as a backup, or
             import to another server.
           </p>
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-            <div className="flex flex-col gap-2">
-              <p className="text-lg italic opacity-75">
-                What will be exported?
-              </p>
+          <div className="flex flex-col items-center">
+            <p className="text-lg italic opacity-75">What will be exported?</p>
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
               <div className="flex flex-col gap-2">
-                <ExportChecklistItem
-                  text="Modules"
-                  type={ExportChecklistItemTypes.CHECK}
-                />
-                <ExportChecklistItem
-                  text="Values"
-                  type={ExportChecklistItemTypes.CHECK}
-                />
-                <ExportChecklistItem
-                  text="Loggers"
-                  type={ExportChecklistItemTypes.CHECK}
-                />
-                <ExportChecklistItem
-                  text="Level Roles"
-                  type={ExportChecklistItemTypes.CHECK}
-                />
-                <ExportChecklistItem
-                  text="Ignores"
-                  type={ExportChecklistItemTypes.CHECK}
-                />
-                <ExportChecklistItem
-                  text="Boosts"
-                  type={ExportChecklistItemTypes.CHECK}
-                />
-                <ExportChecklistItem
-                  text="Announcement Settings"
-                  type={ExportChecklistItemTypes.CHECK}
-                />
+                <div className="flex flex-col gap-2">
+                  <ExportChecklistItem
+                    rtl
+                    text="Modules"
+                    type={ExportChecklistItemTypes.CHECK}
+                  />
+                  <ExportChecklistItem
+                    rtl
+                    text="Values"
+                    type={ExportChecklistItemTypes.CHECK}
+                  />
+                  <ExportChecklistItem
+                    rtl
+                    text="Announcement Settings"
+                    type={ExportChecklistItemTypes.CHECK}
+                  />
+                  <ExportChecklistItem
+                    rtl
+                    text="Loggers"
+                    type={ExportChecklistItemTypes.WARNING}
+                  />
+                  <ExportChecklistItem
+                    rtl
+                    text="Level Roles"
+                    type={ExportChecklistItemTypes.WARNING}
+                  />
+                  <ExportChecklistItem
+                    rtl
+                    text="Ignores"
+                    type={ExportChecklistItemTypes.WARNING}
+                  />
+                  <ExportChecklistItem
+                    rtl
+                    text="Boosts"
+                    type={ExportChecklistItemTypes.WARNING}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="flex flex-col gap-2">
-              <p className="text-lg italic opacity-75">
-                What will not be exported?
-              </p>
               <div className="flex flex-col gap-2">
-                <ExportChecklistItem
-                  text="Leaderboards"
-                  type={ExportChecklistItemTypes.CROSS}
-                />
-                <ExportChecklistItem
-                  text="Dashboard Background"
-                  type={ExportChecklistItemTypes.CROSS}
-                />
-                <ExportChecklistItem
-                  text="Discord Leaderboard"
-                  type={ExportChecklistItemTypes.CROSS}
-                />
+                <div className="flex flex-col gap-2">
+                  <ExportChecklistItem
+                    text="Leaderboards"
+                    type={ExportChecklistItemTypes.CROSS}
+                  />
+                  <ExportChecklistItem
+                    text="Dashboard Background"
+                    type={ExportChecklistItemTypes.CROSS}
+                  />
+                  <ExportChecklistItem
+                    text="Discord Leaderboard"
+                    type={ExportChecklistItemTypes.CROSS}
+                  />
+                </div>
               </div>
             </div>
           </div>

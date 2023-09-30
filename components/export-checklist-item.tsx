@@ -1,6 +1,6 @@
 import {
   faCheckCircle,
-  faTriangleCircleSquare,
+  faDotCircle,
   faXmarkCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,19 +23,28 @@ const ExportChecklistItemTypesMap = {
   },
   [ExportChecklistItemTypes.WARNING]: {
     color: "text-yellow-500",
-    icon: faTriangleCircleSquare,
+    icon: faDotCircle,
   },
 };
 
 interface IExportChecklistItemProps {
   type: ExportChecklistItemTypes;
   text: string;
+  rtl?: boolean;
 }
 
-const ExportChecklistItem: FC<IExportChecklistItemProps> = ({ text, type }) => {
+const ExportChecklistItem: FC<IExportChecklistItemProps> = ({
+  text,
+  type,
+  rtl,
+}) => {
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex flex-row items-center gap-2">
+      <div
+        className={`flex flex-row items-center gap-2 ${
+          rtl ? "flex-row-reverse" : ""
+        }`}
+      >
         <FontAwesomeIcon
           className={`${ExportChecklistItemTypesMap[type].color} text-lg`}
           icon={ExportChecklistItemTypesMap[type].icon}
