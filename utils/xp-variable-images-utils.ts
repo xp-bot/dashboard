@@ -7,42 +7,46 @@ const XPBadges: {
 } = {
   xptranslator: {
     DEFAULT:
-      'http://cdn.namespace.media/s/2pDcXnCdKjHN9bk/download/xptranslator.png',
+      'https://cdn.namespace.media/s/2pDcXnCdKjHN9bk/download/xptranslator.png',
   },
   xpsupport: {
     DEFAULT:
-      'http://cdn.namespace.media/s/Dde5rFDfCHjimbN/download/xpsupport.png',
+      'https://cdn.namespace.media/s/Dde5rFDfCHjimbN/download/xpsupport.png',
     EVENTS: {
       spooktober:
-        'http://cdn.namespace.media/s/6sWEk2snPZRC2sX/download/xpsupport.png',
+        'https://cdn.namespace.media/s/6sWEk2snPZRC2sX/download/xpsupport.png',
     },
   },
   xpfeaturesmith: {
     DEFAULT:
-      'http://cdn.namespace.media/s/6CNXr827ZNYYbW7/download/xpfeaturesmith.png',
+      'https://cdn.namespace.media/s/6CNXr827ZNYYbW7/download/xpfeaturesmith.png',
   },
   xpboost: {
     DEFAULT:
-      'http://cdn.namespace.media/s/rrcrwKdC7DmZ8BB/download/xpboost.png',
+      'https://cdn.namespace.media/s/rrcrwKdC7DmZ8BB/download/xpboost.png',
   },
   xpdev: {
-    DEFAULT: 'http://cdn.namespace.media/s/HaMEsRdaWnBNcgP/download/xpdev.png',
+    DEFAULT: 'https://cdn.namespace.media/s/HaMEsRdaWnBNcgP/download/xpdev.png',
     EVENTS: {
       spooktober:
-        'http://cdn.namespace.media/s/WdPXEDfrQB5mzFb/download/xpdev.png',
+        'https://cdn.namespace.media/s/WdPXEDfrQB5mzFb/download/xpdev.png',
     },
   },
   xppremium: {
     DEFAULT:
-      'http://cdn.namespace.media/s/s4Kab8MnjEXgDGX/download/xppremium.png',
+      'https://cdn.namespace.media/s/s4Kab8MnjEXgDGX/download/xppremium.png',
   },
   xpbughunter: {
     DEFAULT:
-      'http://cdn.namespace.media/s/LsoB5Q4yZNgEK57/download/xpbughunter.png',
+      'https://cdn.namespace.media/s/LsoB5Q4yZNgEK57/download/xpbughunter.png',
   },
   xpcorecommunity: {
     DEFAULT:
-      'http://cdn.namespace.media/s/aAZ4XzZC8m8dtwP/download/xp-core-community.png',
+      'https://cdn.namespace.media/s/aAZ4XzZC8m8dtwP/download/xp-core-community.png',
+  },
+  xpcontributor: {
+    DEFAULT:
+      'https://cdn.namespace.media/s/CfyE7yAGnzBsxxm/download/xpcontributor-big.png',
   },
 };
 
