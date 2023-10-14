@@ -22,6 +22,7 @@ const nextConfig = {
     BACKEND_DOMAIN: process.env.NEXT_PUBLIC_BACKEND_DOMAIN,
     ILUM_DOMAIN: process.env.ILUM_DOMAIN,
     DEVELOPERS: process.env.DEVELOPERS,
+    PUBLIC_HAPPYKIT_API: process.env.PUBLIC_HAPPYKIT_API,
   },
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")],

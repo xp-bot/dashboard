@@ -8,6 +8,8 @@ import { ISocketIO } from "models/backend/socket-models";
 import { useRouter } from "next/router";
 import { createContext, useContext, useEffect, useState } from "react";
 import { io } from "socket.io-client";
+import { useFlags } from "utils/flags/client";
+import { AppFlags } from "utils/flags/config";
 
 import { apiRoutes } from "../apis/api-helper";
 import { IApiFailure, IApiSuccess } from "../models/api-models";
@@ -26,6 +28,7 @@ export enum LoginStatus {
 }
 
 interface IUserContextValues {
+  flags: AppFlags | null;
   isLoggedIn: boolean;
   loginStatus: LoginStatus;
   currentUser?: IXPAPIUser;
@@ -72,6 +75,7 @@ interface IUserContextValues {
 }
 
 export const UserContext = createContext<IUserContextValues>({
+  flags: null,
   isLoggedIn: false,
   loginStatus: LoginStatus.checking,
   discordGuilds: [],
@@ -123,6 +127,7 @@ export function UserContextProvider({
     []
   );
   const [currentUser, setCurrentUser] = useState<IXPAPIUser | undefined>();
+  const { flags } = useFlags();
 
   const [inboxItems, setInboxItems] = useState<IInboxItem[]>([]);
 
@@ -290,6 +295,7 @@ export function UserContextProvider({
   return (
     <UserContext.Provider
       value={{
+        flags,
         isLoggedIn: isEqual(loginStatus, LoginStatus.loggedIn),
         loginStatus,
         currentUser,
