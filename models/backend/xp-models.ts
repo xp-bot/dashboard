@@ -40,7 +40,6 @@ export interface IXPGuild {
       allowed: Array<string>;
     }>;
   };
-  arrows: { [id: string]: number };
   leaderboard_message: {
     enabled: boolean;
     messageID: string;
@@ -126,7 +125,6 @@ export interface IXPLeaderboardGuild {
 export interface IXPLeaderboardUser {
   id: string;
   xp: number;
-  arrowPos: number;
   username: string;
   avatar?: string;
   banner?: string;
