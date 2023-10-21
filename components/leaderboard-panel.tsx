@@ -1,4 +1,3 @@
-import { useUser } from "context/user-context";
 import useBreakpoints from "hooks/use-breakpoints";
 import { isEqual } from "lodash";
 import { IXPLeaderboardUser } from "models/backend/xp-models";
@@ -9,7 +8,6 @@ import { calculateLevel, formatNumber } from "utils/text-utils";
 
 import BlockButton from "./block-button";
 import FallBackImage from "./fallback-image";
-import { ArrowDown, ArrowUp, Neutral } from "./svg/arrows";
 
 interface LeaderboardPanelProps {
   user: IXPLeaderboardUser;
@@ -18,23 +16,12 @@ interface LeaderboardPanelProps {
   isAdmin?: boolean;
 }
 
-const getArrowPos = (id: string, arrPos: number, pos: number) => {
-  return arrPos < pos ? (
-    <ArrowDown />
-  ) : arrPos > pos ? (
-    <ArrowUp />
-  ) : (
-    <Neutral />
-  );
-};
-
 const LeaderboardPanel: FC<LeaderboardPanelProps> = ({
   user,
   rank,
   requestEdit,
   isAdmin,
 }) => {
-  const userContext = useUser();
   const [hovering, setHovering] = useState(false);
   const breakpoints = useBreakpoints();
   hovering;
@@ -85,11 +72,6 @@ const LeaderboardPanel: FC<LeaderboardPanelProps> = ({
       <div className="relative hidden h-full shrink-0 items-center overflow-hidden whitespace-nowrap rounded-md bg-panelBack p-4 text-darkText shadow-md dark:bg-panelBack-darkMode dark:text-darkText-darkMode md:flex">
         {formatNumber(user.xp)} xp
       </div>
-      {!userContext.flags?.["disable-leaderboard-arrows"] && (
-        <div className="relative flex h-full shrink-0 items-center overflow-hidden whitespace-nowrap rounded-md bg-panelBack p-4 text-darkText shadow-md dark:bg-panelBack-darkMode dark:text-darkText-darkMode">
-          {getArrowPos(user.id, user.arrowPos, rank)}
-        </div>
-      )}
       {isAdmin && (
         <BlockButton
           onClick={requestEdit}

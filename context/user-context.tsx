@@ -127,7 +127,9 @@ export function UserContextProvider({
     []
   );
   const [currentUser, setCurrentUser] = useState<IXPAPIUser | undefined>();
-  const { flags } = useFlags();
+  const { flags } = useFlags(
+    currentUser ? { user: { key: currentUser?.discordUser.id } } : undefined
+  );
 
   const [inboxItems, setInboxItems] = useState<IInboxItem[]>([]);
 
