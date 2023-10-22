@@ -1,6 +1,6 @@
 {
   "name": "xp-dashboard",
-  "version": "2.0.21",
+  "version": "2.0.20",
   "private": true,
   "scripts": {
     "dev": "next dev",
