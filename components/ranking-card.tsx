@@ -1,12 +1,14 @@
-import { faPen } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useUser } from 'context/user-context';
-import { useUserDetails } from 'context/user-details-context';
-import { FC } from 'react';
-import defaultBackground from 'utils/default-background';
-import { avatarToURL } from 'utils/discord-utils';
+import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useUser } from "context/user-context";
+import { useUserDetails } from "context/user-details-context";
+import { map } from "lodash";
+import { FC } from "react";
+import defaultBackground from "utils/default-background";
+import { avatarToURL } from "utils/discord-utils";
+import { getXPBadge } from "utils/xp-variable-images-utils";
 
-import FallBackImage from './fallback-image';
+import FallBackImage from "./fallback-image";
 
 const SVGText = (props: {
   leftPercent: number;
@@ -14,7 +16,7 @@ const SVGText = (props: {
   lightFont?: boolean;
   fontSize: number;
   fontWeight: number;
-  fontFamily: 'Roboto' | 'Whitney Semibold';
+  fontFamily: "Roboto" | "Whitney Semibold";
   yAlign: number;
   children: string;
 }) => (
@@ -64,9 +66,7 @@ const RankingCard: FC<RankingCardProps> = () => {
       ) : (
         <></>
       )}
-      <div
-        className="relative flex w-fit max-w-full overflow-hidden rounded-md bg-panelBack p-4 shadow-md dark:bg-panelBack-darkMode"
-      >
+      <div className="relative flex w-fit max-w-full overflow-hidden rounded-md bg-panelBack p-4 shadow-md dark:bg-panelBack-darkMode">
         <div className="flex w-full flex-col gap-3">
           <h2 className="m-0 inline-block text-[17px]">Preview</h2>
           <div className="lg:p-3">
@@ -164,9 +164,9 @@ const RankingCard: FC<RankingCardProps> = () => {
               <>
                 <SVGText
                   fontFamily="Whitney Semibold"
-                  fontSize={33.3}
-                  leftPercent={5.56}
-                  topPercent={48.72}
+                  fontSize={34.6}
+                  leftPercent={5.1}
+                  topPercent={47.4}
                   yAlign={37.3}
                   lightFont
                   fontWeight={400}
@@ -178,7 +178,7 @@ const RankingCard: FC<RankingCardProps> = () => {
                     fontFamily="Roboto"
                     fontSize={12.8}
                     leftPercent={5.56}
-                    topPercent={60.11}
+                    topPercent={59.5}
                     yAlign={14}
                     fontWeight={400}
                   >
@@ -188,19 +188,19 @@ const RankingCard: FC<RankingCardProps> = () => {
                 <SVGText
                   fontFamily="Roboto"
                   fontSize={66.7}
-                  leftPercent={4.44}
-                  topPercent={68.66}
+                  leftPercent={4.1}
+                  topPercent={67.2}
                   yAlign={73}
-                  fontWeight={300}
+                  fontWeight={200}
                   lightFont
                 >
                   LEVEL 25
                 </SVGText>
                 <SVGText
                   fontFamily="Roboto"
-                  fontSize={12.8}
-                  leftPercent={5.56}
-                  topPercent={88.6}
+                  fontSize={14.5}
+                  leftPercent={5.3}
+                  topPercent={89.6}
                   yAlign={14}
                   fontWeight={400}
                 >
@@ -208,6 +208,26 @@ const RankingCard: FC<RankingCardProps> = () => {
                 </SVGText>
               </>
 
+              {map(user.currentUser?.xpUser.badges, (badge, idx) => {
+                const positionX = 401 - 36 * (idx % 6);
+                // + heightAdder
+                const positionY = 108 + 36 * Math.floor(idx / 6);
+                return (
+                  <div
+                    style={{
+                      left: `${(positionX / 450) * 100}%`,
+                      top: `${(positionY / 351) * 100}%`,
+                      width: `${(24 / 450) * 100}%`,
+                    }}
+                    className="absolute aspect-square"
+                  >
+                    <FallBackImage
+                      className="w-full h-full object-contain"
+                      src={getXPBadge(badge)}
+                    />
+                  </div>
+                );
+              })}
               <div className="absolute bottom-0 h-[.57%] w-[35%] bg-xpBlue" />
             </div>
           </div>
