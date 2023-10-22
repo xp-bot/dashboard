@@ -13,14 +13,29 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
+      - name: Bumping version
+        uses: jpb06/bump-package@latest
+        with:
+          major-keywords: BREAKING CHANGE
+          minor-keywords: feat,minor
+          patch-keywords: fix,qol,refactor,perf,docs,style,ci,chore,test
+
+      - uses: actions/checkout@v3
+
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@v1.3.1
+
       - uses: actions/setup-node@v3
         with:
           node-version: 18
+
       - name: Build and push the Docker image
         uses: mr-smithers-excellent/docker-build-push@v5
         with:
           image: xp-dashboard
-          tags: latest
+          tags: v${{ steps.package-version.outputs.current-version}}, latest
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
