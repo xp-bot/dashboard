@@ -18,8 +18,8 @@ jobs:
         uses: jpb06/bump-package@latest
         with:
           major-keywords: BREAKING CHANGE
-          minor-keywords: feat,minor
-          patch-keywords: fix,qol,refactor,perf,docs,style,ci,chore,test
+          minor-keywords: major
+          patch-keywords: feat,fix,qol,refactor,perf,docs,style,ci,chore,test
 
       # - name: get-npm-version
       #   id: package-version
