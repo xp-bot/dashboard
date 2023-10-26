@@ -40,9 +40,9 @@ const ShardPanel: FC<{
   <div
     className={`flex h-full w-full grow items-center justify-center whitespace-nowrap rounded-md border border-input-border p-2 px-3 text-center shadow-md ${
       shard.gateway_connected &&
-      Date.now() - new Date(shard.updated_at).getTime() < 30000
+      Date.now() - new Date(shard.updated_at).getTime() < 60000
         ? statusToClass.Stable
-        : Date.now() - new Date(shard.updated_at).getTime() < 60000
+        : Date.now() - new Date(shard.updated_at).getTime() < 90000
         ? statusToClass.Unstable
         : statusToClass.Offline
     }`}
