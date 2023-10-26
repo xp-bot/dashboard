@@ -176,12 +176,11 @@ const ChartPanel: FC<ChartPanelProps> = ({ chartData, title, hideChart }) => {
               data={{
                 datasets: map(chartData, (data) => ({
                   data: slice(data.data, timePeriod),
-                  fill: false,
+                  fill: true,
                   label: data.name,
                   borderColor: `${data.color}`,
                   backgroundColor: `${data.color}54`,
                   pointStyle: false,
-                  borderWidth: 1.5,
                   tension: 0.15,
                 })),
                 labels: map(slice(chartData[0].labels, timePeriod), (date) =>
