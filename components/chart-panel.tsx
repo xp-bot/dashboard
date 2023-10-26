@@ -182,6 +182,7 @@ const ChartPanel: FC<ChartPanelProps> = ({ chartData, title, hideChart }) => {
                   backgroundColor: `${data.color}54`,
                   pointStyle: false,
                   borderWidth: 1.5,
+                  tension: 0.15,
                 })),
                 labels: map(slice(chartData[0].labels, timePeriod), (date) =>
                   day(date).format(`hh:mm a`)
