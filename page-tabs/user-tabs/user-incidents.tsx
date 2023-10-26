@@ -256,6 +256,7 @@ const UserTabIncidents: FC<UserTabIncidentsProps> = () => {
                 { id: `Planned Maintenance`, title: `Planned Maintenance` },
                 { id: `Investigating`, title: `Investigating` },
                 { id: `Implementing Fix`, title: `Implementing Fix` },
+                { id: `Monitoring`, title: `Monitoring` },
                 { id: `Reverting Patch`, title: `Reverting Patch` },
                 ...(editIncident
                   ? [{ id: `Resolved`, title: `Resolved` }]
