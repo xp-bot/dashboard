@@ -39,6 +39,7 @@ const borderColor: { [key: string]: string } = {
   Maintenance: "#939cfa",
   "Planned Maintenance": "#939cfa",
   "Implementing Fix": "#e993e0",
+  Monitoring: "#f2c94c",
   Resolved: "#43B581",
 };
 

@@ -36,23 +36,39 @@ const statusToClass = {
 
 const ShardPanel: FC<{
   shard: IIlumAlivePing;
-}> = ({ shard }) => (
-  <div
-    className={`flex h-full w-full grow items-center justify-center whitespace-nowrap rounded-md border border-input-border p-2 px-3 text-center shadow-md ${
-      shard.gateway_connected &&
-      Date.now() - new Date(shard.updated_at).getTime() < 60000
-        ? statusToClass.Stable
-        : Date.now() - new Date(shard.updated_at).getTime() < 90000
-        ? statusToClass.Unstable
-        : statusToClass.Offline
-    }`}
-  >
-    {shard.gateway_connected &&
-    Date.now() - new Date(shard.updated_at).getTime() < 60000
-      ? `Shard ${shard.shard_id} - ${shard.server_count} Servers`
-      : `Shard ${shard.shard_id} - Offline`}
-  </div>
-);
+}> = ({ shard }) => {
+  const statusClass = () => {
+    if (!shard.gateway_connected)
+      return {
+        title: `Shard ${shard.shard_id} - Disconnected`,
+        class: statusToClass.Offline,
+      };
+    if (Date.now() - new Date(shard.updated_at).getTime() < 90000)
+      return {
+        title: `Shard ${shard.shard_id} - ${shard.server_count} Servers`,
+        class: statusToClass.Stable,
+      };
+    if (Date.now() - new Date(shard.updated_at).getTime() < 120000)
+      return {
+        title: `Shard ${shard.shard_id} - Unstable`,
+        class: statusToClass.Unstable,
+      };
+    return {
+      title: `Shard ${shard.shard_id} - Offline`,
+      class: statusToClass.Offline,
+    };
+  };
+
+  return (
+    <div
+      className={`flex h-full w-full grow items-center justify-center whitespace-nowrap rounded-md border border-input-border p-2 px-3 text-center shadow-md ${
+        statusClass().class
+      }`}
+    >
+      {statusClass().title}
+    </div>
+  );
+};
 
 const Status: NextPage<HomeProps> = ({
   incidents: ssgIncidents,
