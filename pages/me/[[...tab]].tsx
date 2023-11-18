@@ -172,8 +172,8 @@ const UserTab: NextPage<UserTabProps> = () => {
                         icon: faUserSecret,
                       },
                       {
-                        text: `Safety Guidelines`,
-                        link: `/blog/contributing_to_user_safety_and_service_guidelines_1657056506533`,
+                        text: `Terms of Service`,
+                        link: `/blog/terms_of_service`,
                         icon: faHeartPulse,
                       },
                     ]}
