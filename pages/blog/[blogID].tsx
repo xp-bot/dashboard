@@ -1,3 +1,4 @@
+import { faComment } from "@fortawesome/free-regular-svg-icons";
 import {
   faCross,
   faPen,
@@ -73,6 +74,21 @@ const BlogPost: NextPage<BlogPostProps> = ({ blogPost, comments }) => {
     });
   };
 
+  const handleSwitchEnableComments = async (enabled: boolean) => {
+    const res = await apiRoutes.blog.updatePost(blogPost.postID, {
+      ...blogPost.content,
+      comments_enabled: enabled,
+    });
+    if (res.success) router.push(`/blog/${blogPost.postID}`);
+
+    toast({
+      text: res.success
+        ? `Successfully ${enabled ? `enabled` : `disabled`} comments.`
+        : "Failed to update post's comments status",
+      type: res.success ? ToastItemType.SUCCESS : ToastItemType.ERROR,
+    });
+  };
+
   return (
     <div>
       {!isUndefined(selectedComment) ? (
@@ -119,6 +135,27 @@ const BlogPost: NextPage<BlogPostProps> = ({ blogPost, comments }) => {
               >
                 Post on Discord
               </span>
+            </div>
+            <span className="hidden md:flex">•</span>
+            <div className="flex h-full cursor-pointer flex-row items-center gap-3">
+              <button
+                onClick={() => {
+                  handleSwitchEnableComments(
+                    isUndefined(blogPost.content.comments_enabled)
+                      ? true
+                      : !blogPost.content.comments_enabled
+                  );
+                }}
+                className="flex h-full flex-row items-center gap-3 border-b border-b-transparent pb-0.5 opacity-75 transition-all ease-in-out hover:border-y-red-400 hover:text-red-400"
+              >
+                <FontAwesomeIcon icon={faComment} />
+                <span>
+                  {isUndefined(blogPost.content.comments_enabled) ||
+                  blogPost.content.comments_enabled
+                    ? `Disable Comments`
+                    : `Enable Comments`}
+                </span>
+              </button>
             </div>
             <span className="hidden md:flex">•</span>
             <div className="flex h-full cursor-pointer flex-row items-center gap-3">
