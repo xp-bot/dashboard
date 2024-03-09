@@ -98,6 +98,13 @@ export function BlogCommentsSection({
     scroll();
   }, [selectedComment, selectedRef]);
 
+  if (!blogPost.content.comments_enabled)
+    return (
+      <p className="text-darkText text-center opacity-25 dark:text-darkText-darkMode">
+        Comments have been disabled for this post.
+      </p>
+    );
+
   return (
     <BlogCommentsSectionContext.Provider
       value={{

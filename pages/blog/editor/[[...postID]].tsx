@@ -10,7 +10,11 @@ import { useLayout } from "context/layout-context";
 import { useToast } from "context/toast-context";
 import { useUser } from "context/user-context";
 import { isNil, size, startsWith } from "lodash";
-import { BlogPostStatus, IBlogPost } from "models/backend/blog-models";
+import {
+  BlogPostStatus,
+  IBlogPost,
+  IBlogPostContent,
+} from "models/backend/blog-models";
 import { IPage } from "models/page";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
@@ -59,12 +63,13 @@ const BlogEditor: NextPage<UserTabProps> = ({ blogPost }) => {
   ) => {
     if (!user.currentUser) return;
 
-    const postData = {
+    const postData: IBlogPostContent = {
       title: data.title,
       body: data.body,
       creator: user.currentUser.discordUser.id,
       description: data.description,
       thumbnail: data.thumbnail,
+      comments_enabled: true,
       status,
     };
 

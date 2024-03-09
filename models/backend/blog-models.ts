@@ -12,6 +12,7 @@ export interface IBlogPostContent {
   thumbnail?: string;
   updated_at?: Date;
   created_at?: Date;
+  comments_enabled: boolean;
   status: BlogPostStatus;
 }
 
@@ -21,7 +22,7 @@ export interface IBlogPost {
 }
 
 export interface IBlogPostCommentContent {
-  title: string;
+  title?: string;
   creator: string;
   body: string;
 }
