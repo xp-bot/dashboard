@@ -13,11 +13,13 @@ import FallBackImage from "./fallback-image";
 interface IBlogCreateCommentProps {
   parentCommentId?: string;
   postedCallback?: () => void;
+  isReply?: boolean;
 }
 
 const BlogCreateComment: FC<IBlogCreateCommentProps> = ({
   parentCommentId,
   postedCallback,
+  isReply,
 }) => {
   const user = useUser();
   const commentsSection = useCommentsSection();
@@ -26,10 +28,10 @@ const BlogCreateComment: FC<IBlogCreateCommentProps> = ({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<{ title: string; body: string }>();
+  } = useForm<{ title?: string; body: string }>();
 
   const createComment: SubmitHandler<{
-    title: string;
+    title?: string;
     body: string;
   }> = ({ body, title }) => {
     commentsSection.postComment(
@@ -57,18 +59,20 @@ const BlogCreateComment: FC<IBlogCreateCommentProps> = ({
             />
           </div>
           <div className="relative flex min-h-[5rem] w-full max-w-full grow flex-col justify-center gap-2 font-serif text-darkText dark:text-darkText-darkMode">
-            <BlockInput
-              inputProps={{ maxLength: 30 }}
-              placeholder="Title your Comment"
-              formError={errors.title}
-              registerForm={register("title", {
-                required: `A Title is required.`,
-                minLength: {
-                  value: 5,
-                  message: `Please enter at least 5 characters.`,
-                },
-              })}
-            />
+            {!isReply && (
+              <BlockInput
+                inputProps={{ maxLength: 30 }}
+                placeholder="Title your Comment"
+                formError={errors.title}
+                registerForm={register("title", {
+                  required: `A Title is required.`,
+                  minLength: {
+                    value: 5,
+                    message: `Please enter at least 5 characters.`,
+                  },
+                })}
+              />
+            )}
             <span>
               <BlockTextArea
                 inputProps={{ maxLength: 1024 }}

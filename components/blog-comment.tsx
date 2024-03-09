@@ -212,6 +212,7 @@ const BlogComment: FC<IBlogCommentProps> = ({
       >
         <div className="min-w-[60vw]">
           <BlogCreateComment
+            isReply
             postedCallback={() => {
               setReplyModal(undefined);
             }}
