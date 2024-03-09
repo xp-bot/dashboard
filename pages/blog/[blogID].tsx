@@ -93,7 +93,7 @@ const BlogPost: NextPage<BlogPostProps> = ({ blogPost, comments }) => {
     <div>
       {!isUndefined(selectedComment) ? (
         <HeadSet
-          title={selectedComment.content.title}
+          title={selectedComment.content.title || `Untitled Comment`}
           description={selectedComment.content.body}
           image={avatarToURL(selectedLookup)}
         />
